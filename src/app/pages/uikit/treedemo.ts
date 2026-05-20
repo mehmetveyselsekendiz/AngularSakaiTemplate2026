@@ -1,10 +1,9 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { TreeModule } from 'primeng/tree';
 import { FormsModule } from '@angular/forms';
 import { TreeTableModule } from 'primeng/treetable';
 import { CommonModule } from '@angular/common';
-import { NodeService } from '@/app/pages/service/node.service';
 
 @Component({
     selector: 'app-tree-demo',
@@ -40,7 +39,6 @@ import { NodeService } from '@/app/pages/service/node.service';
             </p-treetable>
         </div>
     `,
-    providers: [NodeService]
 })
 export class TreeDemo implements OnInit {
     treeValue = signal<TreeNode[]>([]);
@@ -53,11 +51,30 @@ export class TreeDemo implements OnInit {
 
     cols: any[] = [];
 
-    nodeService = inject(NodeService);
-
     ngOnInit() {
-        this.nodeService.getFiles().then((files) => this.treeValue.set(files));
-        this.nodeService.getTreeTableNodes().then((files: any) => this.treeTableValue.set(files));
+        this.treeValue.set([
+            { key: '0', label: 'Belgeler', icon: 'pi pi-folder', children: [
+                { key: '0-0', label: 'Pasaport Başvuruları', icon: 'pi pi-folder', children: [
+                    { key: '0-0-0', label: 'form-2024.pdf', icon: 'pi pi-file' },
+                    { key: '0-0-1', label: 'rehber.docx', icon: 'pi pi-file' },
+                ]},
+                { key: '0-1', label: 'Vize Dosyaları', icon: 'pi pi-folder', children: [
+                    { key: '0-1-0', label: 'schengen-2024.pdf', icon: 'pi pi-file' },
+                ]},
+            ]},
+            { key: '1', label: 'Raporlar', icon: 'pi pi-folder', children: [
+                { key: '1-0', label: 'yillik-rapor-2024.xlsx', icon: 'pi pi-file' },
+            ]},
+        ]);
+        this.treeTableValue.set([
+            { key: '0', data: { name: 'Belgeler', size: '—', type: 'Klasör' }, children: [
+                { key: '0-0', data: { name: 'form-2024.pdf', size: '124 KB', type: 'PDF' } },
+                { key: '0-1', data: { name: 'rehber.docx', size: '89 KB', type: 'Word' } },
+            ]},
+            { key: '1', data: { name: 'Raporlar', size: '—', type: 'Klasör' }, children: [
+                { key: '1-0', data: { name: 'rapor-2024.xlsx', size: '512 KB', type: 'Excel' } },
+            ]},
+        ]);
 
         this.cols = [
             { field: 'name', header: 'Name' },

@@ -16,9 +16,11 @@ import { RippleModule } from 'primeng/ripple';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { TagModule } from 'primeng/tag';
-import { Customer, CustomerService, Representative } from '@/app/pages/service/customer.service';
-import { Product, ProductService } from '@/app/pages/service/product.service';
-import {ObjectUtils} from "primeng/utils";
+import { ObjectUtils } from 'primeng/utils';
+
+interface Representative { name: string; image: string; }
+interface Customer { id?: string; name?: string; country?: { name: string; code: string }; company?: string; date?: any; status?: string; activity?: number; representative?: Representative; balance?: number; verified?: boolean; }
+interface Product { id?: string; name?: string; price?: number; category?: string; rating?: number; inventoryStatus?: string; image?: string; orders?: { id: string; customer: string; date: string; amount: number; status: string }[]; }
 
 interface expandedRows {
     [key: string]: boolean;
@@ -388,7 +390,7 @@ interface expandedRows {
             font-weight: bold;
         }
     `,
-    providers: [ConfirmationService, MessageService, CustomerService, ProductService]
+    providers: [ConfirmationService, MessageService]
 })
 export class TableDemo implements OnInit {
     customers1: Customer[] = [];
@@ -417,47 +419,41 @@ export class TableDemo implements OnInit {
 
     balanceFrozen: boolean = false;
 
-    loading: boolean = true;
+    loading: boolean = false;
 
     @ViewChild('filter') filter!: ElementRef;
 
-    constructor(
-        private customerService: CustomerService,
-        private productService: ProductService
-    ) {}
+    private static readonly DEMO_CUSTOMERS: Customer[] = [
+        { id: '1000', name: 'Ayşe Kaya', country: { name: 'Türkiye', code: 'tr' }, company: 'Dışişleri Bakanlığı', date: new Date('2024-01-15'), status: 'qualified', activity: 74, representative: { name: 'Ali Demir', image: 'ionibowcher.png' }, balance: 45200, verified: true },
+        { id: '1001', name: 'Mehmet Yılmaz', country: { name: 'Almanya', code: 'de' }, company: 'Berlin Büyükelçiliği', date: new Date('2024-02-20'), status: 'new', activity: 52, representative: { name: 'Fatma Şahin', image: 'annafali.png' }, balance: 32100, verified: false },
+        { id: '1002', name: 'Fatma Çelik', country: { name: 'Fransa', code: 'fr' }, company: 'Paris Başkonsolosluğu', date: new Date('2024-03-10'), status: 'negotiation', activity: 88, representative: { name: 'Ali Demir', image: 'ionibowcher.png' }, balance: 67800, verified: true },
+        { id: '1003', name: 'Ali Şahin', country: { name: 'ABD', code: 'us' }, company: 'Washington Büyükelçiliği', date: new Date('2024-04-05'), status: 'unqualified', activity: 23, representative: { name: 'Fatma Şahin', image: 'annafali.png' }, balance: 18900, verified: false },
+        { id: '1004', name: 'Zeynep Arslan', country: { name: 'İngiltere', code: 'gb' }, company: 'Londra Başkonsolosluğu', date: new Date('2024-05-18'), status: 'qualified', activity: 91, representative: { name: 'Ali Demir', image: 'ionibowcher.png' }, balance: 89300, verified: true },
+        { id: '1005', name: 'Mustafa Öztürk', country: { name: 'Japonya', code: 'jp' }, company: 'Tokyo Büyükelçiliği', date: new Date('2024-06-22'), status: 'renewal', activity: 61, representative: { name: 'Fatma Şahin', image: 'annafali.png' }, balance: 54700, verified: true },
+    ];
 
     ngOnInit() {
-        this.customerService.getCustomersLarge().then((customers) => {
-            this.customers1 = customers;
-            this.loading = false;
-
-            // @ts-ignore
-            this.customers1.forEach((customer) => (customer.date = new Date(customer.date)));
-        });
-        this.customerService.getCustomersMedium().then((customers) => (this.customers2 = customers));
-        this.customerService.getCustomersLarge().then((customers) => (this.customers3 = customers));
-        this.productService.getProductsWithOrdersSmall().then((data) => (this.products = data));
+        this.customers1 = TableDemo.DEMO_CUSTOMERS;
+        this.customers2 = TableDemo.DEMO_CUSTOMERS;
+        this.customers3 = TableDemo.DEMO_CUSTOMERS;
+        this.products = [
+            { id: 'P001', name: 'Pasaport', price: 150, category: 'Kimlik Belgesi', rating: 5, inventoryStatus: 'INSTOCK', image: 'product-placeholder.svg', orders: [{ id: 'O001', customer: 'Ayşe Kaya', date: '2024-01-15', amount: 150, status: 'DELIVERED' }] },
+            { id: 'P002', name: 'Vize Başvurusu', price: 80, category: 'Vize', rating: 4, inventoryStatus: 'LOWSTOCK', image: 'product-placeholder.svg', orders: [{ id: 'O002', customer: 'Mehmet Yılmaz', date: '2024-02-20', amount: 80, status: 'PENDING' }] },
+            { id: 'P003', name: 'Apostil', price: 45, category: 'Belge Onayı', rating: 4, inventoryStatus: 'INSTOCK', image: 'product-placeholder.svg', orders: [{ id: 'O003', customer: 'Fatma Çelik', date: '2024-03-10', amount: 45, status: 'DELIVERED' }] },
+        ];
 
         this.representatives = [
-            { name: 'Amy Elsner', image: 'amyelsner.png' },
-            { name: 'Anna Fali', image: 'annafali.png' },
-            { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
-            { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
-            { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
-            { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
-            { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
-            { name: 'Onyama Limba', image: 'onyamalimba.png' },
-            { name: 'Stephen Shaw', image: 'stephenshaw.png' },
-            { name: 'XuXue Feng', image: 'xuxuefeng.png' }
+            { name: 'Ali Demir', image: 'ionibowcher.png' },
+            { name: 'Fatma Şahin', image: 'annafali.png' },
         ];
 
         this.statuses = [
-            { label: 'Unqualified', value: 'unqualified' },
-            { label: 'Qualified', value: 'qualified' },
-            { label: 'New', value: 'new' },
-            { label: 'Negotiation', value: 'negotiation' },
-            { label: 'Renewal', value: 'renewal' },
-            { label: 'Proposal', value: 'proposal' }
+            { label: 'Niteliksiz', value: 'unqualified' },
+            { label: 'Nitelikli', value: 'qualified' },
+            { label: 'Yeni', value: 'new' },
+            { label: 'Müzakere', value: 'negotiation' },
+            { label: 'Yenileme', value: 'renewal' },
+            { label: 'Teklif', value: 'proposal' }
         ];
     }
 

@@ -10,7 +10,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {FormsModule} from '@angular/forms';
 import {TooltipModule} from 'primeng/tooltip';
 import {TableModule} from 'primeng/table';
-import {Product, ProductService} from '@/app/pages/service/product.service';
+interface Product { id?: string; name?: string; price?: number; image?: string; inventoryStatus?: string; }
 
 @Component({
     selector: 'app-overlay-demo',
@@ -141,7 +141,7 @@ import {Product, ProductService} from '@/app/pages/service/product.service';
             </div>
         </div>
     </div>`,
-    providers: [ConfirmationService, MessageService, ProductService]
+    providers: [ConfirmationService, MessageService]
 })
 export class OverlayDemo implements OnInit {
     display: boolean = false;
@@ -163,13 +163,18 @@ export class OverlayDemo implements OnInit {
     selectedProduct!: Product;
 
     constructor(
-        private productService: ProductService,
         private confirmationService: ConfirmationService,
         private messageService: MessageService
     ) {}
 
     ngOnInit() {
-        this.productService.getProductsSmall().then((products) => (this.products = products));
+        this.products = [
+            { id: '1000', name: 'Bamboo Watch', price: 65, image: 'bamboo-watch.jpg', inventoryStatus: 'INSTOCK' },
+            { id: '1001', name: 'Black Watch', price: 72, image: 'black-watch.jpg', inventoryStatus: 'INSTOCK' },
+            { id: '1002', name: 'Blue Band', price: 79, image: 'blue-band.jpg', inventoryStatus: 'LOWSTOCK' },
+            { id: '1003', name: 'Blue T-Shirt', price: 29, image: 'blue-t-shirt.jpg', inventoryStatus: 'INSTOCK' },
+            { id: '1004', name: 'Bracelet', price: 15, image: 'bracelet.jpg', inventoryStatus: 'INSTOCK' },
+        ];
     }
 
     confirm(event: Event) {

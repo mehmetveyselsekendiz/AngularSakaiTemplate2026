@@ -27,9 +27,9 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { TextareaModule } from 'primeng/textarea';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CountryService } from '@/app/pages/service/country.service';
-import { NodeService } from '@/app/pages/service/node.service';
 import { TreeNode } from 'primeng/api';
-import { Country } from '@/app/pages/service/customer.service';
+
+interface Country { name: string; code: string; }
 
 @Component({
     selector: 'app-input-demo',
@@ -235,7 +235,7 @@ import { Country } from '@/app/pages/service/customer.service';
                 </div>
             </div>
         </p-fluid>`,
-    providers: [CountryService, NodeService]
+    providers: [CountryService]
 })
 export class InputDemo implements OnInit {
     floatValue: any = null;
@@ -313,14 +313,25 @@ export class InputDemo implements OnInit {
 
     countryService = inject(CountryService);
 
-    nodeService = inject(NodeService);
-
     ngOnInit() {
         this.countryService.getCountries().then((countries) => {
             this.autoValue = countries;
         });
 
-        this.nodeService.getFiles().then((data) => (this.treeSelectNodes = data));
+        this.treeSelectNodes = [
+            { key: '0', label: 'Belgeler', data: 'Documents Folder', icon: 'pi pi-fw pi-inbox', children: [
+                { key: '0-0', label: 'İş', data: 'Work Folder', icon: 'pi pi-fw pi-cog', children: [
+                    { key: '0-0-0', label: 'Giderler.doc', icon: 'pi pi-fw pi-file', data: 'Expenses' },
+                    { key: '0-0-1', label: 'Özgeçmiş.doc', icon: 'pi pi-fw pi-file', data: 'Resume' },
+                ]},
+                { key: '0-1', label: 'Ev', data: 'Home Folder', icon: 'pi pi-fw pi-home', children: [
+                    { key: '0-1-0', label: 'Faturalar.txt', icon: 'pi pi-fw pi-file', data: 'Invoices' },
+                ]},
+            ]},
+            { key: '1', label: 'Resimler', data: 'Pictures Folder', icon: 'pi pi-fw pi-image', children: [
+                { key: '1-0', label: 'logo.jpg', icon: 'pi pi-fw pi-image', data: 'Logo' },
+            ]},
+        ];
     }
 
     filterCountry(event: AutoCompleteCompleteEvent) {

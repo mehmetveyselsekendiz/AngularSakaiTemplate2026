@@ -17,12 +17,21 @@
 - [x] **Çözüm:** PrimeFaces `sakai-ng` upstream'i `sakai` adıyla eklendi; submodule URL'si `https://github.com/cetincakiroglu/sakai-assets` olarak bulundu; `git archive` ile `src/assets/` içeriği çıkartıldı
 - [x] `src/assets/` klasörü artık mevcut: `styles.scss`, `tailwind.css`, `layout/`, `demo/` SCSS dosyaları
 
-### Bekleyen Adımlar (Bu Oturum)
+### Phase 1 — Sakai Demo Temizliği (Tamamlandı)
 
-- [ ] `src/index.html` — CDN font (Lato) ve dış favicon satırları kaldırılacak
-- [ ] `npm run start` → build başarılı mı doğrulanacak
-- [ ] Phase 0 commit: `chore: initial sakai-ng baseline + docs`
-- [ ] Phase 1'e geçiş için onay istenecek
+- [x] `src/index.html` — Lato CDN font kaldırıldı, favicon düzeltildi
+- [x] `src/app.routes.ts` — Landing ve Documentation rotaları kaldırıldı
+- [x] `src/app/layout/component/app.menu.ts` — Tüm menü Türkçeleştirildi, MFA yapısına çevrildi
+- [x] `src/app/layout/component/app.topbar.ts` — SAKAI logosu → MFA, palette butonu kaldırıldı
+- [x] `src/app/layout/component/app.configurator.ts` — Tamamen silindi
+- [x] `src/app/layout/component/app.floatingconfigurator.ts` — Sadece dark toggle bırakıldı
+- [x] `src/app/pages/auth/login.ts` — PrimeLand içerikleri Türkçeleştirildi
+- [x] `package.json` — `primeclt` kaldırıldı
+- [x] `src/app/pages/landing/` — Klasör silindi
+- [x] `src/app/pages/service/` — Demo servisler silindi (customer, product, node, photo), country.service korundu
+- [x] `public/demo/` — Demo görseller silindi, `flags/` korundu
+- [x] `tabledemo.ts`, `treedemo.ts`, `crud.ts`, `recentsaleswidget.ts`, `inputdemo.ts`, `listdemo.ts`, `mediademo.ts`, `overlaydemo.ts` — Silinen servis bağımlılıkları inline statik verilerle değiştirildi
+- [x] Build doğrulandı: `npx ng build --configuration development` — **BAŞARILI**, hata yok
 
 ---
 

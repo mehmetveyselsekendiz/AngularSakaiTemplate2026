@@ -7,7 +7,7 @@ import { OrderListModule } from 'primeng/orderlist';
 import { PickListModule } from 'primeng/picklist';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TagModule } from 'primeng/tag';
-import { Product, ProductService } from '@/app/pages/service/product.service';
+interface Product { id?: string; name?: string; price?: number; image?: string; inventoryStatus?: string; category?: string; rating?: number; }
 
 @Component({
     selector: 'app-list-demo',
@@ -156,14 +156,20 @@ import { Product, ProductService } from '@/app/pages/service/product.service';
             }
         }
     `,
-    providers: [ProductService]
 })
 export class ListDemo {
     layout: 'list' | 'grid' = 'list';
 
     options = ['list', 'grid'];
 
-    products: Product[] = [];
+    products: Product[] = [
+        { id: '1000', name: 'Bamboo Watch', price: 65, image: 'bamboo-watch.jpg', inventoryStatus: 'INSTOCK', category: 'Accessories', rating: 5 },
+        { id: '1001', name: 'Black Watch', price: 72, image: 'black-watch.jpg', inventoryStatus: 'INSTOCK', category: 'Accessories', rating: 4 },
+        { id: '1002', name: 'Blue Band', price: 79, image: 'blue-band.jpg', inventoryStatus: 'LOWSTOCK', category: 'Fitness', rating: 3 },
+        { id: '1003', name: 'Blue T-Shirt', price: 29, image: 'blue-t-shirt.jpg', inventoryStatus: 'INSTOCK', category: 'Clothing', rating: 5 },
+        { id: '1004', name: 'Bracelet', price: 15, image: 'bracelet.jpg', inventoryStatus: 'INSTOCK', category: 'Accessories', rating: 4 },
+        { id: '1005', name: 'Brown Purse', price: 120, image: 'brown-purse.jpg', inventoryStatus: 'OUTOFSTOCK', category: 'Accessories', rating: 4 },
+    ];
 
     sourceCities: any[] = [];
 
@@ -171,10 +177,7 @@ export class ListDemo {
 
     orderCities: any[] = [];
 
-    constructor(private productService: ProductService) {}
-
     ngOnInit() {
-        this.productService.getProductsSmall().then((data) => (this.products = data.slice(0, 6)));
 
         this.sourceCities = [
             { name: 'San Francisco', code: 'SF' },

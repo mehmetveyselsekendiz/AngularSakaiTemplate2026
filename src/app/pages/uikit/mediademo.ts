@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
 import { GalleriaModule } from 'primeng/galleria';
 import { ImageModule } from 'primeng/image';
 import { TagModule } from 'primeng/tag';
-import { PhotoService } from '@/app/pages/service/photo.service';
-import { Product, ProductService } from '@/app/pages/service/product.service';
+
+interface Product { id?: string; name?: string; price?: number; image?: string; inventoryStatus?: string; category?: string; }
 
 @Component({
     selector: 'app-media-demo',
@@ -54,16 +54,23 @@ import { Product, ProductService } from '@/app/pages/service/product.service';
                 </ng-template>
             </p-galleria>
         </div>`,
-    providers: [ProductService, PhotoService]
 })
 export class MediaDemo implements OnInit {
-    productService = inject(ProductService);
+    products = signal<Product[]>([
+        { id: '1000', name: 'Bamboo Watch', price: 65, image: 'bamboo-watch.jpg', inventoryStatus: 'INSTOCK', category: 'Accessories' },
+        { id: '1001', name: 'Black Watch', price: 72, image: 'black-watch.jpg', inventoryStatus: 'INSTOCK', category: 'Accessories' },
+        { id: '1002', name: 'Blue Band', price: 79, image: 'blue-band.jpg', inventoryStatus: 'LOWSTOCK', category: 'Fitness' },
+        { id: '1003', name: 'Blue T-Shirt', price: 29, image: 'blue-t-shirt.jpg', inventoryStatus: 'INSTOCK', category: 'Clothing' },
+        { id: '1004', name: 'Bracelet', price: 15, image: 'bracelet.jpg', inventoryStatus: 'INSTOCK', category: 'Accessories' },
+    ]);
 
-    photoService = inject(PhotoService);
-
-    products = signal<Product[]>([]);
-
-    images = signal<any[]>([]);
+    images = signal<any[]>([
+        { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria1s.jpg', alt: 'Görsel 1' },
+        { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria2.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria2s.jpg', alt: 'Görsel 2' },
+        { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3s.jpg', alt: 'Görsel 3' },
+        { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria4.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria4s.jpg', alt: 'Görsel 4' },
+        { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria5.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria5s.jpg', alt: 'Görsel 5' },
+    ]);
 
     galleriaResponsiveOptions: any[] = [
         {
@@ -102,10 +109,7 @@ export class MediaDemo implements OnInit {
         }
     ];
 
-    ngOnInit() {
-        this.productService.getProductsSmall().then((products) => this.products.set(products));
-        this.photoService.getImages().then((images) => this.images.set(images));
-    }
+    ngOnInit() {}
 
     getSeverity(status: string) {
         switch (status) {

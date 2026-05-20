@@ -1,9 +1,16 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
-import { Product, ProductService } from '@/app/pages/service/product.service';
+
+interface Product {
+    id?: string;
+    name?: string;
+    price?: number;
+    image?: string;
+    inventoryStatus?: string;
+}
 
 @Component({
     standalone: true,
@@ -34,14 +41,13 @@ import { Product, ProductService } from '@/app/pages/service/product.service';
             </ng-template>
         </p-table>
     </div>`,
-    providers: [ProductService]
 })
 export class RecentSalesWidget {
-    products = signal<Product[]>([]);
-
-    productService = inject(ProductService);
-
-    ngOnInit() {
-        this.productService.getProductsSmall().then((data) => (this.products.set(data)));
-    }
+    products = signal<Product[]>([
+        { id: '1000', name: 'Bamboo Watch', price: 65, image: 'bamboo-watch.jpg', inventoryStatus: 'INSTOCK' },
+        { id: '1001', name: 'Black Watch', price: 72, image: 'black-watch.jpg', inventoryStatus: 'INSTOCK' },
+        { id: '1002', name: 'Blue Band', price: 79, image: 'blue-band.jpg', inventoryStatus: 'LOWSTOCK' },
+        { id: '1003', name: 'Blue T-Shirt', price: 29, image: 'blue-t-shirt.jpg', inventoryStatus: 'INSTOCK' },
+        { id: '1004', name: 'Bracelet', price: 15, image: 'bracelet.jpg', inventoryStatus: 'INSTOCK' },
+    ]);
 }
