@@ -91,6 +91,44 @@
 - [x] `src/index.html` güncellendi — `<script src="config.js">` + sayfa başlığı Türkçeleştirildi
 - [x] Build doğrulandı: **BAŞARILI**
 
+### Phase 6 — Bileşen Kütüphanesi (Tamamlandı)
+
+**Bağlam:** Phase 4'te oluşturulan `/pages/kutuphane` sınırlı kalmıştı (~20 bileşen). Sakai'nin orijinal `/uikit/*` sayfaları Phase 1'de route'dan kaldırılmış ama dosyalar disk üzerinde duruyordu. Karar: `/uikit/*` sayfaları tek yetkili bileşen referansı olarak restore edildi (bkz. K-007).
+
+- [x] `src/app/pages/uikit/buttondemo.ts` — Harici CDN PrimeFaces logosu kaldırıldı; "Templating" bölümü PrimeIcons'lu yerel butonlarla yeniden yazıldı
+- [x] `src/app/pages/uikit/overlaydemo.ts` — `CommonModule` eklendi (currency pipe için); kırık `/demo/images/product/*.jpg` görselli tablo kaldırıldı, yerine isim + TRY para birimi fiyat sütunu getirildi; `ToastModule` çift import temizlendi
+- [x] `src/app/pages/uikit/filedemo.ts` — Sıfırdan yeniden yazıldı: `https://www.primefaces.org/cdn/api/upload.php` → `/api/upload`; `inject()` pattern'ine geçildi; Türkçeleştirildi; sadeleştirildi
+- [x] `src/app/pages/uikit/mediademo.ts` — Sıfırdan yeniden yazıldı: Tüm CDN görsel URL'leri kaldırıldı; `svgPlaceholder(w, h, bg, label)` yardımcı fonksiyonu oluşturuldu — `data:image/svg+xml` URI üretir, CDN bağımlılığı yok; Carousel: 5 MFA hizmet kartı (Vize, Pasaport, Konsolosluk, Belge, Tercüme) PrimeIcons + MFA paletleriyle; Galleria: 5 MFA palet renkli SVG placeholder; Image: tek SVG placeholder
+- [x] `src/app/pages/uikit/chartdemo.ts` — Pie/Polar/Radar chart renkleri `--p-indigo`, `--p-purple`, `--p-teal`, `--p-orange` → `--mfa-red`, `--mfa-navy`, `--mfa-gold`, `--mfa-gray`; tüm dataset etiketleri Türkçeleştirildi
+- [x] `src/app/pages/uikit/editordemo.ts` — YENİ DOSYA: `p-editor` (Quill peer dep zaten var) Zengin Metin Editörü demosu; tam toolbar (başlık seçici, kalın/italik/altçizgi/üstüçizgi, renk/arka plan seçici, liste/girintileme, hizalama, bağlantı/görsel/kod-bloğu, temizle); salt okunur mod demosu; `@if (icerik())` koşullu HTML çıktı önizlemesi; `signal<string>('')`, `temizle()`, `varsayilanYukle()` metodları
+- [x] `src/app/pages/uikit/uikit.routes.ts` — `EditorDemo` import + `{ path: 'editor', data: { breadcrumb: 'Zengin Metin' }, component: EditorDemo }` rotası eklendi; tüm breadcrumb'lar Türkçeleştirildi
+- [x] `src/app/pages/pages.routes.ts` — `Kutuphane` import ve `{ path: 'kutuphane', component: Kutuphane }` rotası kaldırıldı (`kutuphane/` klasörü dosya olarak diskte duruyor — henüz silinmedi)
+- [x] `src/app/layout/component/app.menu.ts` — Menü grubu "Kütüphane" → "Bileşen Kütüphanesi"; Sayfalar grubundan "Kütüphane" linki kaldırıldı; "Zengin Metin" menü öğesi eklendi (`/uikit/editor`)
+- [x] `CLAUDE.md` Bölüm 14 — Governance kaynağı `/pages/kutuphane` → `/uikit/*`; CDN asset yasağı kuralı eklendi; eski onaylı bileşen listesi kaldırıldı
+- [x] Build doğrulandı: **BAŞARILI** (commit `16f4e3e`)
+
+### Phase 6 Devam + Phase 7 Başlangıcı — 20 Mayıs 2026 (Oturum 2)
+
+- [x] `src/app/pages/kutuphane/` klasörü silindi (route'dan daha önce kaldırılmıştı, diskteki atıl dosya temizlendi)
+- [x] `src/app/core/config/navigation.config.ts` oluşturuldu
+  - `NavItem` interface (MenuItem genişlemesi + `requiredRoles?`)
+  - `NavGroup` interface (üst grup + `requiredRoles?`)
+  - `NAV_GROUPS` sabiti — tüm menü tanımları merkezi config'e taşındı
+  - `ROUTE_LABEL_MAP` — breadcrumb için route → Türkçe etiket eşlemesi (23 rota)
+- [x] `src/app/layout/component/app.menu.ts` yeniden yazıldı
+  - `ngOnInit()` + inline model kaldırıldı
+  - `inject(AuthService)` + `computed()` signal pattern eklendi
+  - `filteredModel = computed(...)` — `authService.roles()` değişince otomatik güncellenir (zoneless uyumlu)
+  - Rol bazlı filtreleme: grup ve item seviyesinde `requiredRoles` desteği
+- [x] `src/app/pages/dashboard/dashboard.ts` MFA karşılama sayfasına dönüştürüldü
+  - Sakai demo widget'ları kaldırıldı (StatsWidget, RecentSalesWidget, BestSellingWidget, RevenueStreamWidget, NotificationsWidget)
+  - `src/app/pages/dashboard/components/` klasörü silindi
+  - `AuthService.displayName()` ile "Hoş geldiniz, {Ad Soyad}" başlığı
+  - 4 adet `p-card` hızlı erişim kartı: Bileşen Kütüphanesi, Kurumsal Kimlik, CRUD Örneği, Boş Sayfa
+- [x] `proxy.conf.js` oluşturuldu — `/api/**` → `process.env.API_URL || 'http://localhost:8080'` (geliştirme proxy; çalışma zamanında `window.__ENV__.API_URL` karşılığı)
+- [x] `angular.json` güncellendi — `serve.options.proxyConfig: "proxy.conf.js"` eklendi
+- [x] Build doğrulandı: **BAŞARILI** (21.1 sn)
+
 ---
 
 ## Alınan Kararlar
@@ -148,6 +186,16 @@
 **Gerekçe:** Angular/PrimeNG'de tema token'larını TypeScript sabitlerinden otomatik üretecek bir build pipeline yoktur (React Tailwind `@theme inline` gibi). Manuel senkronizasyon kabul edilebilir çünkü renk değişikliği sık değil, dosya sayısı üç ile sınırlı.
 
 **Kural:** Renk değişikliği SADECE `mfa-tokens.scss`'te başlar, sonra diğer ikisi güncellenir.
+
+---
+
+### K-007 — Bileşen Kütüphanesi Governance Kaynağı Değişikliği (20 Mayıs 2026)
+
+**Karar:** Tek yetkili bileşen referans kaynağı, özel oluşturulan `/pages/kutuphane` yerine Sakai'nin orijinal `/uikit/*` sayfaları oldu.
+
+**Gerekçe:** `/pages/kutuphane` (Phase 4) yaklaşık 20 bileşeni gösteriyordu ve yeni bileşen ekledikçe büyümesi gerekirdi. Sakai'nin `/uikit/*` sayfaları Phase 1'de temizlik kapsamında route'dan kaldırılmıştı ancak dosyalar diskte duruyordu; bu sayfalar zaten tüm temel PrimeNG bileşenlerini 16 kategoride kapsıyor. Restore edip MFA uyumlu hâle getirmek, sıfırdan büyütmekten çok daha az efor gerektirdi.
+
+**Etki:** 16 `/uikit/*` sayfası MFA paletine uyarlandı (CDN bağımlılıkları kaldırıldı, renkler `--mfa-*` token'larına çevrildi, içerikler Türkçeleştirildi); `p-editor` sayfası eklendi; `/pages/kutuphane` route'dan çıkarıldı (dosya diskte, henüz silinmedi — onay bekleniyor). Governance kuralı değişmedi: modüller `/uikit/*`'te gösterilmeyen bileşeni kullanamaz; yeni bileşen önce oraya eklenir.
 
 ---
 
