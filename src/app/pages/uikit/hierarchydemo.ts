@@ -47,12 +47,7 @@ const MFA_HIERARCHY: TreeNode[] = [
 
         <div class="card mt-4">
             <div class="font-semibold text-xl mb-4">Seçilebilir Düğümler</div>
-            <p-organizationchart
-                [value]="data"
-                selectionMode="single"
-                [(selection)]="selected"
-                styleClass="w-full overflow-auto"
-            />
+            <p-organizationchart [value]="data" selectionMode="single" [(selection)]="selected" styleClass="w-full overflow-auto" />
             @if (selected) {
                 <p class="mt-4 text-sm text-muted-color">
                     Seçili: <strong>{{ selected.label }}</strong>

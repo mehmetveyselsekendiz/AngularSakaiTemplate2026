@@ -47,9 +47,15 @@ export const NAV_GROUPS: NavGroup[] = [
             { label: 'Kurumsal Kimlik', icon: 'pi pi-fw pi-palette', routerLink: ['/pages/kurumsal-kimlik'] },
             { label: 'CRUD Örneği', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/crud'] },
             { label: 'Boş Sayfa', icon: 'pi pi-fw pi-circle-off', routerLink: ['/pages/empty'] },
-            { label: 'Giriş', icon: 'pi pi-fw pi-sign-in', routerLink: ['/auth/login'] },
-            { label: 'Erişim Engeli', icon: 'pi pi-fw pi-lock', routerLink: ['/auth/access'] },
-            { label: 'Hata Sayfası', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/auth/error'] },
+            {
+                label: 'Auth',
+                icon: 'pi pi-fw pi-user',
+                items: [
+                    { label: 'Giriş', icon: 'pi pi-fw pi-sign-in', routerLink: ['/auth/login'] },
+                    { label: 'Erişim Engeli', icon: 'pi pi-fw pi-lock', routerLink: ['/auth/access'] },
+                    { label: 'Hata Sayfası', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/auth/error'] }
+                ]
+            },
             { label: 'Sayfa Bulunamadı', icon: 'pi pi-fw pi-times-circle', routerLink: ['/notfound'] }
         ]
     }
