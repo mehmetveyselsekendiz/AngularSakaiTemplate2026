@@ -2,13 +2,15 @@ import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StyleClassModule } from 'primeng/styleclass';
+import { TooltipModule } from 'primeng/tooltip';
 import { LayoutService } from '@/app/layout/service/layout.service';
+import { AuthService } from '@/app/core/auth/auth.service';
 
 @Component({
     selector: 'app-topbar',
     standalone: true,
-    imports: [RouterModule, CommonModule, StyleClassModule],
-    template: ` <div class="layout-topbar">
+    imports: [RouterModule, CommonModule, StyleClassModule, TooltipModule],
+    template: `<div class="layout-topbar">
         <div class="layout-topbar-logo-container">
             <button class="layout-menu-button layout-topbar-action" (click)="layoutService.onMenuToggle()">
                 <i class="pi pi-bars"></i>
@@ -21,7 +23,7 @@ import { LayoutService } from '@/app/layout/service/layout.service';
         <div class="layout-topbar-actions">
             <div class="layout-config-menu">
                 <button type="button" class="layout-topbar-action" (click)="toggleDarkMode()">
-                    <i [ngClass]="{ 'pi ': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme() }"></i>
+                    <i [ngClass]="{ 'pi': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme() }"></i>
                 </button>
             </div>
 
@@ -31,10 +33,17 @@ import { LayoutService } from '@/app/layout/service/layout.service';
 
             <div class="layout-topbar-menu hidden lg:block">
                 <div class="layout-topbar-menu-content">
-                    <button type="button" class="layout-topbar-action">
-                        <i class="pi pi-user"></i>
-                        <span>Profil</span>
-                    </button>
+                    @if (authService.isLoggedIn()) {
+                        <button type="button" class="layout-topbar-action" pTooltip="Çıkış Yap" tooltipPosition="bottom" (click)="onLogout()">
+                            <i class="pi pi-user"></i>
+                            <span>{{ authService.displayName() }}</span>
+                        </button>
+                    } @else {
+                        <button type="button" class="layout-topbar-action">
+                            <i class="pi pi-user"></i>
+                            <span>Profil</span>
+                        </button>
+                    }
                 </div>
             </div>
         </div>
@@ -42,11 +51,16 @@ import { LayoutService } from '@/app/layout/service/layout.service';
 })
 export class AppTopbar {
     layoutService = inject(LayoutService);
+    authService   = inject(AuthService);
 
-    toggleDarkMode() {
+    toggleDarkMode(): void {
         this.layoutService.layoutConfig.update((state) => ({
             ...state,
             darkTheme: !state.darkTheme
         }));
+    }
+
+    onLogout(): void {
+        this.authService.logout();
     }
 }

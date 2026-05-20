@@ -71,6 +71,26 @@
 - [x] `CLAUDE.md` güncellendi — Bölüm 14: Governance kuralı eklendi (kütüphanede olmayan bileşen kullanılamaz)
 - [x] Build doğrulandı: **BAŞARILI**
 
+### Phase 5 — Manuel OIDC Auth (Tamamlandı)
+
+- [x] `src/app/core/types/auth.types.ts` oluşturuldu — `AuthUser`, `OidcTokenResponse`, `ApiError` interface'leri + `Window.__ENV__` global tipi
+- [x] `src/app/core/config/app-env.ts` oluşturuldu — React `auth.config.ts`'ten port; `window.__ENV__` okuyucu, `extractRoles()` (realm_access / profile.roles / resource_access), `appEnv` sabiti
+- [x] `public/config.js` oluşturuldu — boş şablon (`window.__ENV__ = { SSO_URL, CLIENT_ID, REDIRECT_URI, POST_LOGOUT_URI, API_URL, PORTAL_URL }`)
+- [x] `src/app/core/auth/auth.service.ts` oluşturuldu — PKCE (SHA-256 + base64url), `signal<AuthUser | null>`, `computed isLoggedIn / roles / displayName`, `loginRedirect()` / `handleCallback()` / `logout()` / `getToken()` / `consumeReturnTo()`
+- [x] `src/app/core/auth/auth.guard.ts` oluşturuldu — Functional `CanActivateFn`, `isLoggedIn()` yoksa `loginRedirect(state.url)`
+- [x] `src/app/core/auth/auth.interceptor.ts` oluşturuldu — `HttpInterceptorFn`, Bearer token enjekte (token endpoint hariç)
+- [x] `src/app/core/http/error.interceptor.ts` oluşturuldu — 401→loginRedirect+EMPTY, 403/422/5xx/0→MessageService toast
+- [x] `src/app/core/auth/auth.callback.component.ts` oluşturuldu — URL `code`+`state` al, `handleCallback()` çağır, `consumeReturnTo()`'ya yönlendir
+- [x] `src/app/core/auth/permission.service.ts` oluşturuldu — `hasRole(role): Signal<boolean>`, `anyRole(roles[]): Signal<boolean>`
+- [x] `src/app.config.ts` güncellendi — `withInterceptors([authInterceptor, errorInterceptor])` + global `MessageService` provider
+- [x] `src/app.routes.ts` güncellendi — AppLayout rotasına `canActivate: [authGuard]`
+- [x] `src/app/pages/auth/auth.routes.ts` güncellendi — `{ path: 'callback', component: AuthCallback }` eklendi
+- [x] `src/app/pages/auth/login.ts` güncellendi — e-posta/şifre formu kaldırıldı, "MFA SSO ile Giriş Yap" butonu eklendi
+- [x] `src/app/layout/component/app.topbar.ts` güncellendi — `AuthService` inject, `displayName()` göster, tıklayınca `logout()`
+- [x] `src/app/layout/component/app.layout.ts` güncellendi — global `<p-toast />` eklendi
+- [x] `src/index.html` güncellendi — `<script src="config.js">` + sayfa başlığı Türkçeleştirildi
+- [x] Build doğrulandı: **BAŞARILI**
+
 ---
 
 ## Alınan Kararlar
