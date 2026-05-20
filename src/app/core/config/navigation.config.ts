@@ -50,6 +50,7 @@ export const NAV_GROUPS: NavGroup[] = [
             {
                 label: 'Auth',
                 icon: 'pi pi-fw pi-user',
+                path: 'auth',
                 items: [
                     { label: 'Giriş', icon: 'pi pi-fw pi-sign-in', routerLink: ['/auth/login'] },
                     { label: 'Erişim Engeli', icon: 'pi pi-fw pi-lock', routerLink: ['/auth/access'] },
