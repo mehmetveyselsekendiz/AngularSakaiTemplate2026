@@ -29,7 +29,10 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CountryService } from '@/app/pages/service/country.service';
 import { TreeNode } from 'primeng/api';
 
-interface Country { name: string; code: string; }
+interface Country {
+    name: string;
+    code: string;
+}
 
 @Component({
     selector: 'app-input-demo',
@@ -319,18 +322,26 @@ export class InputDemo implements OnInit {
         });
 
         this.treeSelectNodes = [
-            { key: '0', label: 'Belgeler', data: 'Documents Folder', icon: 'pi pi-fw pi-inbox', children: [
-                { key: '0-0', label: 'İş', data: 'Work Folder', icon: 'pi pi-fw pi-cog', children: [
-                    { key: '0-0-0', label: 'Giderler.doc', icon: 'pi pi-fw pi-file', data: 'Expenses' },
-                    { key: '0-0-1', label: 'Özgeçmiş.doc', icon: 'pi pi-fw pi-file', data: 'Resume' },
-                ]},
-                { key: '0-1', label: 'Ev', data: 'Home Folder', icon: 'pi pi-fw pi-home', children: [
-                    { key: '0-1-0', label: 'Faturalar.txt', icon: 'pi pi-fw pi-file', data: 'Invoices' },
-                ]},
-            ]},
-            { key: '1', label: 'Resimler', data: 'Pictures Folder', icon: 'pi pi-fw pi-image', children: [
-                { key: '1-0', label: 'logo.jpg', icon: 'pi pi-fw pi-image', data: 'Logo' },
-            ]},
+            {
+                key: '0',
+                label: 'Belgeler',
+                data: 'Documents Folder',
+                icon: 'pi pi-fw pi-inbox',
+                children: [
+                    {
+                        key: '0-0',
+                        label: 'İş',
+                        data: 'Work Folder',
+                        icon: 'pi pi-fw pi-cog',
+                        children: [
+                            { key: '0-0-0', label: 'Giderler.doc', icon: 'pi pi-fw pi-file', data: 'Expenses' },
+                            { key: '0-0-1', label: 'Özgeçmiş.doc', icon: 'pi pi-fw pi-file', data: 'Resume' }
+                        ]
+                    },
+                    { key: '0-1', label: 'Ev', data: 'Home Folder', icon: 'pi pi-fw pi-home', children: [{ key: '0-1-0', label: 'Faturalar.txt', icon: 'pi pi-fw pi-file', data: 'Invoices' }] }
+                ]
+            },
+            { key: '1', label: 'Resimler', data: 'Pictures Folder', icon: 'pi pi-fw pi-image', children: [{ key: '1-0', label: 'logo.jpg', icon: 'pi pi-fw pi-image', data: 'Logo' }] }
         ];
     }
 

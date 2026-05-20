@@ -1,16 +1,24 @@
 // MFA Kurumsal Renk Paleti — TEK KAYNAK
 // Renk değişikliği SADECE bu dosyada yapılır.
 // theme.config.ts'deki hex değerleri bu dosya ile senkrondur.
+//
+// PrimeNG severity eşleşmeleri:
+//   primary → --mfa-red   (#DA291C)
+//   info    → --mfa-navy  (#003773)  [sky primitive]
+//   warn    → --mfa-gold  (#D7AD4D)  [orange primitive]
+//   danger  → --mfa-danger(#C81D1D)  [red primitive]
+//   surface → --mfa-gray  (#53565A)  tabanlı
 
 :root {
-  // Temel marka renkleri
-  --mfa-red:        #DA291C; // Pantone 199 C — Ana renk
-  --mfa-gold:       #D7AD4D; // Sadece tören/sertifika
-  --mfa-gray:       #53565A; // Nötr metin/border
-  --mfa-navy:       #003773; // Pantone 287
-  --mfa-navy-dark:  #00235A; // Pantone 288
+  // ─── Temel marka renkleri ────────────────────────────────────────────────
+  --mfa-red:        #DA291C; // Pantone 199 C — primary
+  --mfa-gold:       #D7AD4D; // Altın Varak — warn / törensel
+  --mfa-gray:       #53565A; // Pantone Cool Gray 10 C — surface base
+  --mfa-navy:       #003773; // Pantone 287 C — info
+  --mfa-navy-dark:  #00235A; // Pantone 288 C — contrast / sidebar
+  --mfa-danger:     #C81D1D; // Tehlike kırmızısı — danger (primary'den soğuk/koyu)
 
-  // Kırmızı paleti (11 adım)
+  // ─── Kırmızı (primary) paleti ────────────────────────────────────────────
   --mfa-red-50:  #fef2f1;
   --mfa-red-100: #fee4e1;
   --mfa-red-200: #fec9c4;
@@ -23,7 +31,46 @@
   --mfa-red-900: #7a1810;
   --mfa-red-950: #440c08;
 
-  // Yüzey paleti — MFA grisi (#53565A) baz (11 adım)
+  // ─── Lacivert (info) paleti ──────────────────────────────────────────────
+  --mfa-navy-50:  #eff4fb;
+  --mfa-navy-100: #d5e2f5;
+  --mfa-navy-200: #aac5eb;
+  --mfa-navy-300: #72a0d8;
+  --mfa-navy-400: #3c78c2;
+  --mfa-navy-500: #1557a4;
+  --mfa-navy-600: #003773; // = --mfa-navy
+  --mfa-navy-700: #002d5e;
+  --mfa-navy-800: #00224a;
+  --mfa-navy-900: #001736;
+  --mfa-navy-950: #000c1e;
+
+  // ─── Altın (warn) paleti ─────────────────────────────────────────────────
+  --mfa-gold-50:  #fdf8ec;
+  --mfa-gold-100: #faf0d1;
+  --mfa-gold-200: #f5e0a3;
+  --mfa-gold-300: #edce6d;
+  --mfa-gold-400: #e2bd57;
+  --mfa-gold-500: #d7ad4d; // = --mfa-gold
+  --mfa-gold-600: #c49a37;
+  --mfa-gold-700: #a67d24;
+  --mfa-gold-800: #876117;
+  --mfa-gold-900: #67490e;
+  --mfa-gold-950: #3a2806;
+
+  // ─── Tehlike (danger) paleti ─────────────────────────────────────────────
+  --mfa-danger-50:  #fff1f0;
+  --mfa-danger-100: #ffe2e0;
+  --mfa-danger-200: #ffc5c2;
+  --mfa-danger-300: #ff9690;
+  --mfa-danger-400: #f95f5a;
+  --mfa-danger-500: #e83030;
+  --mfa-danger-600: #c81d1d; // = --mfa-danger
+  --mfa-danger-700: #a81717;
+  --mfa-danger-800: #8a1515;
+  --mfa-danger-900: #6e1313;
+  --mfa-danger-950: #3d0909;
+
+  // ─── Yüzey (surface) paleti ──────────────────────────────────────────────
   --mfa-surface-0:   #ffffff;
   --mfa-surface-50:  #f9f9fa;
   --mfa-surface-100: #f2f2f3;

@@ -40,7 +40,7 @@ interface Product {
                 </tr>
             </ng-template>
         </p-table>
-    </div>`,
+    </div>`
 })
 export class RecentSalesWidget {
     products = signal<Product[]>([
@@ -48,6 +48,6 @@ export class RecentSalesWidget {
         { id: '1001', name: 'Black Watch', price: 72, image: 'black-watch.jpg', inventoryStatus: 'INSTOCK' },
         { id: '1002', name: 'Blue Band', price: 79, image: 'blue-band.jpg', inventoryStatus: 'LOWSTOCK' },
         { id: '1003', name: 'Blue T-Shirt', price: 29, image: 'blue-t-shirt.jpg', inventoryStatus: 'INSTOCK' },
-        { id: '1004', name: 'Bracelet', price: 15, image: 'bracelet.jpg', inventoryStatus: 'INSTOCK' },
+        { id: '1004', name: 'Bracelet', price: 15, image: 'bracelet.jpg', inventoryStatus: 'INSTOCK' }
     ]);
 }

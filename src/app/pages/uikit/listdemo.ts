@@ -7,7 +7,15 @@ import { OrderListModule } from 'primeng/orderlist';
 import { PickListModule } from 'primeng/picklist';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TagModule } from 'primeng/tag';
-interface Product { id?: string; name?: string; price?: number; image?: string; inventoryStatus?: string; category?: string; rating?: number; }
+interface Product {
+    id?: string;
+    name?: string;
+    price?: number;
+    image?: string;
+    inventoryStatus?: string;
+    category?: string;
+    rating?: number;
+}
 
 @Component({
     selector: 'app-list-demo',
@@ -155,7 +163,7 @@ interface Product { id?: string; name?: string; price?: number; image?: string; 
                 width: 100%;
             }
         }
-    `,
+    `
 })
 export class ListDemo {
     layout: 'list' | 'grid' = 'list';
@@ -168,7 +176,7 @@ export class ListDemo {
         { id: '1002', name: 'Blue Band', price: 79, image: 'blue-band.jpg', inventoryStatus: 'LOWSTOCK', category: 'Fitness', rating: 3 },
         { id: '1003', name: 'Blue T-Shirt', price: 29, image: 'blue-t-shirt.jpg', inventoryStatus: 'INSTOCK', category: 'Clothing', rating: 5 },
         { id: '1004', name: 'Bracelet', price: 15, image: 'bracelet.jpg', inventoryStatus: 'INSTOCK', category: 'Accessories', rating: 4 },
-        { id: '1005', name: 'Brown Purse', price: 120, image: 'brown-purse.jpg', inventoryStatus: 'OUTOFSTOCK', category: 'Accessories', rating: 4 },
+        { id: '1005', name: 'Brown Purse', price: 120, image: 'brown-purse.jpg', inventoryStatus: 'OUTOFSTOCK', category: 'Accessories', rating: 4 }
     ];
 
     sourceCities: any[] = [];
@@ -178,7 +186,6 @@ export class ListDemo {
     orderCities: any[] = [];
 
     ngOnInit() {
-
         this.sourceCities = [
             { name: 'San Francisco', code: 'SF' },
             { name: 'London', code: 'LDN' },

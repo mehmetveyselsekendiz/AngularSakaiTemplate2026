@@ -1,16 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {ConfirmationService, MessageService} from 'primeng/api';
-import {ButtonModule} from 'primeng/button';
-import {DialogModule} from 'primeng/dialog';
-import {ToastModule} from 'primeng/toast';
-import {DrawerModule} from 'primeng/drawer';
-import {Popover, PopoverModule} from 'primeng/popover';
-import {ConfirmPopupModule} from 'primeng/confirmpopup';
-import {InputTextModule} from 'primeng/inputtext';
-import {FormsModule} from '@angular/forms';
-import {TooltipModule} from 'primeng/tooltip';
-import {TableModule} from 'primeng/table';
-interface Product { id?: string; name?: string; price?: number; image?: string; inventoryStatus?: string; }
+import { Component, OnInit } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
+import { DrawerModule } from 'primeng/drawer';
+import { Popover, PopoverModule } from 'primeng/popover';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
+import { TooltipModule } from 'primeng/tooltip';
+import { TableModule } from 'primeng/table';
+interface Product {
+    id?: string;
+    name?: string;
+    price?: number;
+    image?: string;
+    inventoryStatus?: string;
+}
 
 @Component({
     selector: 'app-overlay-demo',
@@ -173,7 +179,7 @@ export class OverlayDemo implements OnInit {
             { id: '1001', name: 'Black Watch', price: 72, image: 'black-watch.jpg', inventoryStatus: 'INSTOCK' },
             { id: '1002', name: 'Blue Band', price: 79, image: 'blue-band.jpg', inventoryStatus: 'LOWSTOCK' },
             { id: '1003', name: 'Blue T-Shirt', price: 29, image: 'blue-t-shirt.jpg', inventoryStatus: 'INSTOCK' },
-            { id: '1004', name: 'Bracelet', price: 15, image: 'bracelet.jpg', inventoryStatus: 'INSTOCK' },
+            { id: '1004', name: 'Bracelet', price: 15, image: 'bracelet.jpg', inventoryStatus: 'INSTOCK' }
         ];
     }
 

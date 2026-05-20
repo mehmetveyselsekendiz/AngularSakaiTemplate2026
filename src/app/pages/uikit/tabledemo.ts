@@ -18,9 +18,32 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { TagModule } from 'primeng/tag';
 import { ObjectUtils } from 'primeng/utils';
 
-interface Representative { name: string; image: string; }
-interface Customer { id?: string; name?: string; country?: { name: string; code: string }; company?: string; date?: any; status?: string; activity?: number; representative?: Representative; balance?: number; verified?: boolean; }
-interface Product { id?: string; name?: string; price?: number; category?: string; rating?: number; inventoryStatus?: string; image?: string; orders?: { id: string; customer: string; date: string; amount: number; status: string }[]; }
+interface Representative {
+    name: string;
+    image: string;
+}
+interface Customer {
+    id?: string;
+    name?: string;
+    country?: { name: string; code: string };
+    company?: string;
+    date?: any;
+    status?: string;
+    activity?: number;
+    representative?: Representative;
+    balance?: number;
+    verified?: boolean;
+}
+interface Product {
+    id?: string;
+    name?: string;
+    price?: number;
+    category?: string;
+    rating?: number;
+    inventoryStatus?: string;
+    image?: string;
+    orders?: { id: string; customer: string; date: string; amount: number; status: string }[];
+}
 
 interface expandedRows {
     [key: string]: boolean;
@@ -424,12 +447,78 @@ export class TableDemo implements OnInit {
     @ViewChild('filter') filter!: ElementRef;
 
     private static readonly DEMO_CUSTOMERS: Customer[] = [
-        { id: '1000', name: 'Ayşe Kaya', country: { name: 'Türkiye', code: 'tr' }, company: 'Dışişleri Bakanlığı', date: new Date('2024-01-15'), status: 'qualified', activity: 74, representative: { name: 'Ali Demir', image: 'ionibowcher.png' }, balance: 45200, verified: true },
-        { id: '1001', name: 'Mehmet Yılmaz', country: { name: 'Almanya', code: 'de' }, company: 'Berlin Büyükelçiliği', date: new Date('2024-02-20'), status: 'new', activity: 52, representative: { name: 'Fatma Şahin', image: 'annafali.png' }, balance: 32100, verified: false },
-        { id: '1002', name: 'Fatma Çelik', country: { name: 'Fransa', code: 'fr' }, company: 'Paris Başkonsolosluğu', date: new Date('2024-03-10'), status: 'negotiation', activity: 88, representative: { name: 'Ali Demir', image: 'ionibowcher.png' }, balance: 67800, verified: true },
-        { id: '1003', name: 'Ali Şahin', country: { name: 'ABD', code: 'us' }, company: 'Washington Büyükelçiliği', date: new Date('2024-04-05'), status: 'unqualified', activity: 23, representative: { name: 'Fatma Şahin', image: 'annafali.png' }, balance: 18900, verified: false },
-        { id: '1004', name: 'Zeynep Arslan', country: { name: 'İngiltere', code: 'gb' }, company: 'Londra Başkonsolosluğu', date: new Date('2024-05-18'), status: 'qualified', activity: 91, representative: { name: 'Ali Demir', image: 'ionibowcher.png' }, balance: 89300, verified: true },
-        { id: '1005', name: 'Mustafa Öztürk', country: { name: 'Japonya', code: 'jp' }, company: 'Tokyo Büyükelçiliği', date: new Date('2024-06-22'), status: 'renewal', activity: 61, representative: { name: 'Fatma Şahin', image: 'annafali.png' }, balance: 54700, verified: true },
+        {
+            id: '1000',
+            name: 'Ayşe Kaya',
+            country: { name: 'Türkiye', code: 'tr' },
+            company: 'Dışişleri Bakanlığı',
+            date: new Date('2024-01-15'),
+            status: 'qualified',
+            activity: 74,
+            representative: { name: 'Ali Demir', image: 'ionibowcher.png' },
+            balance: 45200,
+            verified: true
+        },
+        {
+            id: '1001',
+            name: 'Mehmet Yılmaz',
+            country: { name: 'Almanya', code: 'de' },
+            company: 'Berlin Büyükelçiliği',
+            date: new Date('2024-02-20'),
+            status: 'new',
+            activity: 52,
+            representative: { name: 'Fatma Şahin', image: 'annafali.png' },
+            balance: 32100,
+            verified: false
+        },
+        {
+            id: '1002',
+            name: 'Fatma Çelik',
+            country: { name: 'Fransa', code: 'fr' },
+            company: 'Paris Başkonsolosluğu',
+            date: new Date('2024-03-10'),
+            status: 'negotiation',
+            activity: 88,
+            representative: { name: 'Ali Demir', image: 'ionibowcher.png' },
+            balance: 67800,
+            verified: true
+        },
+        {
+            id: '1003',
+            name: 'Ali Şahin',
+            country: { name: 'ABD', code: 'us' },
+            company: 'Washington Büyükelçiliği',
+            date: new Date('2024-04-05'),
+            status: 'unqualified',
+            activity: 23,
+            representative: { name: 'Fatma Şahin', image: 'annafali.png' },
+            balance: 18900,
+            verified: false
+        },
+        {
+            id: '1004',
+            name: 'Zeynep Arslan',
+            country: { name: 'İngiltere', code: 'gb' },
+            company: 'Londra Başkonsolosluğu',
+            date: new Date('2024-05-18'),
+            status: 'qualified',
+            activity: 91,
+            representative: { name: 'Ali Demir', image: 'ionibowcher.png' },
+            balance: 89300,
+            verified: true
+        },
+        {
+            id: '1005',
+            name: 'Mustafa Öztürk',
+            country: { name: 'Japonya', code: 'jp' },
+            company: 'Tokyo Büyükelçiliği',
+            date: new Date('2024-06-22'),
+            status: 'renewal',
+            activity: 61,
+            representative: { name: 'Fatma Şahin', image: 'annafali.png' },
+            balance: 54700,
+            verified: true
+        }
     ];
 
     ngOnInit() {
@@ -437,14 +526,41 @@ export class TableDemo implements OnInit {
         this.customers2 = TableDemo.DEMO_CUSTOMERS;
         this.customers3 = TableDemo.DEMO_CUSTOMERS;
         this.products = [
-            { id: 'P001', name: 'Pasaport', price: 150, category: 'Kimlik Belgesi', rating: 5, inventoryStatus: 'INSTOCK', image: 'product-placeholder.svg', orders: [{ id: 'O001', customer: 'Ayşe Kaya', date: '2024-01-15', amount: 150, status: 'DELIVERED' }] },
-            { id: 'P002', name: 'Vize Başvurusu', price: 80, category: 'Vize', rating: 4, inventoryStatus: 'LOWSTOCK', image: 'product-placeholder.svg', orders: [{ id: 'O002', customer: 'Mehmet Yılmaz', date: '2024-02-20', amount: 80, status: 'PENDING' }] },
-            { id: 'P003', name: 'Apostil', price: 45, category: 'Belge Onayı', rating: 4, inventoryStatus: 'INSTOCK', image: 'product-placeholder.svg', orders: [{ id: 'O003', customer: 'Fatma Çelik', date: '2024-03-10', amount: 45, status: 'DELIVERED' }] },
+            {
+                id: 'P001',
+                name: 'Pasaport',
+                price: 150,
+                category: 'Kimlik Belgesi',
+                rating: 5,
+                inventoryStatus: 'INSTOCK',
+                image: 'product-placeholder.svg',
+                orders: [{ id: 'O001', customer: 'Ayşe Kaya', date: '2024-01-15', amount: 150, status: 'DELIVERED' }]
+            },
+            {
+                id: 'P002',
+                name: 'Vize Başvurusu',
+                price: 80,
+                category: 'Vize',
+                rating: 4,
+                inventoryStatus: 'LOWSTOCK',
+                image: 'product-placeholder.svg',
+                orders: [{ id: 'O002', customer: 'Mehmet Yılmaz', date: '2024-02-20', amount: 80, status: 'PENDING' }]
+            },
+            {
+                id: 'P003',
+                name: 'Apostil',
+                price: 45,
+                category: 'Belge Onayı',
+                rating: 4,
+                inventoryStatus: 'INSTOCK',
+                image: 'product-placeholder.svg',
+                orders: [{ id: 'O003', customer: 'Fatma Çelik', date: '2024-03-10', amount: 45, status: 'DELIVERED' }]
+            }
         ];
 
         this.representatives = [
             { name: 'Ali Demir', image: 'ionibowcher.png' },
-            { name: 'Fatma Şahin', image: 'annafali.png' },
+            { name: 'Fatma Şahin', image: 'annafali.png' }
         ];
 
         this.statuses = [
@@ -485,7 +601,7 @@ export class TableDemo implements OnInit {
     }
 
     expandAll() {
-        if(ObjectUtils.isEmpty(this.expandedRows)) {
+        if (ObjectUtils.isEmpty(this.expandedRows)) {
             this.expandedRows = this.products.reduce(
                 (acc, p) => {
                     if (p.id) {
@@ -497,9 +613,8 @@ export class TableDemo implements OnInit {
             );
             this.isExpanded = true;
         } else {
-            this.collapseAll()
+            this.collapseAll();
         }
-
     }
 
     collapseAll() {

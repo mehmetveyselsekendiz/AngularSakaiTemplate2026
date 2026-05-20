@@ -6,7 +6,14 @@ import { GalleriaModule } from 'primeng/galleria';
 import { ImageModule } from 'primeng/image';
 import { TagModule } from 'primeng/tag';
 
-interface Product { id?: string; name?: string; price?: number; image?: string; inventoryStatus?: string; category?: string; }
+interface Product {
+    id?: string;
+    name?: string;
+    price?: number;
+    image?: string;
+    inventoryStatus?: string;
+    category?: string;
+}
 
 @Component({
     selector: 'app-media-demo',
@@ -53,7 +60,7 @@ interface Product { id?: string; name?: string; price?: number; image?: string; 
                     <img [src]="item.thumbnailImageSrc" />
                 </ng-template>
             </p-galleria>
-        </div>`,
+        </div>`
 })
 export class MediaDemo implements OnInit {
     products = signal<Product[]>([
@@ -61,7 +68,7 @@ export class MediaDemo implements OnInit {
         { id: '1001', name: 'Black Watch', price: 72, image: 'black-watch.jpg', inventoryStatus: 'INSTOCK', category: 'Accessories' },
         { id: '1002', name: 'Blue Band', price: 79, image: 'blue-band.jpg', inventoryStatus: 'LOWSTOCK', category: 'Fitness' },
         { id: '1003', name: 'Blue T-Shirt', price: 29, image: 'blue-t-shirt.jpg', inventoryStatus: 'INSTOCK', category: 'Clothing' },
-        { id: '1004', name: 'Bracelet', price: 15, image: 'bracelet.jpg', inventoryStatus: 'INSTOCK', category: 'Accessories' },
+        { id: '1004', name: 'Bracelet', price: 15, image: 'bracelet.jpg', inventoryStatus: 'INSTOCK', category: 'Accessories' }
     ]);
 
     images = signal<any[]>([
@@ -69,7 +76,7 @@ export class MediaDemo implements OnInit {
         { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria2.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria2s.jpg', alt: 'Görsel 2' },
         { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3s.jpg', alt: 'Görsel 3' },
         { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria4.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria4s.jpg', alt: 'Görsel 4' },
-        { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria5.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria5s.jpg', alt: 'Görsel 5' },
+        { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria5.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria5s.jpg', alt: 'Görsel 5' }
     ]);
 
     galleriaResponsiveOptions: any[] = [

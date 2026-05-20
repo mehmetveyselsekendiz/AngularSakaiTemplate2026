@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
     selector: 'app-floating-configurator',
     imports: [CommonModule, ButtonModule],
     template: `
-        <div class="flex gap-4 top-8 right-8" [ngClass]="{'fixed': float()}">
+        <div class="flex gap-4 top-8 right-8" [ngClass]="{ fixed: float() }">
             <p-button type="button" (onClick)="toggleDarkMode()" [rounded]="true" [icon]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'" severity="secondary" />
         </div>
     `
