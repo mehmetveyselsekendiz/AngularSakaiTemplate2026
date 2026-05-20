@@ -107,6 +107,18 @@
 - [x] `CLAUDE.md` Bölüm 14 — Governance kaynağı `/pages/kutuphane` → `/uikit/*`; CDN asset yasağı kuralı eklendi; eski onaylı bileşen listesi kaldırıldı
 - [x] Build doğrulandı: **BAŞARILI** (commit `16f4e3e`)
 
+### Geliştirici Login Bypass + Commit Temizliği — 20 Mayıs 2026 (Oturum 2, devam)
+
+- [x] Phase 5-6 dosyalarındaki Prettier format değişiklikleri commit edildi (`74ae37c`)
+- [x] `src/app/core/auth/auth.service.ts` — `devLogin(displayName)` metodu eklendi
+  - Yalnızca `SSO_URL` boş olduğunda çalışır (production'da otomatik devre dışı)
+  - Mock `AuthUser` oluşturur, sessionStorage'a yazar, `/` adresine yönlendirir
+- [x] `src/app/pages/auth/login.ts` — Geliştirici bypass bölümü eklendi
+  - `@if (!isSsoConfigured)` ile SSO URL tanımlıysa hiç gösterilmez
+  - "GELİŞTİRİCİ MODU" altın rengi badge, görünen ad input'u, "Geliştirici Olarak Devam Et" butonu
+  - `InputTextModule` import eklendi; signal tabanlı input (`devName`)
+- [x] Build doğrulandı: **BAŞARILI** (22.3 sn)
+
 ### Phase 6 Devam + Phase 7 Başlangıcı — 20 Mayıs 2026 (Oturum 2)
 
 - [x] `src/app/pages/kutuphane/` klasörü silindi (route'dan daha önce kaldırılmıştı, diskteki atıl dosya temizlendi)

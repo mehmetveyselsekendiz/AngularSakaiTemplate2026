@@ -83,6 +83,25 @@ export class AuthService {
         window.location.href = `${appEnv.ssoUrl()}/protocol/openid-connect/logout?${params}`;
     }
 
+    /**
+     * SSO yapılandırılmamış ortamlarda geliştirici geçişi sağlar.
+     * SSO_URL tanımlıysa çalışmaz — production güvenliği korunur.
+     */
+    devLogin(displayName: string): void {
+        if (appEnv.ssoUrl()) return;
+        const mockUser: AuthUser = {
+            id: 'dev-user',
+            username: 'developer',
+            email: 'developer@mfa.gov.tr',
+            fullName: displayName || 'Geliştirici',
+            roles: [],
+            accessToken: 'dev-token'
+        };
+        this._user.set(mockUser);
+        sessionStorage.setItem(STORAGE_KEY_USER, JSON.stringify(mockUser));
+        void this.router.navigate(['/']);
+    }
+
     /** HTTP interceptor tarafından Bearer token almak için kullanılır */
     getToken(): string | null {
         return this._user()?.accessToken ?? null;
