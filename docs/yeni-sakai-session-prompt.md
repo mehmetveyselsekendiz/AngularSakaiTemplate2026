@@ -2,19 +2,14 @@
 
 Bu dosya, **`AngularSakaiTemplate2026`** dizininde **yeni bir Claude Code oturumu** başlattığında ilk mesaj olarak göndereceğin prompt'u içerir.
 
+> **Son güncelleme:** 20 Mayıs 2026 — Phase 1–6 tamamlandı, Phase 7 devam ediyor.
+
 ## Kullanım Adımları
 
 1. PowerShell veya Terminal aç
 2. `cd C:\Users\t1.veysel.sekendiz\Desktop\AngularSakaiTemplate2026`
-3. **React kaynağını referans olarak clone'la (henüz yapmadıysan):**
-   ```bash
-   git clone https://github.com/mehmetveyselsekendiz/ReactTemplate2026.git .reference-react
-   echo .reference-react/ >> .gitignore
-   ```
-4. **Eski plan dokümanı:** `docs/angular-migration-plan.md` (Sakai öncesi sıfırdan v22 yaklaşımı — tarihsel referans, artık geçersiz). Kopyalanmadıysa eski repodan kopyala.
-5. **Yeni yol haritası:** `docs/sakai-mfa-uyarlama-plani.md` (Sakai + MFA özelleştirme planı — **takip edeceğin doküman bu**)
-6. Bu dizinde Claude Code oturumu aç (`claude`)
-7. Aşağıdaki **"PROMPT — BURADAN KOPYALA"** bölümündeki metni komple kopyala ve ilk mesaj olarak yapıştır
+3. Bu dizinde Claude Code oturumu aç (`claude`)
+4. Aşağıdaki **"PROMPT — BURADAN KOPYALA"** bölümündeki metni komple kopyala ve ilk mesaj olarak yapıştır
 
 ---
 
@@ -25,192 +20,106 @@ Merhaba. Bu repo T.C. Dışişleri Bakanlığı için Angular kurumsal frontend
 template'i. Tüm MFA modül takımları (vize, pasaport, personel, konsolosluk)
 bu template'i fork'layıp kendi modüllerini geliştirecek.
 
-Daha önce React ile yapılmıştı (ReactTemplate2026). Mevcut React kodu
-.reference-react/ klasörüne clone'lanmıştır (gitignore'lu, repo'ya commit
-edilmez).
+---
 
-## DURUM
+## MEVCUT DURUM — ÖNCE BUNU OKU
 
-Bu repo PrimeFaces sakai-ng (Angular 21 stable + PrimeNG 21 Aura + Tailwind v4)
-template'inin fork'udur. Sakai bize layout, sidebar, topbar, UIKit demoları
-ve CRUD iskeleti hazır verdi. Bizim işimiz Sakai'nin demo içeriğini
-temizleyip MFA paleti, manuel OIDC auth, MFA modül yapısı ve OpenShift
-Docker config'i eklemek.
+Phase 1–6 tamamlandı, Phase 7 devam ediyor. Sıfırdan başlama; kurulum
+adımlarını tekrar yapma.
 
-## İLK İŞ
+Oturumu anlamak için sırasıyla şunları oku:
 
-1. docs/sakai-mfa-uyarlama-plani.md dosyasını oku ve 5-10 cümlelik
-   özet ver. Bu dokümanı (yol haritası) takip edeceksin.
-2. docs/angular-migration-plan.md dosyası TARİHSEL referanstır
-   (Sakai öncesi sıfırdan v22 yaklaşımı). Sadece eski karar gerekçelerini
-   öğrenmek için okuyabilirsin; uygulama yapma.
-3. .reference-react/ klasörü React template'in tamamı — Angular'a port
-   ederken referans olarak kullan.
+1. CLAUDE.md — kritik kurallar ve yasaklar (zaten otomatik yükleniyor)
+2. docs/ilerleme-ve-kararlar.md — tamamlanan TÜM adımlar, alınan kararlar
+3. docs/sakai-mfa-uyarlama-plani.md — genel yol haritası
+
+Özet:
+- Phase 1 ✓  Sakai demo temizliği (CDN font, landing, demo servisler)
+- Phase 2 ✓  MFA tema entegrasyonu (mfa-tokens.scss, MfaPreset, theme.config.ts)
+- Phase 3 ✓  Kurumsal Kimlik sayfası (/pages/kurumsal-kimlik)
+- Phase 4 ✓  Bileşen Kütüphanesi (/uikit/* restore, governance kuralı)
+- Phase 5 ✓  Manuel OIDC Auth (PKCE, AuthService, authGuard, interceptors)
+- Phase 6 ✓  uikit sayfaları MFA uyumlu (CDN kaldırıldı, MFA token, Türkçe)
+- Phase 7 ▶  navigation.config.ts, menü computed() signal, auth alt-grup ✓
+             Devam eden: palet ihlalleri temizliği (CDN görseller + hardcoded
+             renkler — miscdemo, timelinedemo, tabledemo, crud, mediademo)
+
+---
 
 ## STACK — KESİN (Sakai'den miras)
 
-- Angular 21 stable (^21) — Sakai upstream'iyle aynı. Angular 22 stable
-  çıkıp Sakai geçince biz de geçeriz.
-- TypeScript ~5.9.3 (Sakai default)
-- PrimeNG 21.x Aura (^21.0.2)
-- @primeuix/themes ^2.0.0 (PrimeNG'nin tema paketi — eski @primeng/themes)
+- Angular 21 stable (^21) — Sakai upstream'iyle aynı
+- TypeScript ~5.9.3
+- PrimeNG 21.x Aura (^21.0.2) + @primeuix/themes ^2.0.0
 - primeicons ^7.0.0
 - Tailwind v4 (^4.1.11) + @tailwindcss/postcss + tailwindcss-primeui
-- quill ^2.0.3 (PrimeNG <p-editor> peer dep — rich text editör)
+- quill ^2.0.3 (PrimeNG <p-editor> peer dep)
 - chart.js 4.4.2 (PrimeNG <p-chart> peer dep)
-- Zoneless change detection (provideZonelessChangeDetection)
-- Standalone components — modules YOK
-- SCSS (Sakai default — inlineStyleLanguage: scss)
-- Node 22 LTS veya 24
+- Zoneless change detection (provideZonelessChangeDetection) — Zone.js YOK
+- Standalone components — @NgModule YOK
+- SCSS
+
+Angular 22 stable çıkıp Sakai geçince biz de geçeriz (Signal Forms o zaman).
+
+---
 
 ## TEMEL FELSEFE — MİNİMUM BAĞIMLILIK
 
-Angular + PrimeNG'nin kendi içinde olan her şey kullanılır. Asla
-"popüler" diye dışarıdan paket ekleme.
+"Bunu Angular veya PrimeNG'nin kendisi yapabiliyor mu?" — evet ise paket EKLENMEZ.
 
-- Form              → Reactive Forms (built-in). Signal Forms v22'de
-                      stable, biz v21'deyiz. Karmaşıklaşırsa Reactive
-                      Forms zaten yeterli. NgRx/TanStack Form YOK.
-- Validasyon        → Angular Validators (built-in). Zod YOK.
-- API sorgu         → Angular HttpClient. Axios YOK.
-- Server state      → Angular httpResource() / resource() (v21'de var).
-                      TanStack Query YOK.
-- Cache             → httpResource zaten cache yapar. Ek lib YOK.
-- Client state      → Angular Signals (Sakai LayoutService gibi).
-                      Zustand/NgRx YOK.
-- Tablo             → PrimeNG <p-table>. TanStack Table YOK.
-- Grafik            → PrimeNG <p-chart> (chart.js peer dep). ngx-echarts
-                      veya Recharts YOK.
-- Rich Text Editör  → PrimeNG <p-editor> (quill peer dep). TinyMCE,
-                      CKEditor, slate, lexical YOK.
-- Toast/Mesaj       → PrimeNG MessageService + <p-toast>. Sonner YOK.
-- Icons             → PrimeIcons (Sakai zaten kullanıyor). Lucide YOK.
-- Dialog/Drawer     → PrimeNG <p-dialog>, <p-drawer>.
-- Tarih seçici      → PrimeNG <p-datepicker>.
-- Tüm form input    → PrimeNG <p-select>, <p-checkbox>, <p-radiobutton>,
-                      <p-toggleswitch>, <p-textarea>, <p-inputtext>.
-- Change detection  → ZONELESS (Sakai zaten kullanıyor).
-- Routing           → Angular Router (functional guards, loadComponent
-                      lazy — Sakai zaten kullanıyor).
+- Form / Validasyon  → Reactive Forms + Angular Validators (built-in)
+- HTTP / Server state → HttpClient + httpResource() (built-in)
+- Client state       → Angular Signals
+- Tablo / Grafik     → PrimeNG <p-table> / <p-chart>
+- Toast / Dialog     → PrimeNG MessageService / <p-dialog>
+- İkon              → PrimeIcons (Lucide/Font Awesome YOK)
+- Auth              → Manuel OIDC — Keycloak lib / angular-oauth2-oidc YOK
 
-External paket olarak SADECE şunlar kabul (zaten Sakai'de var):
-- primeng + @primeuix/themes + primeicons
-- quill (PrimeNG <p-editor> peer dep)
-- chart.js (PrimeNG <p-chart> peer dep)
-- tailwindcss + @tailwindcss/postcss + tailwindcss-primeui
+Kabul edilen external paketler (yalnızca Sakai'de var olanlar):
+primeng, @primeuix/themes, primeicons, quill, chart.js,
+tailwindcss, @tailwindcss/postcss, tailwindcss-primeui
 
-Sakai'nin defaultunda olan ama BİZE GEREKSİZ paketler (Phase 1'de
-silinecek):
-- primeclt (Sakai CLI tool)
+---
 
-## AUTH — KEYCLOAK LIB KULLANMA
+## MFA PALETİ — TEK KAYNAK
 
-MFA SSO ile bağlanılacak. keycloak-angular EKLEME, angular-oauth2-oidc
-EKLEME. Kullanılacak yöntem:
+src/assets/mfa-tokens.scss → CSS değişkenleri.
+Component'lerde hardcoded hex, Tailwind sabit renk sınıfı YASAK.
 
-- Mevcut React projesinin auth akışını referans al:
-  .reference-react/src/auth/AuthSync.tsx +
-  .reference-react/src/auth/auth.store.ts +
-  .reference-react/src/config/auth.config.ts +
-  .reference-react/src/lib/api-client.ts (interceptor)
-- Aynı pattern'i Angular ile, sadece HttpClient + Router + Signals
-  kullanarak kur:
-  - AuthService (signal'da user + roller + token)
-  - Functional CanActivateFn (login değilse SSO URL'sine redirect)
-  - HttpInterceptorFn (Bearer token ekler, 401'de SSO'ya redirect)
-  - Callback route (SSO'dan dönüşte token'ı parse eder)
-- Sakai'nin pages/auth/login.ts dosyası sadece UI — submit'i
-  hardcoded olarak '/'a yönlendiriyor. Biz bunu auth.loginRedirect()
-  ile değiştireceğiz.
-- Token endpoint'leri, SSO URL'leri, client ID — hepsi
-  window.__ENV__ üzerinden runtime'da gelir (React template ile
-  aynı pattern).
+Tokenlar: --mfa-red, --mfa-gold, --mfa-gray, --mfa-navy, --mfa-navy-dark
++ 11-adımlı paletler (--mfa-red-{50..950}, --mfa-surface-{0..950}, vs.)
 
-## MOCK BACKEND YOK
+PrimeNG bağlama: src/app/core/config/theme.config.ts → MfaPreset
 
-Backend gerçek endpoint sunacak; geliştirme sırasında staging API'ye
-proxy.conf.json ile bağlanılacak (CORS bypass). json-server YOK, MSW
-YOK, in-memory mock service YOK. Kütüphane sayfasında preview için
-statik demo verisi inline kullanılabilir (sadece görsel örnek).
+---
 
-## SAKAİ'YE NE KADAR MÜDAHALE?
+## AUTH — MANUEL OIDC (HAZIR)
 
-Hedef: MFA özelleştirmesini kendi klasörlerimize (src/app/core/,
-src/app/features/, src/assets/mfa-tokens.scss) yığ. Sakai dosyalarına
-minimal dokun. Bu sayede Sakai upstream'den patch çekersek çakışma
-minimum olur.
+src/app/core/auth/ altında tam PKCE akışı mevcut. Dokunma.
+Geliştirme girişi: /auth/login → "GELİŞTİRİCİ MODU" (SSO_URL boşken görünür).
+SSO config: window.__ENV__ (public/config.js şablonu).
 
-Sakai dosyaları (DİKKATLİ DEĞİŞTİR — değişikliği commit mesajında
-"Sakai default'tan farklılık: X" diye not düş):
-- src/app/layout/component/* (özellikle app.menu.ts, app.configurator.ts,
-  app.topbar.ts)
-- src/app/pages/auth/login.ts (OIDC bağlama)
-- src/app/pages/dashboard/ (MFA dashboard'a uyarla)
-- src/app.config.ts (MfaPreset + interceptors)
-- src/app.routes.ts (auth callback + guards)
-- src/assets/styles.scss (mfa-tokens import)
-- package.json (paket silme)
-
-## SABİT KARARLAR — DİĞER
-
-1. MFA paleti src/assets/mfa-tokens.scss'te CSS değişkeni
-   (detay: docs/sakai-mfa-uyarlama-plani.md Bölüm 3)
-2. Klasör yapısı: docs/sakai-mfa-uyarlama-plani.md Bölüm 2'de tanımlı
-3. TypeScript strict — Sakai default
-4. UI Türkçe, kod TR/EN serbest
-5. Renk paleti:
-   - Kırmızı: #DA291C (Pantone 199 C, ana renk)
-   - Altın Varak: #D7AD4D (sadece tören/sertifika)
-   - Gri: #53565A
-   - Lacivert: #003773 (Pantone 287)
-   - Koyu Lacivert: #00235A (Pantone 288)
-6. Font: Helvetica system stack (Inter/Roboto/CDN font YASAK)
-7. OpenShift + Docker: nginx-unprivileged port 8080, ConfigMap →
-   window.__ENV__ pattern (React template'ten aynen taşınır)
-8. Rich text editör için <p-editor> (Quill) kullanılır — Kütüphane
-   sayfasında örneği var. MFA modüllerinde duyuru, vize başvuru notu,
-   raporlama gibi yerlerde işe yarar.
+---
 
 ## ÇALIŞMA TARZI
 
-- Türkçe konuş. Ben Angular'ı bilmiyorum.
-- Her yeni terim için (signal, inject, FormBuilder, httpResource,
-  computed, definePreset, providePrimeNG, vs.) ilk kullandığında 1
-  cümlelik açıklama ver.
-- Kod yazmadan önce ne yapacağını kısa cümleyle söyle.
-- npm install / npm run build / npm run start gibi büyük komutları
-  çalıştırmadan ÖNCE bana göster, onay al.
-- Eğer "şu paketi ekleyelim mi?" diye düşünüyorsan, ÖNCE şunu sor:
-  "Bunu Angular veya PrimeNG'nin kendisi yapabiliyor mu?" Cevap evet
-  ise ek paket EKLENMEYECEK.
-- Hata aldığında çözmeden önce hatayı bana göster.
-- Her phase sonunda commit at, ama ben söylemeden PUSH ETME.
-- Sakai'nin bir dosyasını değiştireceksen önce mevcut halini Read'le
-  oku, sonra Edit ile minimum değişiklik yap.
+- Türkçe konuş.
+- Yeni terim ilk kullanımda 1 cümlelik açıklama ver.
+- Kod yazmadan önce ne yapacağını kısaca söyle.
+- Büyük komutlardan önce onay al (npm install, build, start, dosya silme).
+- Hata aldığında önce göster, sonra çöz.
+- Her phase sonunda commit at, ben söylemeden PUSH ETME.
+- docs/ilerleme-ve-kararlar.md'yi her önemli adımdan sonra güncelle.
 
-## İLK YAPILACAKLAR (Sırayla)
+---
 
-1. docs/sakai-mfa-uyarlama-plani.md dosyasını oku, 5-10 cümlelik
-   özet ver.
-2. Sakai durumunu doğrula:
-   - package.json'a bak (gerçek versiyonlar Sakai'nin kullandığı)
-   - .reference-react/ var mı kontrol et; yoksa kullanıcıya clone
-     komutunu hatırlat
-   - node_modules var mı? (yoksa "npm install çalıştırmamı ister
-     misin?" diye sor — onay al)
-3. Phase 0'ı başlat:
-   - Onay alarak npm install çalıştır
-   - Onay alarak npm run start çalıştır
-   - Default Sakai dashboard'ı tarayıcıda doğrula (kullanıcıdan
-     "evet açıldı" teyidi al)
-   - Git'e "chore: initial sakai-ng baseline + docs" commit at
-     (push etme)
-4. Phase 1'e geçiş için onay iste; her phase sonunda
-   docs/sakai-mfa-uyarlama-plani.md Bölüm 6'daki doğrulama
-   listesinden ilgili maddeleri işaretle, bana raporla.
+## İLK YAPILACAKLAR
 
-Hazırsan başla. İlk adım docs/sakai-mfa-uyarlama-plani.md'yi okumak
-ve özetlemek.
+1. docs/ilerleme-ve-kararlar.md'yi oku — mevcut durumu anla.
+2. Kısa özet ver: hangi phase, ne tamamlandı, sırada ne var.
+3. Sonra bu oturumun isteğini ele al.
+
+Hazırsan başla.
 ```
 
 ---
@@ -219,18 +128,47 @@ ve özetlemek.
 
 Yeni Claude sırasıyla şunları yapacak:
 
-1. **`docs/sakai-mfa-uyarlama-plani.md`'i okur** ve sana 5-10 cümlelik özet verir
-2. **Sakai durumunu doğrular** — package.json, .reference-react/, node_modules kontrolü
-3. **Phase 0'ı başlatır:** `npm install` için onay ister, sonra `npm run start`
-4. **Default Sakai'yi tarayıcıda gör** — sen "açıldı" deyince Phase 1'e geçer
-5. Adım adım ilerler; her büyük komutta onay alır
+1. **CLAUDE.md'yi otomatik okur** — kuralları bilir
+2. **`docs/ilerleme-ve-kararlar.md`'yi okur** — tam mevcut durumu anlar
+3. **Kısa özet verir** — hangi phase, ne tamamlandı, sırada ne var
+4. **Senin isteğine odaklanır** — Phase 0 kurulum adımlarını tekrar yapmaz
 
-Sen sadece Türkçe cevap verirsin, Angular bilmen gerekmez.
+---
+
+## Önemli Dosya Haritası
+
+| Dosya | Ne İşe Yarar |
+|---|---|
+| `CLAUDE.md` | Kritik kurallar — her oturumda otomatik yüklenir |
+| `docs/ilerleme-ve-kararlar.md` | Tamamlanan adımlar + kararlar — **KAYNAK BUDUR** |
+| `docs/sakai-mfa-uyarlama-plani.md` | Genel yol haritası |
+| `src/assets/mfa-tokens.scss` | MFA renk token'ları — TEK PALET KAYNAĞI |
+| `src/app/core/config/theme.config.ts` | PrimeNG MfaPreset tanımı |
+| `src/app/core/config/navigation.config.ts` | Menü yapısı + breadcrumb map |
+| `src/app/core/auth/` | OIDC auth altyapısı (5 dosya) |
+| `public/config.js` | Runtime env config (window.__ENV__) şablonu |
+| `.reference-react/` | Eski React template (gitignore'lu, referans) |
+
+---
+
+## Yeni Oturum İçin Ek Not
+
+Eğer bu oturuma **yeni bir özellik isteğiyle** başlıyorsan, promptun başına
+şu bağlam bloğunu ekle:
+
+```
+--- OTURUM BAĞLAMI ---
+[isteğini buraya yaz]
+
+Not: Phase 1-6 tamamlandı, Phase 7 devam ediyor.
+Detay için docs/ilerleme-ve-kararlar.md'yi oku.
+--- OTURUM BAĞLAMI SONU ---
+```
 
 ---
 
 ## Hatırlatmalar
 
-- Bu repo'yu (`AngularSakaiTemplate2026`) GitHub'a push etmeden önce uygun bir isim ver (örn. `frontend-starter-angular` veya `mfa-frontend-template`).
-- Sakai upstream sync için: `git remote add upstream https://github.com/primefaces/sakai-ng.git`
-- Eski `AngularTemplate2026` dizini artık geçersiz — silebilir veya arşivleyebilirsin (sadece `docs/` ve `.reference-react/` içeriyordu).
+- Sakai upstream sync: `git remote add upstream https://github.com/primefaces/sakai-ng.git`
+- Bu repo'yu GitHub'a push etmeden önce uzak repo URL'sini ekle.
+- `.reference-react/` gitignore'lu — commitleme, sadece lokal referans.
