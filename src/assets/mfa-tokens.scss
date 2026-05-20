@@ -1,0 +1,39 @@
+// MFA Kurumsal Renk Paleti — TEK KAYNAK
+// Renk değişikliği SADECE bu dosyada yapılır.
+// theme.config.ts'deki hex değerleri bu dosya ile senkrondur.
+
+:root {
+  // Temel marka renkleri
+  --mfa-red:        #DA291C; // Pantone 199 C — Ana renk
+  --mfa-gold:       #D7AD4D; // Sadece tören/sertifika
+  --mfa-gray:       #53565A; // Nötr metin/border
+  --mfa-navy:       #003773; // Pantone 287
+  --mfa-navy-dark:  #00235A; // Pantone 288
+
+  // Kırmızı paleti (11 adım)
+  --mfa-red-50:  #fef2f1;
+  --mfa-red-100: #fee4e1;
+  --mfa-red-200: #fec9c4;
+  --mfa-red-300: #fd9e97;
+  --mfa-red-400: #f96661;
+  --mfa-red-500: #ef3a34;
+  --mfa-red-600: #da291c; // = --mfa-red
+  --mfa-red-700: #b81e14;
+  --mfa-red-800: #991b12;
+  --mfa-red-900: #7a1810;
+  --mfa-red-950: #440c08;
+
+  // Yüzey paleti — MFA grisi (#53565A) baz (11 adım)
+  --mfa-surface-0:   #ffffff;
+  --mfa-surface-50:  #f9f9fa;
+  --mfa-surface-100: #f2f2f3;
+  --mfa-surface-200: #e4e4e7;
+  --mfa-surface-300: #c8c9cc;
+  --mfa-surface-400: #a8aab0;
+  --mfa-surface-500: #7e8088;
+  --mfa-surface-600: #53565a; // = --mfa-gray
+  --mfa-surface-700: #3e4044;
+  --mfa-surface-800: #2a2d31;
+  --mfa-surface-900: #1a1c1f;
+  --mfa-surface-950: #0d0e10;
+}

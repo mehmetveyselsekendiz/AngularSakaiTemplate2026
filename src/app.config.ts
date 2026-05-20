@@ -1,8 +1,8 @@
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling } from '@angular/router';
-import Aura from '@primeuix/themes/aura';
 import { providePrimeNG } from 'primeng/config';
+import { MfaPreset } from '@/app/core/config/theme.config';
 import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -10,6 +10,6 @@ export const appConfig: ApplicationConfig = {
         provideRouter(appRoutes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
         provideHttpClient(withFetch()),
         provideZonelessChangeDetection(),
-        providePrimeNG({ theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } } })
+        providePrimeNG({ theme: { preset: MfaPreset, options: { darkModeSelector: '.app-dark' } } })
     ]
 };
