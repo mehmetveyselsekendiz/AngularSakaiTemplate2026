@@ -240,3 +240,92 @@
 **Gerekçe:** CLAUDE.md Kural 5 — kurumsal güvenlik ve offline kullanım gereksinimi. Sakai default'u Lato kullanıyor; biz Helvetica system stack'e geçiyoruz.
 
 **Etki:** Görsel fark minimal — Lato ile Helvetica/Arial benzer sans-serif fontlar.
+
+---
+
+## Oturum 3 — 20 Mayıs 2026 (devam, akşam)
+
+### Planlama: Phase 7B — Runtime Ayar Sistemi
+
+Kullanıcı isteği: "Bütün componentler ve sayfalar kurumsal kimlik paletinden beslenmeli. Dark mode + dil + font scale destekleri kurumsal kimlikle bağlantılı, dinamik olmalı. Palet dışı kullanım varsa görüntülenmeli. Kütüphane component'leri kod olarak görüntülenip kopyalanabilmeli. Geliştirici kütüphane dışına component ekleyemez. Responsive olmalı."
+
+- [x] Kapsam decomposition yapıldı (9 alt-sistem: S1-S9) — bkz. spec
+- [x] Brainstorming skill ile clarifying questions tamamlandı (persistence, dark stratejisi, font preset, panel UI, dil paketi, palet runtime değişimi)
+- [x] Tasarım sunuldu (Bölüm A-F), onaylandı
+- [x] **Spec yazıldı:** [`superpowers/specs/2026-05-20-phase-7b-runtime-settings-design.md`](superpowers/specs/2026-05-20-phase-7b-runtime-settings-design.md)
+- [x] **Faz tanımları sade ve net:**
+  - Phase 7B = Runtime Ayar Sistemi (S1+S2+S3-min+S4+S5)
+  - Phase 7C = Tam i18n
+  - Phase 8 = Palet ihlali tarayıcı + governance otomasyonu (S6+S9)
+  - Phase 9 = Component kod görüntüleme/kopyalama (S7)
+  - Phase 10 = Responsive audit (S8)
+
+### Dokümentasyon Temizliği
+
+- [x] `.reference-react/` klasörü silindi (1.5MB) — kullanıcı kararı: "ihtiyacımız kalmadı"
+- [x] `docs/angular-migration-plan.md` silindi (24KB) — zaten "geçersiz, tarihsel" işaretliydi
+- [x] `CLAUDE.md` baştan aşağı güncellendi:
+  - React referansları (4 yer) kaldırıldı
+  - §9 "Sakai Upstream Sync Stratejisi" silindi
+  - §3'e i18n politikası eklendi (`ngx-translate` / `@angular/localize` yasaklı; custom + PrimeNG built-in)
+  - §4'e alias token açıklaması eklendi (`--mfa-bg`, `--mfa-text`, vb.)
+  - §5'e font scale açıklaması eklendi
+  - §6'dan React auth referansı kaldırıldı; geliştirici modu notu eklendi
+  - §8 proxy referansı `proxy.conf.json` → `proxy.conf.js`
+  - §9 "Klasör Sorumluluğu" olarak yeniden adlandırıldı
+  - §10 klasör yapısı `core/settings/`, `core/i18n/`, `assets/i18n/` ile güncellendi
+  - §13 yasaklar listesi genişletildi (ngx-translate, doğrudan dark class, hardcoded px font-size)
+  - §14 governance'a i18n key kuralı + alias token tercih kuralı eklendi
+  - **YENİ §15 — Runtime Ayar Sistemi** eklendi
+  - Eski §15 "Bir Şeyden Emin Değilsen" → §16'ya kaydırıldı
+- [x] `docs/sakai-mfa-uyarlama-plani.md` güncellendi:
+  - §0 upstream sync risk satırı güncellendi (iptal notu)
+  - §4'e "4B. Yeni Yol Haritası" bölümü eklendi — Phase 7A/7B/7C/8/9/10/11
+  - §5 risk tablosundan Sakai upstream satırı silindi
+  - §7 "Sakai Upstream Sync Stratejisi" tamamen silindi
+  - §8 → §7 ("Sonraki Adım") — aktif faz Phase 7B olarak işaretlendi
+
+---
+
+## Alınan Kararlar (devam)
+
+### K-009 — LayoutService Bölünmesi (20 Mayıs 2026)
+
+**Karar:** Sakai default'undaki `LayoutService` üç sorumluluk taşıyordu (sidebar/menu state + tema yönetimi + ölü kod). Yeniden tasarımda sorumluluk ayrımı (SRP) uygulanır:
+- `LayoutService` (mevcut): SADECE sidebar/menu state (`overlayMenuActive`, `mobileMenuActive`, `staticMenuDesktopInactive`, `onMenuToggle`, `isDesktop()`). Ölü alanlar (`preset`, `primary`, `surface`, `menuMode`, `darkTheme`, `theme` computed) silinir.
+- `SettingsService` (yeni, `core/settings/`): Tema, font scale, dil, persistence, View Transition.
+
+**Gerekçe:** Kullanıcı "sade ve tek yerden yönetim; ölü kod kalmasın" istedi. Tek-servis seçeneği (tüm sorumluluklar `LayoutService`'te) SRP ihlali yaratıyor ve isim yanıltıcı oluyordu. İki servis ayrımı isim/sorumluluk netliği veriyor; aynı işi yapan iki yer YOK çünkü tema kontrolü tek bir yerde (`SettingsService`).
+
+**Etki:** `LayoutService.toggleDarkMode` ve `darkTheme` artık çağrılmaz. `app.floatingconfigurator.ts` silinir (Phase 7B implementasyonunda). `<app-settings-drawer>` ve `/pages/ayarlar` `SettingsService` ile bağlanır.
+
+---
+
+### K-010 — Upstream Sync Sonlandırıldı (20 Mayıs 2026)
+
+**Karar:** PrimeFaces `sakai-ng` ile upstream sync stratejisi terk edildi. Kod tabanı tek seferlik baseline olarak çekildi, bundan sonra MFA template'i olarak ileri gidiyor.
+
+**Gerekçe:** Kullanıcı kararı: "upstream artık yapmayacağız. Sakai kodları çektik. Artık template'i kendimize göre değiştiriyoruz." Sakai'nin patch'lerini sıkı şekilde minimum diff'le almak, MFA özelleştirmesini (özellikle Phase 7B+ runtime ayar sistemi, palet ihlali, governance) ciddi şekilde kısıtlıyordu. Pratikte upstream sync hiç yapılmamıştı; karar resmileşmesi.
+
+**Etki:**
+- CLAUDE.md §9 başlığı "Sakai'ye Müdahale Kuralı" → "Klasör Sorumluluğu" (upstream-sync komutu silindi)
+- `sakai-mfa-uyarlama-plani.md` §7 "Sakai Upstream Sync Stratejisi" silindi
+- "Sakai dosyalarına minimum diff" kuralı artık merge çakışması için değil, dosya temizliği için tavsiye
+- Layout/menü/topbar dosyaları MFA'ya göre özgürce refaktör edilebilir (kullanıcıya plan göstererek)
+
+---
+
+### K-011 — i18n 0-Paket Politikası (20 Mayıs 2026)
+
+**Karar:** Uluslararasılaştırma için yeni paket eklenmez. Hibrit yaklaşım uygulanır:
+- **PrimeNG component metinleri** (table/calendar/fileupload empty mesajları, ay/gün isimleri, vb.) için PrimeNG built-in `PrimeNG.setTranslation()` API'si (paket yok)
+- **Uygulama metinleri** (menü, topbar, butonlar, sayfa içerikleri) için custom mini `TranslateService` (~50 satır) + `| t` pipe + `tr.json`/`en.json` (paket yok)
+- **Angular `date`/`currency`/`number` pipe'ları** için `LOCALE_ID` runtime provider (paket yok, sınırlama: runtime değişmez)
+
+**Gerekçe:** Kullanıcı sordu: "Dil paketi gerekiyorsa kuralım; PrimeNG'de var ve yeterliyse kalsın." Custom çözüm Phase 7B kapsamı için yeterli — sözlük yapısı `ngx-translate` ile uyumlu, ileride geçiş kolay (search-replace). Şu an paket eklemek CLAUDE.md kuralının istisna alanını açıyor; bunun bedeli faydaya değmez. `@angular/localize` build-time i18n, runtime dil değişimi yok — kabul edilemez.
+
+**Etki:**
+- `package.json` dokunulmuyor (paket eklenmiyor)
+- `src/app/core/i18n/translate.service.ts` + `translate.pipe.ts` yazılır (Phase 7B implementasyon)
+- CLAUDE.md §3 yasaklar listesi: `@ngx-translate/core`, `@angular/localize`
+- `LOCALE_ID` runtime sınırlaması Phase 7C'de çözülür (manuel `formatDate`/`formatCurrency` sarmalama)

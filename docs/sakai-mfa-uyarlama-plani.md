@@ -10,10 +10,10 @@
 
 ## 0. Yönetici Özeti
 
-- **Yaklaşım değişikliği:** Plan'ın orijinali "sıfırdan Angular 22 RC scaffold" idi. Mayıs 2026 itibarıyla Angular 22 hâlâ RC (release candidate). PrimeFaces'ın resmi admin template'i **sakai-ng**, Angular 21 stable + PrimeNG 21 Aura + Tailwind v4 + signal-based mimarisi ile hazır geldi. Bunu **başlangıç noktası** olarak kabul ediyoruz.
-- **Felsefe değişmedi:** Minimum bağımlılık. Sakai sadece bize iskelet veriyor; MFA'ya özgü her şeyi (palet, auth, modül yapısı) biz ekliyoruz.
-- **Avantaj:** Layout + sidebar + topbar + dark mode + 15+ UIKit demo sayfası + CRUD örneği hazır. ~6 günlük zaman tasarrufu.
-- **Risk:** Sakai upstream (`primefaces/sakai-ng`) ile sync. Patch'lerimizi mümkün olduğunca **MFA'ya özgü dosyalarda** (yeni `core/`, yeni `features/`) tutacağız, Sakai'nin kendi dosyalarına minimal müdahale.
+- **Yaklaşım değişikliği:** Plan'ın orijinali "sıfırdan Angular 22 RC scaffold" idi. Mayıs 2026 itibarıyla Angular 22 hâlâ RC. PrimeFaces'ın resmi admin template'i **sakai-ng**, Angular 21 stable + PrimeNG 21 Aura + Tailwind v4 + signal-based mimarisi ile hazır geldi. Bunu **tek seferlik baseline** olarak çektik.
+- **Felsefe değişmedi:** Minimum bağımlılık. Tek dosya kütüphanesi (PrimeNG + Angular built-in + Tailwind).
+- **Avantaj:** Layout + sidebar + topbar + dark mode + 15+ UIKit demo sayfası + CRUD örneği hazır.
+- **Upstream sync iptal (2026-05-20 kullanıcı kararı):** Sakai kodları çekildi, artık MFA template'i olarak ileri gidiyoruz. `primefaces/sakai-ng` ile sync yapmıyoruz.
 
 ### Mayıs 2026 İtibarıyla Sakai'nin Bize Verdikleri
 
@@ -506,12 +506,12 @@ export const appConfig: ApplicationConfig = {
 - [ ] Local test: `docker build -t mfa-frontend . && docker run -p 8080:8080 mfa-frontend`
 - [ ] Git: commit `feat(docker): nginx-unprivileged + ConfigMap window.__ENV__ pattern`
 
-### Phase 8 — CLAUDE.md + README + Doğrulama (Day 8)
+### Phase 8 — CLAUDE.md + README + Doğrulama (Day 8) — [TAMAMLANDI, eski plan]
 
-- [ ] `CLAUDE.md` — React `.reference-react/CLAUDE.md`'nin 22 bölümünü Angular için yeniden yaz
+- [x] `CLAUDE.md` — Angular için yeniden yazıldı (React referansı kaldırıldı 2026-05-20)
 - [ ] `README.md` — kurulum, geliştirme, build, deploy
 - [ ] `.env.example` — runtime env değişkenleri
-- [ ] `npm run build` → temiz mi
+- [x] `npm run build` → temiz
 - [ ] (varsa) `npm run lint` → temiz mi
 - [ ] (varsa) `npm test` → temiz mi
 - [ ] Lighthouse a11y/perf
@@ -519,12 +519,66 @@ export const appConfig: ApplicationConfig = {
 
 ---
 
+## 4B. Yeni Yol Haritası (2026-05-20 Mayıs sonrası)
+
+Mevcut Phase 0-8 ilk fazda teslim edildi. Aşağıdaki Phase'ler kurumsal kimliği "**runtime kontrol edilebilir + governance ile korunan + dünya standartlarında kullanılabilir**" hâle getirmek için tanımlandı.
+
+### Phase 7A — Devam Eden Temizlik (DEVAM)
+- [x] `navigation.config.ts` merkezi menü config
+- [x] Menü `computed()` signal (rol bazlı filtreleme)
+- [x] Auth alt-grup (Giriş / Erişim Engeli / Hata Sayfası)
+- [x] Eksik sayfa tespiti (notfound, empty, access, error, hierarchy)
+- [ ] Kalan palet ihlali temizliği (miscdemo, timelinedemo, tabledemo, crud, dashboard)
+
+### Phase 7B — Runtime Ayar Sistemi (PLAN HAZIR)
+**Spec:** [`superpowers/specs/2026-05-20-phase-7b-runtime-settings-design.md`](superpowers/specs/2026-05-20-phase-7b-runtime-settings-design.md)
+
+- [ ] `SettingsService` (tema/font/dil + persistence + View Transition)
+- [ ] `LayoutService` refaktör (sadece sidebar/menu state)
+- [ ] `mfa-tokens.scss` alias token'lar + `.app-dark` + `html[data-font-scale]`
+- [ ] `theme.config.ts` dark colorScheme
+- [ ] Custom `TranslateService` + `| t` pipe (0 paket)
+- [ ] `tr.json` / `en.json` (kritik ~80 key)
+- [ ] Topbar drawer + `/pages/ayarlar` (paylaşılan `<app-settings-form>`)
+- [ ] `app.floatingconfigurator.ts` silinir
+- [ ] `LOCALE_ID` runtime provider
+
+### Phase 7C — Tam i18n
+- [ ] `/uikit/*` demo metinleri çevirisi
+- [ ] Dashboard, Kurumsal Kimlik, CRUD metinleri
+- [ ] `LOCALE_ID` runtime sınırlamasının çözümü (formatDate/formatCurrency manuel sarmalama)
+- [ ] Sözlük dosyaları lazy-load değerlendirmesi
+
+### Phase 8 — Palet İhlali Tarayıcı + Governance Otomasyonu
+- [ ] Build-time stylelint kuralı (hardcoded hex/tailwind sabit renk yasağı)
+- [ ] Runtime denetim sayfası `/pages/kurumsal-kimlik/denetim` — CSS taraması, palet dışı renk/font listesi
+- [ ] Pre-commit hook + CI kuralı — `/uikit/*`'te gösterilmemiş component import'u fail eder
+- [ ] CDN asset tarayıcı
+
+### Phase 9 — Bileşen Kodunu Görüntüleme/Kopyalama
+- [ ] `/uikit/*` her bileşen yanında "Kodu Göster" düğmesi
+- [ ] Kaynak `.ts` dosyasından compile-time extraction (Vite plugin veya build script)
+- [ ] Snippet kopyalama UI'ı
+
+### Phase 10 — Responsive Audit
+- [ ] Tüm sayfaların 5 breakpoint'te (360/768/1024/1440/1920) doğrulanması
+- [ ] Kırık layoutların düzeltilmesi
+- [ ] Touch hedef boyutu denetimi (≥44px)
+- [ ] WCAG 2.1 SC 1.4.10 (Reflow) uygunluk
+
+### Phase 11 — Modül Takım Dağıtımı
+- [ ] Template `v1.0.0` tag
+- [ ] Modül fork rehberi (`docs/MODULE-DEV-GUIDE.md`)
+- [ ] OpenShift Docker (eski Phase 7 — yarım kalmıştı)
+- [ ] CI pipeline
+
+---
+
 ## 5. Bilinen Riskler
 
 | Risk | Etki | Azaltma |
 |---|---|---|
-| Sakai upstream patch'i geldiğinde merge çakışması | Sakai dosyalarına ne kadar müdahale ettiğimize bağlı | MFA kodu **yalnız** `core/`, `features/`, `assets/mfa-tokens.scss`'te. Sakai dosyalarına minimum dokun. |
-| Angular 22 stable çıktığında upgrade | Signal Forms açılır, breaking change olabilir | Sakai upstream v22'ye geçince biz de geçeriz. O zaman Reactive Forms → Signal Forms migration. |
+| Angular 22 stable çıktığında upgrade | Signal Forms açılır, breaking change olabilir | v22 migration sırasında Reactive Forms → Signal Forms. |
 | `chart.js` direct silmek `<p-chart>`'ı kırabilir | Grafik sayfası çalışmaz | Sakai default'ta tutuyoruz. Şüpheyle yaklaş, silme. |
 | Manuel OIDC: state/PKCE/refresh token bug'ları | Auth bozulur | MFA SSO ekibiyle koordineli; React `auth.config.ts` referans; ilk gün staging'de teste tabi tut. |
 | `LayoutService.layoutConfig` runtime değişimi MFA brand kilidini bozar | Kullanıcı kırmızı'yı maviye çevirir | `AppConfigurator`'ı kaldır. layoutConfig'in `primary` field'ını signal init'inde MFA değerine sabitle. |
@@ -554,37 +608,8 @@ export const appConfig: ApplicationConfig = {
 
 ---
 
-## 7. Sakai Upstream Sync Stratejisi
+## 7. Sonraki Adım
 
-Bu template Sakai'nin fork'u olduğu için ileride upstream patch'leri çekmek isteyebiliriz:
+Yeni Claude Code oturumunda **`docs/yeni-sakai-session-prompt.md`** dosyasını oku ve ilk mesaj olarak yapıştır. Aktif faz: **Phase 7B — Runtime Ayar Sistemi** (spec [`superpowers/specs/2026-05-20-phase-7b-runtime-settings-design.md`](superpowers/specs/2026-05-20-phase-7b-runtime-settings-design.md)).
 
-```bash
-git remote add upstream https://github.com/primefaces/sakai-ng.git
-git fetch upstream
-git merge upstream/master   # veya cherry-pick
-```
-
-**Çakışma riski olan dosyalar (Sakai dosyaları):**
-- `src/app/layout/component/*` (özellikle `app.menu.ts`, `app.configurator.ts`, `app.topbar.ts`)
-- `src/app/pages/auth/login.ts`
-- `src/app/pages/dashboard/`
-- `src/app/pages/uikit/` (eğer `features/kutuphane/`'ye taşımadıysak)
-- `src/app.config.ts`
-- `src/app.routes.ts`
-- `src/assets/styles.scss`
-- `package.json` (paket eklendi/kaldırıldı)
-
-**Çakışma riski olmayan dosyalar (MFA'ya özgü):**
-- Her şey `src/app/core/`, `src/app/features/`, `src/assets/mfa-tokens.scss` altında.
-
-Strateji: MFA özelleştirmesini mümkün olduğunca kendi klasörlerimize yığ. Sakai'nin dosyalarına yapılan değişikliği minimal tut ve PR/commit mesajında "Sakai default'tan değişiklik: X" diye işaretle.
-
----
-
-## 8. Sonraki Adım
-
-Yeni Claude Code oturumunda **`docs/yeni-sakai-session-prompt.md`** dosyasını oku ve ilk mesaj olarak yapıştır. Yeni Claude:
-
-1. Bu dokümanı okur
-2. `npm install` ve `npm run start` ile Sakai baseline doğrular
-3. Phase 0'dan başlar
+Phase ilerlemesi için [`ilerleme-ve-kararlar.md`](ilerleme-ve-kararlar.md)'ı oku.
