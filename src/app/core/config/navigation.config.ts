@@ -25,6 +25,7 @@ export const NAV_GROUPS: NavGroup[] = [
             { label: 'Butonlar', icon: 'pi pi-fw pi-mobile', class: 'rotated-icon', routerLink: ['/uikit/button'] },
             { label: 'Giriş Alanları', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] },
             { label: 'Form Düzeni', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
+            { label: 'Hiyerarşi', icon: 'pi pi-fw pi-sitemap', routerLink: ['/uikit/hierarchy'] },
             { label: 'Zengin Metin', icon: 'pi pi-fw pi-align-left', routerLink: ['/uikit/editor'] },
             { label: 'Tablo', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'] },
             { label: 'Liste', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/list'] },
@@ -45,7 +46,11 @@ export const NAV_GROUPS: NavGroup[] = [
         items: [
             { label: 'Kurumsal Kimlik', icon: 'pi pi-fw pi-palette', routerLink: ['/pages/kurumsal-kimlik'] },
             { label: 'CRUD Örneği', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/crud'] },
-            { label: 'Boş Sayfa', icon: 'pi pi-fw pi-circle-off', routerLink: ['/pages/empty'] }
+            { label: 'Boş Sayfa', icon: 'pi pi-fw pi-circle-off', routerLink: ['/pages/empty'] },
+            { label: 'Giriş', icon: 'pi pi-fw pi-sign-in', routerLink: ['/auth/login'] },
+            { label: 'Erişim Engeli', icon: 'pi pi-fw pi-lock', routerLink: ['/auth/access'] },
+            { label: 'Hata Sayfası', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/auth/error'] },
+            { label: 'Sayfa Bulunamadı', icon: 'pi pi-fw pi-times-circle', routerLink: ['/notfound'] }
         ]
     }
 ];
@@ -56,6 +61,7 @@ export const ROUTE_LABEL_MAP: Record<string, string> = {
     '/uikit/button': 'Butonlar',
     '/uikit/input': 'Giriş Alanları',
     '/uikit/formlayout': 'Form Düzeni',
+    '/uikit/hierarchy': 'Hiyerarşi',
     '/uikit/editor': 'Zengin Metin',
     '/uikit/table': 'Tablo',
     '/uikit/list': 'Liste',

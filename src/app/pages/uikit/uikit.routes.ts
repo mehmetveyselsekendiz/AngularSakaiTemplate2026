@@ -4,6 +4,7 @@ import { ChartDemo } from './chartdemo';
 import { EditorDemo } from './editordemo';
 import { FileDemo } from './filedemo';
 import { FormLayoutDemo } from './formlayoutdemo';
+import { HierarchyDemo } from './hierarchydemo';
 import { InputDemo } from './inputdemo';
 import { ListDemo } from './listdemo';
 import { MediaDemo } from './mediademo';
@@ -22,6 +23,7 @@ export default [
     { path: 'editor', data: { breadcrumb: 'Zengin Metin' }, component: EditorDemo },
     { path: 'file', data: { breadcrumb: 'Dosya Yükleme' }, component: FileDemo },
     { path: 'formlayout', data: { breadcrumb: 'Form Düzeni' }, component: FormLayoutDemo },
+    { path: 'hierarchy', data: { breadcrumb: 'Hiyerarşi' }, component: HierarchyDemo },
     { path: 'input', data: { breadcrumb: 'Giriş Alanları' }, component: InputDemo },
     { path: 'list', data: { breadcrumb: 'Liste' }, component: ListDemo },
     { path: 'media', data: { breadcrumb: 'Medya' }, component: MediaDemo },

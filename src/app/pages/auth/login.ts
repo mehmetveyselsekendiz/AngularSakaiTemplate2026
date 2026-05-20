@@ -32,13 +32,7 @@ import { appEnv } from '@/app/core/config/app-env';
                                     <span class="text-xs text-muted-color">SSO yapılandırılmamış</span>
                                 </div>
                                 <div class="flex flex-col gap-3">
-                                    <input
-                                        pInputText
-                                        class="w-full"
-                                        placeholder="Görünen ad (ör. Ahmet Yılmaz)"
-                                        [value]="devName()"
-                                        (input)="devName.set($any($event.target).value)"
-                                    />
+                                    <input pInputText class="w-full" placeholder="Görünen ad (ör. Ahmet Yılmaz)" [value]="devName()" (input)="devName.set($any($event.target).value)" />
                                     <p-button label="Geliştirici Olarak Devam Et" icon="pi pi-code" severity="secondary" styleClass="w-full" (onClick)="onDevLogin()" />
                                 </div>
                             </div>
