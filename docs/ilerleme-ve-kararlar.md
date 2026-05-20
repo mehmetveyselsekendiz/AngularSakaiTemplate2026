@@ -141,6 +141,18 @@
 - [x] `angular.json` güncellendi — `serve.options.proxyConfig: "proxy.conf.js"` eklendi
 - [x] Build doğrulandı: **BAŞARILI** (21.1 sn)
 
+### Eksik/Kırık Sayfalar Tespiti + Türkçeleştirme — 20 Mayıs 2026 (Oturum 2)
+
+- [x] `src/app/pages/notfound/notfound.ts` — Türkçeleştirildi; lorem ipsum linkler → Ana Sayfa / Bileşen Kütüphanesi / Kurumsal Kimlik; "Go to Dashboard" → "Ana Sayfaya Dön"
+- [x] `src/app/pages/empty/empty.ts` — "Empty Page" → "Boş Sayfa" Türkçeleştirildi
+- [x] `src/app/pages/auth/access.ts` — Türkçeleştirildi; CDN görseli kaldırıldı → `pi pi-ban` PrimeIcon; Tailwind orange → `var(--mfa-gold)` (gradient, border, icon renkleri)
+- [x] `src/app/pages/auth/error.ts` — Türkçeleştirildi; CDN görseli kaldırıldı → `pi pi-exclamation-circle` PrimeIcon; Tailwind pink → `var(--mfa-red)` (gradient, border, icon renkleri)
+- [x] `src/app/pages/documentation/documentation.ts` — Sakai İngilizce demo silindi; `src/app/pages/pages.routes.ts`'ten route kaldırıldı
+- [x] `src/app/pages/uikit/hierarchydemo.ts` oluşturuldu — `p-organizationchart` demosu; MFA org yapısı mock verisi (T.C. Dışişleri Bakanlığı kök); temel görünüm + seçilebilir düğüm demosu
+- [x] `src/app/pages/uikit/uikit.routes.ts` güncellendi — `HierarchyDemo` import + `{ path: 'hierarchy', ... }` rotası eklendi
+- [x] `src/app/core/config/navigation.config.ts` güncellendi — Sayfalar grubuna Hiyerarşi eklendi; Auth alt-grup yapısı oluşturuldu (Giriş / Erişim Engeli / Hata Sayfası); Sayfa Bulunamadı eklendi
+- [x] Build doğrulandı: **BAŞARILI** (commit `8c77c05`)
+
 ---
 
 ## Alınan Kararlar
@@ -208,6 +220,16 @@
 **Gerekçe:** `/pages/kutuphane` (Phase 4) yaklaşık 20 bileşeni gösteriyordu ve yeni bileşen ekledikçe büyümesi gerekirdi. Sakai'nin `/uikit/*` sayfaları Phase 1'de temizlik kapsamında route'dan kaldırılmıştı ancak dosyalar diskte duruyordu; bu sayfalar zaten tüm temel PrimeNG bileşenlerini 16 kategoride kapsıyor. Restore edip MFA uyumlu hâle getirmek, sıfırdan büyütmekten çok daha az efor gerektirdi.
 
 **Etki:** 16 `/uikit/*` sayfası MFA paletine uyarlandı (CDN bağımlılıkları kaldırıldı, renkler `--mfa-*` token'larına çevrildi, içerikler Türkçeleştirildi); `p-editor` sayfası eklendi; `/pages/kutuphane` route'dan çıkarıldı (dosya diskte, henüz silinmedi — onay bekleniyor). Governance kuralı değişmedi: modüller `/uikit/*`'te gösterilmeyen bileşeni kullanamaz; yeni bileşen önce oraya eklenir.
+
+---
+
+### K-008 — Auth Sayfaları MFA Palet Zorunluluğu (20 Mayıs 2026)
+
+**Karar:** `access.ts` ve `error.ts` sayfalarındaki Sakai default renkleri (`rgba(247,149,48)`, `--p-orange-400`, `--p-pink-400`, Tailwind `border-orange-500` / `text-pink-500`) tamamen kaldırıldı; `var(--mfa-gold)` ve `var(--mfa-red)` ile değiştirildi.
+
+**Gerekçe:** CLAUDE.md §4 — hardcoded renk yasağı; §14 — `style="color:#xxx"` ve Tailwind arbitrary renk yasağı. CDN görsellerinin yerine PrimeIcons kullanılmasıyla birlikte bu sayfalar artık offline çalışabilir, renk değişikliği tek noktadan (`mfa-tokens.scss`) yönetilebilir.
+
+**Etki:** `access.ts` → altın (`--mfa-gold`) tonu: uyarı/erişim engeli anlamı; `error.ts` → kırmızı (`--mfa-red`) tonu: tehlike/hata anlamı. `color-mix(in srgb, <token> 40%, transparent)` ile yarı saydam gradient arka plan.
 
 ---
 
