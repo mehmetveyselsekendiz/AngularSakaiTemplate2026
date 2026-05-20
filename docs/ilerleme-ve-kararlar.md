@@ -59,6 +59,18 @@
 - [x] `src/app/layout/component/app.menu.ts` güncellendi — "Sayfalar" grubuna "Kurumsal Kimlik" eklendi
 - [x] Build doğrulandı: **BAŞARILI**
 
+### Phase 4 — Bileşen Kütüphanesi (Tamamlandı)
+
+- [x] `src/app/pages/kutuphane/kutuphane.ts` oluşturuldu — `/pages/kutuphane` rotasında yaşayan stil rehberi
+  - 6 sekmeli `p-tabs` navigasyonu: Butonlar, Form, Mesajlar, Tablo & Etiketler, Overlay, Durum
+  - Her bölümde canlı örnek + "Kodu Göster/Gizle" toggle + kopyalanabilir snippet
+  - `signal()` ile dialog/drawer görünürlük yönetimi (zoneless uyumlu)
+  - `MessageService` ile toast demo — yeni bağımlılık eklenmedi
+- [x] `src/app/pages/pages.routes.ts` güncellendi — `{ path: 'kutuphane', component: Kutuphane }` eklendi
+- [x] `src/app/layout/component/app.menu.ts` güncellendi — "Bileşen Kütüphanesi" menü öğesi eklendi
+- [x] `CLAUDE.md` güncellendi — Bölüm 14: Governance kuralı eklendi (kütüphanede olmayan bileşen kullanılamaz)
+- [x] Build doğrulandı: **BAŞARILI**
+
 ---
 
 ## Alınan Kararlar

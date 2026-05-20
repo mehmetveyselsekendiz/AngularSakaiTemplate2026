@@ -2,11 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TagModule } from 'primeng/tag';
 import { DividerModule } from 'primeng/divider';
-import {
-    brandColors, brandTypography, printTypography,
-    logoVariants, logoBackgroundRules, differentiationAreas,
-    corporateIdentity, BrandColor, BrandColorKey
-} from '@/app/core/config/design-tokens';
+import { brandColors, brandTypography, printTypography, logoVariants, logoBackgroundRules, differentiationAreas, corporateIdentity, BrandColor, BrandColorKey } from '@/app/core/config/design-tokens';
 
 @Component({
     selector: 'app-kurumsal-kimlik',
@@ -14,7 +10,6 @@ import {
     imports: [CommonModule, TagModule, DividerModule],
     template: `
         <div class="flex flex-col gap-6">
-
             <!-- Başlık -->
             <div class="card">
                 <div class="flex items-center gap-3 mb-2">
@@ -27,10 +22,7 @@ import {
             <!-- Renk Paleti -->
             <div class="card">
                 <div class="font-semibold text-xl mb-1">Renk Paleti</div>
-                <p class="text-surface-500 text-sm mb-4">
-                    Tüm renkler <code>mfa-tokens.scss</code> CSS değişkenleri üzerinden tanımlanır.
-                    Bileşenlerde hardcoded hex kullanılmaz.
-                </p>
+                <p class="text-surface-500 text-sm mb-4">Tüm renkler <code>mfa-tokens.scss</code> CSS değişkenleri üzerinden tanımlanır. Bileşenlerde hardcoded hex kullanılmaz.</p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                     @for (key of colorKeys; track key) {
@@ -67,9 +59,7 @@ import {
                     @for (area of areas; track area.name) {
                         <div class="border border-surface-200 rounded-lg p-4">
                             <div class="font-semibold mb-1">{{ area.name }}</div>
-                            <div class="text-xs text-surface-500 mb-2">
-                                Zemin: {{ area.background }} — Logo: {{ area.logo }}
-                            </div>
+                            <div class="text-xs text-surface-500 mb-2">Zemin: {{ area.background }} — Logo: {{ area.logo }}</div>
                             <div class="text-xs text-surface-600">{{ area.description }}</div>
                         </div>
                     }
@@ -86,9 +76,7 @@ import {
                                 <span class="font-semibold">{{ entry.name }}</span>
                                 <p-tag [value]="entry.role" severity="secondary" />
                             </div>
-                            <div class="text-sm mb-3" [style.font-family]="entry.stack">
-                                Aa Bb Cc — T.C. Dışişleri Bakanlığı
-                            </div>
+                            <div class="text-sm mb-3" [style.font-family]="entry.stack">Aa Bb Cc — T.C. Dışişleri Bakanlığı</div>
                             <div class="text-xs text-surface-400 font-mono">{{ entry.stack }}</div>
                             <p-divider styleClass="my-2" />
                             <div class="text-xs text-surface-600">{{ entry.usage }}</div>
@@ -133,19 +121,15 @@ import {
                 <div class="flex flex-col gap-2">
                     @for (rule of bgRules; track rule.context) {
                         <div class="flex items-center gap-4 p-3 border border-surface-200 rounded-lg">
-                            <div class="w-8 h-8 rounded border border-surface-300 shrink-0"
-                                 [style.background]="bgColorOf(rule.backgroundColor)"></div>
+                            <div class="w-8 h-8 rounded border border-surface-300 shrink-0" [style.background]="bgColorOf(rule.backgroundColor)"></div>
                             <div class="flex-1 min-w-0">
                                 <div class="text-sm font-semibold">{{ rule.context }}</div>
-                                <div class="text-xs text-surface-500">
-                                    Zemin: {{ rule.background }} — Logo: {{ rule.logo }}
-                                </div>
+                                <div class="text-xs text-surface-500">Zemin: {{ rule.background }} — Logo: {{ rule.logo }}</div>
                             </div>
                         </div>
                     }
                 </div>
             </div>
-
         </div>
     `
 })

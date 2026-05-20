@@ -40,7 +40,7 @@ export const brandColors = {
         cmyk: '5 / 100 / 100 / 0',
         usage: 'Bakanlık genel kullanım rengi. Tüm primary action buton, link, sekme ve vurgu öğelerinde kullanılır.',
         cssVar: '--mfa-red',
-        semanticRole: 'primary',
+        semanticRole: 'primary'
     },
     gold: {
         name: 'Altın Varak',
@@ -49,9 +49,9 @@ export const brandColors = {
         rgb: [215, 173, 77] as const,
         oklch: 'oklch(0.756 0.124 84.5)',
         cmyk: '13 / 30 / 69 / 3',
-        usage: 'Sadece Bakanlık Makamı ve özel/ayrıcalıklı temsil materyallerinde. Genel UI\'da kullanılmaz; tören/sertifika tipi sayfalarda izinlidir.',
+        usage: "Sadece Bakanlık Makamı ve özel/ayrıcalıklı temsil materyallerinde. Genel UI'da kullanılmaz; tören/sertifika tipi sayfalarda izinlidir.",
         cssVar: '--mfa-gold',
-        semanticRole: 'warn',
+        semanticRole: 'warn'
     },
     gray: {
         name: 'Gri',
@@ -61,9 +61,9 @@ export const brandColors = {
         oklch: 'oklch(0.457 0.010 247.8)',
         pantone: 'Cool Gray 11 C',
         cmyk: '44 / 34 / 22 / 77',
-        usage: 'Kurumsal kimlik materyallerinde metin rengi. Dijital UI\'da ikincil metin (muted-foreground) olarak kullanılır.',
+        usage: "Kurumsal kimlik materyallerinde metin rengi. Dijital UI'da ikincil metin (muted-foreground) olarak kullanılır.",
         cssVar: '--mfa-gray',
-        semanticRole: 'surface',
+        semanticRole: 'surface'
     },
     navy: {
         name: 'Lacivert',
@@ -75,7 +75,7 @@ export const brandColors = {
         cmyk: '100 / 80 / 0 / 25',
         usage: 'Yardımcı renk. Bilgi/info bileşenleri, ikincil rozetler, alternatif vurgu zeminleri.',
         cssVar: '--mfa-navy',
-        semanticRole: 'info',
+        semanticRole: 'info'
     },
     navyDark: {
         name: 'Koyu Lacivert',
@@ -87,7 +87,7 @@ export const brandColors = {
         cmyk: '100 / 80 / 0 / 50',
         usage: 'Yardımcı renk. Farklılaşma gerektiren zeminler, başlık vurguları, kenar çubuğu arka planı.',
         cssVar: '--mfa-navy-dark',
-        semanticRole: 'contrast',
+        semanticRole: 'contrast'
     },
     /**
      * Angular/PrimeNG'ye özgü — resmi kimlik rehberinde BULUNMAZ.
@@ -103,8 +103,8 @@ export const brandColors = {
         cmyk: '0 / 85 / 85 / 22',
         usage: 'Hata mesajları, silme/iptal işlemleri, kritik uyarı. PrimeNG danger severity için tanımlanmıştır.',
         cssVar: '--mfa-danger',
-        semanticRole: 'danger',
-    },
+        semanticRole: 'danger'
+    }
 } as const satisfies Record<string, BrandColor>;
 
 export type BrandColorKey = keyof typeof brandColors;
@@ -125,21 +125,21 @@ export const brandTypography = {
         stack: '"Helvetica Neue", Helvetica, Arial, "Liberation Sans", system-ui, sans-serif',
         role: 'UI Gövde / Headings',
         usage: 'Tüm dijital arayüz metinleri. Buton, başlık, etiket, paragraf, tablo başlığı.',
-        medium: 'digital',
+        medium: 'digital'
     },
     serif: {
         name: 'Times New Roman',
         stack: '"Times New Roman", Times, "Liberation Serif", serif',
         role: 'Resmi Yazışma (Serif)',
-        usage: 'Resmi yazışmalar ve tırnaklı gerektiren dijital içerikler. UI\'da yalnızca özel resmi belge görünümlerinde kullanılır.',
-        medium: 'digital',
-    },
+        usage: "Resmi yazışmalar ve tırnaklı gerektiren dijital içerikler. UI'da yalnızca özel resmi belge görünümlerinde kullanılır.",
+        medium: 'digital'
+    }
 } as const satisfies Record<string, BrandTypeface>;
 
 export const printTypography = [
     { name: 'Myriad Pro', usage: 'Bakan seviyesi mataryeller, basılı/dijital içerik metinleri' },
     { name: 'Minion Pro', usage: 'İsim, unvan, başlık metni (basılı)' },
-    { name: 'Snell Roundhand Bold', usage: 'Bakan makamı imzalı tebrik kartı/davetiye' },
+    { name: 'Snell Roundhand Bold', usage: 'Bakan makamı imzalı tebrik kartı/davetiye' }
 ] as const;
 
 // ─── LOGO VARYANTLARI ─────────────────────────────────────────────────────────
@@ -158,43 +158,43 @@ export const logoVariants = [
         name: 'Varak Amblem Logotayp 1',
         description: 'Altın varaklı tam logo — Bakanlık Makamı.',
         minPrintHeightCm: 2.5,
-        minWebHeightPx: 48,
+        minWebHeightPx: 48
     },
     {
         id: 'amblem-logotayp-1',
         name: 'Amblem Logotayp 1',
         description: 'Kırmızı tam amblem — Bakanlık standart kullanım.',
         minPrintHeightCm: 2.0,
-        minWebHeightPx: 40,
+        minWebHeightPx: 40
     },
     {
         id: 'amblem-logotayp-2',
         name: 'Amblem Logotayp 2',
         description: 'Yatay küçük versiyon.',
         minPrintHeightCm: 1.5,
-        minWebHeightPx: 32,
+        minWebHeightPx: 32
     },
     {
         id: 'amblem-logotayp-3',
         name: 'Amblem Logotayp 3',
         description: 'Alt başlıklı kompakt versiyon.',
         minPrintHeightCm: 1.5,
-        minWebHeightPx: 32,
+        minWebHeightPx: 32
     },
     {
         id: 'amblem-logotayp-4',
         name: 'Amblem Logotayp 4',
         description: 'Yan yana versiyon — Türkiye Cumhuriyeti Dışişleri Bakanlığı.',
         minPrintHeightCm: 1.5,
-        minWebHeightPx: 32,
+        minWebHeightPx: 32
     },
     {
         id: 'amblem-logotayp-5',
         name: 'Amblem Logotayp 5',
         description: 'Dikey kompakt versiyon.',
         minPrintHeightCm: 1.7,
-        minWebHeightPx: 36,
-    },
+        minWebHeightPx: 36
+    }
 ] as const satisfies readonly LogoVariant[];
 
 // ─── ZEMİN — LOGO EŞLEŞME KURALLARI ──────────────────────────────────────────
@@ -211,38 +211,38 @@ export const logoBackgroundRules = [
         background: 'Beyaz',
         backgroundColor: 'white' as const,
         logo: 'gold' as const,
-        context: 'Bakanlık Makamı (özel temsili kullanım)',
+        context: 'Bakanlık Makamı (özel temsili kullanım)'
     },
     {
         background: 'Beyaz',
         backgroundColor: 'white' as const,
         logo: 'red' as const,
-        context: 'Bakanlık standart kullanım (genel)',
+        context: 'Bakanlık standart kullanım (genel)'
     },
     {
         background: 'Kırmızı',
         backgroundColor: 'red' as const,
         logo: 'white' as const,
-        context: 'Bakanlık vurgulu zemin kullanım',
+        context: 'Bakanlık vurgulu zemin kullanım'
     },
     {
         background: 'Koyu Lacivert',
         backgroundColor: 'navyDark' as const,
         logo: 'gold' as const,
-        context: 'Yardımcı renk kullanım — bakanlık temsili',
+        context: 'Yardımcı renk kullanım — bakanlık temsili'
     },
     {
         background: 'Koyu Lacivert',
         backgroundColor: 'navyDark' as const,
         logo: 'white' as const,
-        context: 'Yardımcı renk — alternatif',
+        context: 'Yardımcı renk — alternatif'
     },
     {
         background: 'Koyu Fotoğraf Zemini',
         backgroundColor: 'black-photo' as const,
         logo: 'white' as const,
-        context: 'Yüksek kontrast gerektiren görsel zeminler',
-    },
+        context: 'Yüksek kontrast gerektiren görsel zeminler'
+    }
 ] satisfies readonly LogoBackgroundRule[];
 
 // ─── FARKLILAŞMA ALANLARI ─────────────────────────────────────────────────────
@@ -252,26 +252,26 @@ export const differentiationAreas = [
         name: 'Bakanlık Makamı',
         background: 'Beyaz',
         logo: 'Altın varaklı',
-        description: 'Bakanlık makamı temsilinde kullanılacak renktir.',
+        description: 'Bakanlık makamı temsilinde kullanılacak renktir.'
     },
     {
         name: 'Bakanlık',
         background: 'Kırmızı',
         logo: 'Beyaz amblem',
-        description: 'Bakanlık bünyesindeki markalar, kurumlar ve kuruluşların bakanlığı temsilen kullanacağı renktir.',
+        description: 'Bakanlık bünyesindeki markalar, kurumlar ve kuruluşların bakanlığı temsilen kullanacağı renktir.'
     },
     {
         name: 'Bakanlık (Beyaz)',
         background: 'Beyaz',
         logo: 'Kırmızı amblem',
-        description: 'Standart kurumsal kullanım — bakanlık temsili.',
+        description: 'Standart kurumsal kullanım — bakanlık temsili.'
     },
     {
         name: 'Yardımcı Renk',
         background: 'Koyu Lacivert',
         logo: 'Altın varaklı',
-        description: 'Kamuoyu ve medyaya hitap edilen mecralarda, özgün bir görsel ifade gerektiren durumlarda kullanılacağı renktir.',
-    },
+        description: 'Kamuoyu ve medyaya hitap edilen mecralarda, özgün bir görsel ifade gerektiren durumlarda kullanılacağı renktir.'
+    }
 ] as const;
 
 // ─── AGGREGATE ────────────────────────────────────────────────────────────────
@@ -284,7 +284,7 @@ export const corporateIdentity = {
     logoBackgroundRules,
     differentiationAreas,
     source: 'T.C. Dışişleri Bakanlığı — Kurum Kimliği Rehberi',
-    lastUpdated: '2026-05-20',
+    lastUpdated: '2026-05-20'
 } as const;
 
 export type CorporateIdentity = typeof corporateIdentity;

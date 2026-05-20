@@ -255,7 +255,31 @@ npm test                       # karma + jasmine (Sakai default — kullanılıy
 
 ---
 
-## 14. Bir Şeyden Emin Değilsen
+## 14. Bileşen Kütüphanesi Governance — KESİN KURAL
+
+**Sayfa:** `/pages/kutuphane` → `src/app/pages/kutuphane/kutuphane.ts`
+
+### Modül takımları için kural
+Modül takımları `/pages/kutuphane`'de **listelenen bileşenleri** kullanabilir.
+
+**Yeni bileşen ihtiyacı varsa sıra:**
+1. `kutuphane.ts`'e canlı örnek + kod snippet ekle
+2. Ardından modül kodunda kullan
+
+**Kesinlikle yasak:**
+- ❌ Kütüphane sayfasında gösterilmemiş bileşen kullanmak
+- ❌ Hardcoded hex, `style="color:#xxx"`, Tailwind arbitrary renk (`text-[#DA291C]`)
+- ❌ `bg-red-500`, `text-blue-700` gibi sabit Tailwind renkleri — `var(--mfa-*)` veya PrimeNG severity kullan
+
+**Onaylı bileşen listesi:**
+`p-button` · `p-buttongroup` · `pInputText` · `p-select` · `p-checkbox` ·
+`p-radiobutton` · `p-toggleswitch` · `pTextarea` · `p-datepicker` · `p-message` · `p-toast` ·
+`p-table` · `p-tag` · `p-badge` · `p-overlaybadge` · `p-dialog` · `p-popover` · `p-drawer` ·
+`pTooltip` · `p-progressbar` · `p-progressspinner` · `p-skeleton`
+
+---
+
+## 15. Bir Şeyden Emin Değilsen
 
 1. **`docs/sakai-mfa-uyarlama-plani.md`'ye bak** — detaylı yol haritası, kararların gerekçesi.
 2. **`.reference-react/CLAUDE.md`'ye bak** — React versiyonunun 22 bölümlük kuralları (Angular'a uyarlanacak Phase 8'de).
