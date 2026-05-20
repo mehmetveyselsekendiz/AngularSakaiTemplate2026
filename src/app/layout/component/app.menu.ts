@@ -51,6 +51,7 @@ export class AppMenu {
                 label: 'Sayfalar',
                 icon: 'pi pi-fw pi-briefcase',
                 items: [
+                    { label: 'Kurumsal Kimlik', icon: 'pi pi-fw pi-palette', routerLink: ['/pages/kurumsal-kimlik'] },
                     { label: 'CRUD Örneği', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/crud'] },
                     { label: 'Boş Sayfa', icon: 'pi pi-fw pi-circle-off', routerLink: ['/pages/empty'] }
                 ]
