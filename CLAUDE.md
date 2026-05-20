@@ -257,25 +257,24 @@ npm test                       # karma + jasmine (Sakai default — kullanılıy
 
 ## 14. Bileşen Kütüphanesi Governance — KESİN KURAL
 
-**Sayfa:** `/pages/kutuphane` → `src/app/pages/kutuphane/kutuphane.ts`
+**Kaynak:** `/uikit/*` sayfaları → `src/app/pages/uikit/`
+
+Sayfalar: Butonlar · Giriş Alanları · Form Düzeni · **Zengin Metin** · Tablo · Liste · Ağaç · Panel · Overlay · Medya · Menü · Mesajlar · Dosya Yükleme · Grafikler · Zaman Çizelgesi · Diğer
+
+Tüm PrimeNG bileşenleri `MfaPreset` üzerinden **otomatik olarak MFA kurumsal paletini** kullanır. Renk, border, shadow — hiçbiri hardcoded değil.
 
 ### Modül takımları için kural
-Modül takımları `/pages/kutuphane`'de **listelenen bileşenleri** kullanabilir.
+Modül takımları `/uikit/*` sayfalarında **gösterilen bileşenleri** kullanabilir.
 
 **Yeni bileşen ihtiyacı varsa sıra:**
-1. `kutuphane.ts`'e canlı örnek + kod snippet ekle
+1. İlgili `src/app/pages/uikit/*demo.ts` dosyasına canlı örnek ekle
 2. Ardından modül kodunda kullan
 
 **Kesinlikle yasak:**
-- ❌ Kütüphane sayfasında gösterilmemiş bileşen kullanmak
+- ❌ `/uikit/*` sayfalarında gösterilmemiş bileşen kullanmak
 - ❌ Hardcoded hex, `style="color:#xxx"`, Tailwind arbitrary renk (`text-[#DA291C]`)
 - ❌ `bg-red-500`, `text-blue-700` gibi sabit Tailwind renkleri — `var(--mfa-*)` veya PrimeNG severity kullan
-
-**Onaylı bileşen listesi:**
-`p-button` · `p-buttongroup` · `pInputText` · `p-select` · `p-checkbox` ·
-`p-radiobutton` · `p-toggleswitch` · `pTextarea` · `p-datepicker` · `p-message` · `p-toast` ·
-`p-table` · `p-tag` · `p-badge` · `p-overlaybadge` · `p-dialog` · `p-popover` · `p-drawer` ·
-`pTooltip` · `p-progressbar` · `p-progressspinner` · `p-skeleton`
+- ❌ Harici CDN görseli/URL'si — tüm assets yerel veya `data:` URI olmalı
 
 ---
 

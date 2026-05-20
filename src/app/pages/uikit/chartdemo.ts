@@ -136,12 +136,12 @@ export class ChartDemo {
         });
 
         this.pieData.set({
-            labels: ['A', 'B', 'C'],
+            labels: ['Kırmızı', 'Lacivert', 'Altın Varak'],
             datasets: [
                 {
                     data: [540, 325, 702],
-                    backgroundColor: [documentStyle.getPropertyValue('--p-indigo-500'), documentStyle.getPropertyValue('--p-purple-500'), documentStyle.getPropertyValue('--p-teal-500')],
-                    hoverBackgroundColor: [documentStyle.getPropertyValue('--p-indigo-400'), documentStyle.getPropertyValue('--p-purple-400'), documentStyle.getPropertyValue('--p-teal-400')]
+                    backgroundColor: [documentStyle.getPropertyValue('--mfa-red'), documentStyle.getPropertyValue('--mfa-navy'), documentStyle.getPropertyValue('--mfa-gold')],
+                    hoverBackgroundColor: [documentStyle.getPropertyValue('--mfa-red-400'), documentStyle.getPropertyValue('--mfa-navy-400'), documentStyle.getPropertyValue('--mfa-gold')]
                 }
             ]
         });
@@ -215,11 +215,11 @@ export class ChartDemo {
             datasets: [
                 {
                     data: [11, 16, 7, 3],
-                    backgroundColor: [documentStyle.getPropertyValue('--p-indigo-500'), documentStyle.getPropertyValue('--p-purple-500'), documentStyle.getPropertyValue('--p-teal-500'), documentStyle.getPropertyValue('--p-orange-500')],
-                    label: 'My dataset'
+                    backgroundColor: [documentStyle.getPropertyValue('--mfa-red'), documentStyle.getPropertyValue('--mfa-navy'), documentStyle.getPropertyValue('--mfa-gold'), documentStyle.getPropertyValue('--mfa-gray')],
+                    label: 'Veri Seti'
                 }
             ],
-            labels: ['Indigo', 'Purple', 'Teal', 'Orange']
+            labels: ['Kırmızı', 'Lacivert', 'Altın Varak', 'Gri']
         });
 
         this.polarOptions.set({
@@ -244,24 +244,24 @@ export class ChartDemo {
         });
 
         this.radarData.set({
-            labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
+            labels: ['Planlama', 'Analiz', 'Tasarım', 'Geliştirme', 'Test', 'Dağıtım', 'Destek'],
             datasets: [
                 {
-                    label: 'My First dataset',
-                    borderColor: documentStyle.getPropertyValue('--p-indigo-400'),
-                    pointBackgroundColor: documentStyle.getPropertyValue('--p-indigo-400'),
-                    pointBorderColor: documentStyle.getPropertyValue('--p-indigo-400'),
+                    label: 'Dönem 1',
+                    borderColor: documentStyle.getPropertyValue('--mfa-red'),
+                    pointBackgroundColor: documentStyle.getPropertyValue('--mfa-red'),
+                    pointBorderColor: documentStyle.getPropertyValue('--mfa-red'),
                     pointHoverBackgroundColor: textColor,
-                    pointHoverBorderColor: documentStyle.getPropertyValue('--p-indigo-400'),
+                    pointHoverBorderColor: documentStyle.getPropertyValue('--mfa-red'),
                     data: [65, 59, 90, 81, 56, 55, 40]
                 },
                 {
-                    label: 'My Second dataset',
-                    borderColor: documentStyle.getPropertyValue('--p-purple-400'),
-                    pointBackgroundColor: documentStyle.getPropertyValue('--p-purple-400'),
-                    pointBorderColor: documentStyle.getPropertyValue('--p-purple-400'),
+                    label: 'Dönem 2',
+                    borderColor: documentStyle.getPropertyValue('--mfa-navy'),
+                    pointBackgroundColor: documentStyle.getPropertyValue('--mfa-navy'),
+                    pointBorderColor: documentStyle.getPropertyValue('--mfa-navy'),
                     pointHoverBackgroundColor: textColor,
-                    pointHoverBorderColor: documentStyle.getPropertyValue('--p-purple-400'),
+                    pointHoverBorderColor: documentStyle.getPropertyValue('--mfa-navy'),
                     data: [28, 48, 40, 19, 96, 27, 100]
                 }
             ]

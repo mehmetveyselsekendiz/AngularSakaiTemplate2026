@@ -84,11 +84,12 @@ import { SplitButtonModule } from 'primeng/splitbutton';
                 <div class="font-semibold text-xl">Templating</div>
                 <div class="flex flex-wrap gap-2">
                     <p-button type="button">
-                        <img alt="logo" src="https://primefaces.org/cdn/primeng/images/logo.svg" style="width: 1.5rem" />
+                        <i class="pi pi-star mr-2"></i>
+                        <span>Özel İçerik</span>
                     </p-button>
                     <p-button type="button" outlined severity="success">
-                        <img alt="logo" src="https://primefaces.org/cdn/primeng/images/logo.svg" style="width: 1.5rem" />
-                        <span class="text-bold">PrimeNG</span>
+                        <i class="pi pi-check mr-2"></i>
+                        <span class="font-bold">Onaylandı</span>
                     </p-button>
                 </div>
             </div>

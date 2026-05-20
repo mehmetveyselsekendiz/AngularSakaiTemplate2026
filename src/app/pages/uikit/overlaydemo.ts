@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -21,7 +22,7 @@ interface Product {
 @Component({
     selector: 'app-overlay-demo',
     standalone: true,
-    imports: [ToastModule, DialogModule, ButtonModule, DrawerModule, PopoverModule, ConfirmPopupModule, InputTextModule, FormsModule, TooltipModule, TableModule, ToastModule],
+    imports: [CommonModule, ToastModule, DialogModule, ButtonModule, DrawerModule, PopoverModule, ConfirmPopupModule, InputTextModule, FormsModule, TooltipModule, TableModule],
     template: `<div class="flex flex-col md:flex-row gap-8">
         <div class="md:w-1/2">
             <div class="card">
@@ -42,17 +43,16 @@ interface Product {
                 <div class="font-semibold text-xl mb-4">Popover</div>
                 <div class="flex flex-wrap gap-2">
                     <p-button type="button" label="Show" (click)="toggleDataTable(op2, $event)" />
-                    <p-popover #op2 id="overlay_panel" [style]="{ width: '450px' }">
+                    <p-popover #op2 id="overlay_panel" [style]="{ width: '380px' }">
                         <p-table [value]="products" selectionMode="single" [(selection)]="selectedProduct" dataKey="id" [rows]="5" [paginator]="true" (onRowSelect)="onProductSelect(op2, $event)">
                             <ng-template #header>
                                 <tr>
-                                    <th pSortableColumn="name" style="width: 33%;">
-                                        Name
+                                    <th pSortableColumn="name" style="width: 60%;">
+                                        Ürün Adı
                                         <p-sortIcon field="name" />
                                     </th>
-                                    <th style="width: 33%;">Image</th>
-                                    <th pSortableColumn="price" style="width: 33%;">
-                                        Price
+                                    <th pSortableColumn="price" style="width: 40%;">
+                                        Fiyat
                                         <p-sortIcon field="price" />
                                     </th>
                                 </tr>
@@ -60,10 +60,7 @@ interface Product {
                             <ng-template #body let-product>
                                 <tr [pSelectableRow]="product">
                                     <td>{{ product.name }}</td>
-                                    <td>
-                                        <img [src]="'/demo/images/product/' + product.image" [alt]="product.name" class="w-16 shadow-sm" />
-                                    </td>
-                                    <td>{{ product.price }}</td>
+                                    <td>{{ product.price | currency:'TRY':'symbol':'1.2-2' }}</td>
                                 </tr>
                             </ng-template>
                         </p-table>

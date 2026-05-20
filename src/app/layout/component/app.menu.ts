@@ -28,33 +28,33 @@ export class AppMenu {
                 items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
             },
             {
-                label: 'Kütüphane',
+                label: 'Bileşen Kütüphanesi',
                 items: [
-                    { label: 'Form Düzeni', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
-                    { label: 'Giriş Alanları', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] },
-                    { label: 'Butonlar', icon: 'pi pi-fw pi-mobile', class: 'rotated-icon', routerLink: ['/uikit/button'] },
-                    { label: 'Tablo', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'] },
-                    { label: 'Liste', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/list'] },
-                    { label: 'Ağaç', icon: 'pi pi-fw pi-share-alt', routerLink: ['/uikit/tree'] },
-                    { label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel'] },
-                    { label: 'Katman', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay'] },
-                    { label: 'Medya', icon: 'pi pi-fw pi-image', routerLink: ['/uikit/media'] },
-                    { label: 'Menü', icon: 'pi pi-fw pi-bars', routerLink: ['/uikit/menu'] },
-                    { label: 'Mesaj', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message'] },
-                    { label: 'Dosya', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file'] },
-                    { label: 'Grafik', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts'] },
-                    { label: 'Zaman Çizelgesi', icon: 'pi pi-fw pi-calendar', routerLink: ['/uikit/timeline'] },
-                    { label: 'Diğer', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'] }
+                    { label: 'Butonlar',        icon: 'pi pi-fw pi-mobile',        class: 'rotated-icon', routerLink: ['/uikit/button'] },
+                    { label: 'Giriş Alanları',  icon: 'pi pi-fw pi-check-square',                         routerLink: ['/uikit/input'] },
+                    { label: 'Form Düzeni',     icon: 'pi pi-fw pi-id-card',                              routerLink: ['/uikit/formlayout'] },
+                    { label: 'Zengin Metin',    icon: 'pi pi-fw pi-align-left',                           routerLink: ['/uikit/editor'] },
+                    { label: 'Tablo',           icon: 'pi pi-fw pi-table',                                routerLink: ['/uikit/table'] },
+                    { label: 'Liste',           icon: 'pi pi-fw pi-list',                                 routerLink: ['/uikit/list'] },
+                    { label: 'Ağaç',            icon: 'pi pi-fw pi-share-alt',                            routerLink: ['/uikit/tree'] },
+                    { label: 'Panel',           icon: 'pi pi-fw pi-tablet',                               routerLink: ['/uikit/panel'] },
+                    { label: 'Overlay',         icon: 'pi pi-fw pi-clone',                                routerLink: ['/uikit/overlay'] },
+                    { label: 'Medya',           icon: 'pi pi-fw pi-image',                                routerLink: ['/uikit/media'] },
+                    { label: 'Menü',            icon: 'pi pi-fw pi-bars',                                 routerLink: ['/uikit/menu'] },
+                    { label: 'Mesajlar',        icon: 'pi pi-fw pi-comment',                              routerLink: ['/uikit/message'] },
+                    { label: 'Dosya Yükleme',   icon: 'pi pi-fw pi-file',                                 routerLink: ['/uikit/file'] },
+                    { label: 'Grafikler',       icon: 'pi pi-fw pi-chart-bar',                            routerLink: ['/uikit/charts'] },
+                    { label: 'Zaman Çizelgesi', icon: 'pi pi-fw pi-calendar',                             routerLink: ['/uikit/timeline'] },
+                    { label: 'Diğer',           icon: 'pi pi-fw pi-circle',                               routerLink: ['/uikit/misc'] }
                 ]
             },
             {
                 label: 'Sayfalar',
                 icon: 'pi pi-fw pi-briefcase',
                 items: [
-                    { label: 'Kurumsal Kimlik', icon: 'pi pi-fw pi-palette', routerLink: ['/pages/kurumsal-kimlik'] },
-                    { label: 'Bileşen Kütüphanesi', icon: 'pi pi-fw pi-book', routerLink: ['/pages/kutuphane'] },
-                    { label: 'CRUD Örneği', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/crud'] },
-                    { label: 'Boş Sayfa', icon: 'pi pi-fw pi-circle-off', routerLink: ['/pages/empty'] }
+                    { label: 'Kurumsal Kimlik', icon: 'pi pi-fw pi-palette',    routerLink: ['/pages/kurumsal-kimlik'] },
+                    { label: 'CRUD Örneği',     icon: 'pi pi-fw pi-pencil',     routerLink: ['/pages/crud'] },
+                    { label: 'Boş Sayfa',       icon: 'pi pi-fw pi-circle-off', routerLink: ['/pages/empty'] }
                 ]
             }
         ];

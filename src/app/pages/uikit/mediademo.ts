@@ -1,44 +1,61 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
 import { GalleriaModule } from 'primeng/galleria';
 import { ImageModule } from 'primeng/image';
 import { TagModule } from 'primeng/tag';
 
-interface Product {
-    id?: string;
-    name?: string;
-    price?: number;
-    image?: string;
-    inventoryStatus?: string;
-    category?: string;
+interface Kart {
+    id: string;
+    baslik: string;
+    aciklama: string;
+    icon: string;
+    renk: string;
+    durum: 'AKTIF' | 'BEKLEMEDE' | 'PASIF';
 }
+
+interface Gorsel {
+    itemImageSrc: string;
+    thumbnailImageSrc: string;
+    alt: string;
+}
+
+// MFA palette renkleriyle SVG data URI üretir — dış CDN gerektirmez
+function svgPlaceholder(w: number, h: number, bg: string, label: string): string {
+    const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">` +
+        `<rect width="${w}" height="${h}" fill="${bg}"/>` +
+        (label ? `<text x="${w / 2}" y="${h / 2}" font-size="${Math.floor(h / 6)}" ` +
+        `text-anchor="middle" dominant-baseline="middle" fill="white" font-family="Helvetica,Arial,sans-serif">${label}</text>` : '') +
+        `</svg>`;
+    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+const MFA_RENKLER = ['#DA291C', '#003773', '#00235A', '#D7AD4D', '#53565A'];
+const MFA_ETIKETLER = ['MFA Kırmızı', 'Lacivert', 'Koyu Lacivert', 'Altın Varak', 'Kurumsal Gri'];
 
 @Component({
     selector: 'app-media-demo',
     standalone: true,
     imports: [CommonModule, CarouselModule, ButtonModule, GalleriaModule, ImageModule, TagModule],
-    template: `<div class="card">
+    template: `
+        <div class="card">
             <div class="font-semibold text-xl mb-4">Carousel</div>
-            <p-carousel [value]="products()" [numVisible]="3" [numScroll]="3" [circular]="false" [responsiveOptions]="carouselResponsiveOptions">
-                <ng-template let-product #item>
-                    <div class="border border-surface rounded-border m-2 p-4">
-                        <div class="mb-4">
-                            <div class="relative mx-auto">
-                                <img src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}" [alt]="product.name" class="w-full rounded-border" />
-                                <div class="absolute bg-black/70 rounded-border" [ngStyle]="{ 'left.px': 5, 'top.px': 5 }">
-                                    <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)" />
-                                </div>
-                            </div>
+            <p-carousel [value]="kartlar()" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="carouselOptions">
+                <ng-template let-kart #item>
+                    <div class="border border-surface rounded-border m-2 p-4 flex flex-col gap-3">
+                        <div class="flex items-center justify-center rounded-border h-32" [style.background]="kart.renk">
+                            <i [class]="kart.icon + ' text-white'" style="font-size: 3rem"></i>
                         </div>
-                        <div class="mb-4 font-medium">{{ product.name }}</div>
-                        <div class="flex justify-between items-center">
-                            <div class="mt-0 font-semibold text-xl">{{ '$' + product.price }}</div>
-                            <span>
-                                <p-button icon="pi pi-heart" severity="secondary" [outlined]="true" />
-                                <p-button icon="pi pi-shopping-cart" styleClass="ml-2" />
-                            </span>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold">{{ kart.baslik }}</span>
+                            <p-tag [value]="kart.durum" [severity]="getDurumSeverity(kart.durum)" />
+                        </div>
+                        <p class="text-sm text-color-secondary m-0">{{ kart.aciklama }}</p>
+                        <div class="flex gap-2 justify-end">
+                            <p-button icon="pi pi-eye" severity="secondary" [outlined]="true" size="small" />
+                            <p-button icon="pi pi-pencil" size="small" />
                         </div>
                     </div>
                 </ng-template>
@@ -46,88 +63,57 @@ interface Product {
         </div>
 
         <div class="card">
-            <div class="font-semibold text-xl mb-4">Image</div>
-            <p-image src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" alt="Image" width="250" />
+            <div class="font-semibold text-xl mb-4">Image (Önizleme)</div>
+            <p-image [src]="onizlemeSrc" alt="MFA Kurumsal Görsel" width="250" [preview]="true" />
         </div>
 
         <div class="card">
             <div class="font-semibold text-xl mb-4">Galleria</div>
-            <p-galleria [value]="images()" [responsiveOptions]="galleriaResponsiveOptions" [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
+            <p-galleria [value]="gorseller()" [responsiveOptions]="galleriaOptions" [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
                 <ng-template #item let-item>
-                    <img [src]="item.itemImageSrc" style="width:100%" />
+                    <img [src]="item.itemImageSrc" [alt]="item.alt" style="width:100%; border-radius: var(--border-radius)" />
                 </ng-template>
                 <ng-template #thumbnail let-item>
-                    <img [src]="item.thumbnailImageSrc" />
+                    <img [src]="item.thumbnailImageSrc" [alt]="item.alt" style="width:100%" />
                 </ng-template>
             </p-galleria>
-        </div>`
+        </div>
+    `
 })
-export class MediaDemo implements OnInit {
-    products = signal<Product[]>([
-        { id: '1000', name: 'Bamboo Watch', price: 65, image: 'bamboo-watch.jpg', inventoryStatus: 'INSTOCK', category: 'Accessories' },
-        { id: '1001', name: 'Black Watch', price: 72, image: 'black-watch.jpg', inventoryStatus: 'INSTOCK', category: 'Accessories' },
-        { id: '1002', name: 'Blue Band', price: 79, image: 'blue-band.jpg', inventoryStatus: 'LOWSTOCK', category: 'Fitness' },
-        { id: '1003', name: 'Blue T-Shirt', price: 29, image: 'blue-t-shirt.jpg', inventoryStatus: 'INSTOCK', category: 'Clothing' },
-        { id: '1004', name: 'Bracelet', price: 15, image: 'bracelet.jpg', inventoryStatus: 'INSTOCK', category: 'Accessories' }
+export class MediaDemo {
+    kartlar = signal<Kart[]>([
+        { id: '1', baslik: 'Vize Başvurusu',     aciklama: 'Schengen vize başvuru süreci',    icon: 'pi pi-id-card',    renk: '#DA291C', durum: 'AKTIF'     },
+        { id: '2', baslik: 'Pasaport İşlemleri', aciklama: 'Pasaport yenileme ve başvuru',    icon: 'pi pi-book',       renk: '#003773', durum: 'AKTIF'     },
+        { id: '3', baslik: 'Konsolosluk Randevu', aciklama: 'Online randevu sistemi',          icon: 'pi pi-calendar',   renk: '#00235A', durum: 'BEKLEMEDE' },
+        { id: '4', baslik: 'Belge Onayı',        aciklama: 'Apostil ve noter onay işlemleri', icon: 'pi pi-file-check', renk: '#53565A', durum: 'AKTIF'     },
+        { id: '5', baslik: 'Tercüme Hizmetleri', aciklama: 'Resmi belge tercümesi',           icon: 'pi pi-language',   renk: '#D7AD4D', durum: 'PASIF'     }
     ]);
 
-    images = signal<any[]>([
-        { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria1s.jpg', alt: 'Görsel 1' },
-        { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria2.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria2s.jpg', alt: 'Görsel 2' },
-        { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3s.jpg', alt: 'Görsel 3' },
-        { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria4.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria4s.jpg', alt: 'Görsel 4' },
-        { itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria5.jpg', thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria5s.jpg', alt: 'Görsel 5' }
-    ]);
+    gorseller = signal<Gorsel[]>(
+        MFA_RENKLER.map((renk, i) => ({
+            itemImageSrc:      svgPlaceholder(800, 500, renk, MFA_ETIKETLER[i]),
+            thumbnailImageSrc: svgPlaceholder(120, 80,  renk, ''),
+            alt: MFA_ETIKETLER[i]
+        }))
+    );
 
-    galleriaResponsiveOptions: any[] = [
-        {
-            breakpoint: '1024px',
-            numVisible: 5
-        },
-        {
-            breakpoint: '960px',
-            numVisible: 4
-        },
-        {
-            breakpoint: '768px',
-            numVisible: 3
-        },
-        {
-            breakpoint: '560px',
-            numVisible: 1
-        }
+    onizlemeSrc = svgPlaceholder(400, 300, '#DA291C', 'T.C. Dışişleri Bakanlığı');
+
+    galleriaOptions = [
+        { breakpoint: '1024px', numVisible: 5 },
+        { breakpoint: '768px',  numVisible: 3 },
+        { breakpoint: '560px',  numVisible: 1 }
     ];
 
-    carouselResponsiveOptions: any[] = [
-        {
-            breakpoint: '1024px',
-            numVisible: 3,
-            numScroll: 3
-        },
-        {
-            breakpoint: '768px',
-            numVisible: 2,
-            numScroll: 2
-        },
-        {
-            breakpoint: '560px',
-            numVisible: 1,
-            numScroll: 1
-        }
+    carouselOptions = [
+        { breakpoint: '1024px', numVisible: 3, numScroll: 1 },
+        { breakpoint: '768px',  numVisible: 2, numScroll: 1 },
+        { breakpoint: '560px',  numVisible: 1, numScroll: 1 }
     ];
 
-    ngOnInit() {}
-
-    getSeverity(status: string) {
-        switch (status) {
-            case 'INSTOCK':
-                return 'success';
-            case 'LOWSTOCK':
-                return 'warn';
-            case 'OUTOFSTOCK':
-                return 'danger';
-            default:
-                return 'success';
-        }
+    getDurumSeverity(durum: string): 'success' | 'warn' | 'danger' {
+        if (durum === 'AKTIF') return 'success';
+        if (durum === 'BEKLEMEDE') return 'warn';
+        return 'danger';
     }
 }
