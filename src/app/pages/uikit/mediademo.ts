@@ -26,8 +26,7 @@ function svgPlaceholder(w: number, h: number, bg: string, label: string): string
     const svg =
         `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">` +
         `<rect width="${w}" height="${h}" fill="${bg}"/>` +
-        (label ? `<text x="${w / 2}" y="${h / 2}" font-size="${Math.floor(h / 6)}" ` +
-        `text-anchor="middle" dominant-baseline="middle" fill="white" font-family="Helvetica,Arial,sans-serif">${label}</text>` : '') +
+        (label ? `<text x="${w / 2}" y="${h / 2}" font-size="${Math.floor(h / 6)}" ` + `text-anchor="middle" dominant-baseline="middle" fill="white" font-family="Helvetica,Arial,sans-serif">${label}</text>` : '') +
         `</svg>`;
     return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
@@ -82,17 +81,17 @@ const MFA_ETIKETLER = ['MFA Kırmızı', 'Lacivert', 'Koyu Lacivert', 'Altın Va
 })
 export class MediaDemo {
     kartlar = signal<Kart[]>([
-        { id: '1', baslik: 'Vize Başvurusu',     aciklama: 'Schengen vize başvuru süreci',    icon: 'pi pi-id-card',    renk: '#DA291C', durum: 'AKTIF'     },
-        { id: '2', baslik: 'Pasaport İşlemleri', aciklama: 'Pasaport yenileme ve başvuru',    icon: 'pi pi-book',       renk: '#003773', durum: 'AKTIF'     },
-        { id: '3', baslik: 'Konsolosluk Randevu', aciklama: 'Online randevu sistemi',          icon: 'pi pi-calendar',   renk: '#00235A', durum: 'BEKLEMEDE' },
-        { id: '4', baslik: 'Belge Onayı',        aciklama: 'Apostil ve noter onay işlemleri', icon: 'pi pi-file-check', renk: '#53565A', durum: 'AKTIF'     },
-        { id: '5', baslik: 'Tercüme Hizmetleri', aciklama: 'Resmi belge tercümesi',           icon: 'pi pi-language',   renk: '#D7AD4D', durum: 'PASIF'     }
+        { id: '1', baslik: 'Vize Başvurusu', aciklama: 'Schengen vize başvuru süreci', icon: 'pi pi-id-card', renk: '#DA291C', durum: 'AKTIF' },
+        { id: '2', baslik: 'Pasaport İşlemleri', aciklama: 'Pasaport yenileme ve başvuru', icon: 'pi pi-book', renk: '#003773', durum: 'AKTIF' },
+        { id: '3', baslik: 'Konsolosluk Randevu', aciklama: 'Online randevu sistemi', icon: 'pi pi-calendar', renk: '#00235A', durum: 'BEKLEMEDE' },
+        { id: '4', baslik: 'Belge Onayı', aciklama: 'Apostil ve noter onay işlemleri', icon: 'pi pi-file-check', renk: '#53565A', durum: 'AKTIF' },
+        { id: '5', baslik: 'Tercüme Hizmetleri', aciklama: 'Resmi belge tercümesi', icon: 'pi pi-language', renk: '#D7AD4D', durum: 'PASIF' }
     ]);
 
     gorseller = signal<Gorsel[]>(
         MFA_RENKLER.map((renk, i) => ({
-            itemImageSrc:      svgPlaceholder(800, 500, renk, MFA_ETIKETLER[i]),
-            thumbnailImageSrc: svgPlaceholder(120, 80,  renk, ''),
+            itemImageSrc: svgPlaceholder(800, 500, renk, MFA_ETIKETLER[i]),
+            thumbnailImageSrc: svgPlaceholder(120, 80, renk, ''),
             alt: MFA_ETIKETLER[i]
         }))
     );
@@ -101,14 +100,14 @@ export class MediaDemo {
 
     galleriaOptions = [
         { breakpoint: '1024px', numVisible: 5 },
-        { breakpoint: '768px',  numVisible: 3 },
-        { breakpoint: '560px',  numVisible: 1 }
+        { breakpoint: '768px', numVisible: 3 },
+        { breakpoint: '560px', numVisible: 1 }
     ];
 
     carouselOptions = [
         { breakpoint: '1024px', numVisible: 3, numScroll: 1 },
-        { breakpoint: '768px',  numVisible: 2, numScroll: 1 },
-        { breakpoint: '560px',  numVisible: 1, numScroll: 1 }
+        { breakpoint: '768px', numVisible: 2, numScroll: 1 },
+        { breakpoint: '560px', numVisible: 1, numScroll: 1 }
     ];
 
     getDurumSeverity(durum: string): 'success' | 'warn' | 'danger' {

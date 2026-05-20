@@ -19,15 +19,8 @@ import { AuthService } from '@/app/core/auth/auth.service';
                         </div>
 
                         <div class="flex flex-col items-center gap-4">
-                            <p class="text-surface-500 text-sm text-center max-w-xs">
-                                Sisteme erişmek için MFA Merkezi Kimlik Doğrulama (SSO) servisi kullanılmaktadır.
-                            </p>
-                            <p-button
-                                label="MFA SSO ile Giriş Yap"
-                                icon="pi pi-sign-in"
-                                styleClass="w-full"
-                                (onClick)="onSsoLogin()"
-                            />
+                            <p class="text-surface-500 text-sm text-center max-w-xs">Sisteme erişmek için MFA Merkezi Kimlik Doğrulama (SSO) servisi kullanılmaktadır.</p>
+                            <p-button label="MFA SSO ile Giriş Yap" icon="pi pi-sign-in" styleClass="w-full" (onClick)="onSsoLogin()" />
                         </div>
                     </div>
                 </div>

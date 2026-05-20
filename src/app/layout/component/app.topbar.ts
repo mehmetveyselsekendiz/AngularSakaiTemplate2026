@@ -23,7 +23,7 @@ import { AuthService } from '@/app/core/auth/auth.service';
         <div class="layout-topbar-actions">
             <div class="layout-config-menu">
                 <button type="button" class="layout-topbar-action" (click)="toggleDarkMode()">
-                    <i [ngClass]="{ 'pi': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme() }"></i>
+                    <i [ngClass]="{ pi: true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme() }"></i>
                 </button>
             </div>
 
@@ -51,7 +51,7 @@ import { AuthService } from '@/app/core/auth/auth.service';
 })
 export class AppTopbar {
     layoutService = inject(LayoutService);
-    authService   = inject(AuthService);
+    authService = inject(AuthService);
 
     toggleDarkMode(): void {
         this.layoutService.layoutConfig.update((state) => ({

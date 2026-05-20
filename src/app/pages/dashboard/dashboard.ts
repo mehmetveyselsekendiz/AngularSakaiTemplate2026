@@ -48,10 +48,7 @@ const QUICK_LINKS: QuickLink[] = [
             <div class="col-span-12">
                 <p-card>
                     <div class="flex items-center gap-4">
-                        <span
-                            class="inline-flex items-center justify-center w-16 h-16 rounded-full shrink-0"
-                            style="background: var(--mfa-red)"
-                        >
+                        <span class="inline-flex items-center justify-center w-16 h-16 rounded-full shrink-0" style="background: var(--mfa-red)">
                             <i class="pi pi-shield text-3xl" style="color: white"></i>
                         </span>
                         <div>
@@ -77,13 +74,7 @@ const QUICK_LINKS: QuickLink[] = [
                                 <span class="font-semibold text-base">{{ link.label }}</span>
                             </div>
                             <p class="text-muted-color text-sm m-0 flex-1">{{ link.description }}</p>
-                            <p-button
-                                label="İncele"
-                                severity="secondary"
-                                size="small"
-                                styleClass="w-full"
-                                [routerLink]="link.route"
-                            />
+                            <p-button label="İncele" severity="secondary" size="small" styleClass="w-full" [routerLink]="link.route" />
                         </div>
                     </p-card>
                 </div>

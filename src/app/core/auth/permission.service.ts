@@ -18,8 +18,6 @@ export class PermissionService {
      * Roller listesi boşsa her zaman true döner.
      */
     anyRole(roles: string[]): Signal<boolean> {
-        return computed(() =>
-            roles.length === 0 || roles.some(r => this.authService.roles().includes(r))
-        );
+        return computed(() => roles.length === 0 || roles.some((r) => this.authService.roles().includes(r)));
     }
 }

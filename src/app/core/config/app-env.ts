@@ -27,5 +27,5 @@ export const appEnv = {
     // SSO logout redirect: http://localhost:4200/auth/login
     postLogoutUri: () => env('POST_LOGOUT_URI', `${window.location.origin}/auth/login`),
     apiUrl: () => env('API_URL'),
-    portalUrl: () => env('PORTAL_URL', 'https://www.mfa.gov.tr'),
+    portalUrl: () => env('PORTAL_URL', 'https://www.mfa.gov.tr')
 } as const;

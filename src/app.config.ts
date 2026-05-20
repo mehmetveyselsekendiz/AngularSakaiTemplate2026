@@ -15,6 +15,6 @@ export const appConfig: ApplicationConfig = {
         provideZonelessChangeDetection(),
         providePrimeNG({ theme: { preset: MfaPreset, options: { darkModeSelector: '.app-dark' } } }),
         // MessageService: error interceptor ve tüm uygulama için global provider
-        MessageService,
+        MessageService
     ]
 };

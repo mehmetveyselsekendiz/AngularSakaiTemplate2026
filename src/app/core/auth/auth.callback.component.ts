@@ -14,12 +14,12 @@ import { AuthService } from './auth.service';
     `
 })
 export class AuthCallback implements OnInit {
-    private route       = inject(ActivatedRoute);
-    private router      = inject(Router);
+    private route = inject(ActivatedRoute);
+    private router = inject(Router);
     private authService = inject(AuthService);
 
     ngOnInit(): void {
-        const code  = this.route.snapshot.queryParamMap.get('code');
+        const code = this.route.snapshot.queryParamMap.get('code');
         const state = this.route.snapshot.queryParamMap.get('state');
 
         if (!code || !state) {

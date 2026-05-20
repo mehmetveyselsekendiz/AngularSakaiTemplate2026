@@ -57,16 +57,13 @@ import { MessageModule } from 'primeng/message';
 
             <div class="card">
                 <div class="font-semibold text-xl mb-4">Salt Okunur Mod</div>
-                <p-editor [ngModel]="saltOkunurIcerik" [readonly]="true" [style]="{ height: '200px' }">
-                </p-editor>
+                <p-editor [ngModel]="saltOkunurIcerik" [readonly]="true" [style]="{ height: '200px' }"> </p-editor>
             </div>
 
             @if (icerik()) {
                 <div class="card">
                     <div class="font-semibold text-xl mb-4">HTML Çıktısı</div>
-                    <p-message severity="info">
-                        Aşağıdaki içerik editörden üretilen ham HTML'dir. Güvenilir kaynaklardan geldiğinde <code>[innerHTML]</code> ile render edilebilir.
-                    </p-message>
+                    <p-message severity="info"> Aşağıdaki içerik editörden üretilen ham HTML'dir. Güvenilir kaynaklardan geldiğinde <code>[innerHTML]</code> ile render edilebilir. </p-message>
                     <pre class="mt-4 p-4 rounded-border text-sm overflow-auto" style="background: var(--surface-100)">{{ icerik() }}</pre>
                 </div>
             }
@@ -87,10 +84,6 @@ export class EditorDemo {
     }
 
     varsayilanYukle() {
-        this.icerik.set(
-            '<h3>Örnek Zengin Metin İçeriği</h3>' +
-            '<p>Bu metin <strong>kalın</strong>, <em>italik</em> ve <u>altı çizili</u> biçimlendirme içermektedir.</p>' +
-            '<ul><li>Madde 1</li><li>Madde 2</li><li>Madde 3</li></ul>'
-        );
+        this.icerik.set('<h3>Örnek Zengin Metin İçeriği</h3>' + '<p>Bu metin <strong>kalın</strong>, <em>italik</em> ve <u>altı çizili</u> biçimlendirme içermektedir.</p>' + '<ul><li>Madde 1</li><li>Madde 2</li><li>Madde 3</li></ul>');
     }
 }

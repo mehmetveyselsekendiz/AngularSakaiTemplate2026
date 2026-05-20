@@ -60,7 +60,7 @@ interface Product {
                             <ng-template #body let-product>
                                 <tr [pSelectableRow]="product">
                                     <td>{{ product.name }}</td>
-                                    <td>{{ product.price | currency:'TRY':'symbol':'1.2-2' }}</td>
+                                    <td>{{ product.price | currency: 'TRY' : 'symbol' : '1.2-2' }}</td>
                                 </tr>
                             </ng-template>
                         </p-table>
