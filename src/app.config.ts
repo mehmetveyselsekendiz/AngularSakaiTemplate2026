@@ -1,11 +1,12 @@
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, inject, provideEnvironmentInitializer, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import { MfaPreset } from '@/app/core/config/theme.config';
 import { authInterceptor } from '@/app/core/auth/auth.interceptor';
 import { errorInterceptor } from '@/app/core/http/error.interceptor';
+import { SettingsService } from '@/app/core/settings/settings.service';
 import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -15,6 +16,8 @@ export const appConfig: ApplicationConfig = {
         provideZonelessChangeDetection(),
         providePrimeNG({ theme: { preset: MfaPreset, options: { darkModeSelector: '.app-dark' } } }),
         // MessageService: error interceptor ve tüm uygulama için global provider
-        MessageService
+        MessageService,
+        // SettingsService'i root injector kurulurken erken oluştur → DOM effect'leri ilk render'dan önce çalışsın
+        provideEnvironmentInitializer(() => inject(SettingsService))
     ]
 };
