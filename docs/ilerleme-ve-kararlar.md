@@ -329,3 +329,26 @@ Kullanıcı isteği: "Bütün componentler ve sayfalar kurumsal kimlik paletinde
 - `src/app/core/i18n/translate.service.ts` + `translate.pipe.ts` yazılır (Phase 7B implementasyon)
 - CLAUDE.md §3 yasaklar listesi: `@ngx-translate/core`, `@angular/localize`
 - `LOCALE_ID` runtime sınırlaması Phase 7C'de çözülür (manuel `formatDate`/`formatCurrency` sarmalama)
+
+---
+
+### Phase 7B — Runtime Ayar Sistemi (TAMAMLANDI — 21 Mayıs 2026)
+
+Implementation `superpowers:subagent-driven-development` skill ile, 12 task'lık plan üzerinden yürütüldü. Her task'ta: fresh implementer subagent → spec compliance reviewer → code quality reviewer döngüsü uygulandı.
+
+- [x] Task 1: `SettingsService` + types (signal+effect+localStorage, SSR-safe) — commit `add6d45`
+- [x] Task 2: `mfa-tokens.scss` alias token'lar + `.app-dark` + `html[data-font-scale]` — commit `b179ec1`
+- [x] Task 3: `theme.config.ts` `colorScheme.dark.surface` ters çevrilmiş (önceki bug fix) — commit `34c7e4c`
+- [x] Task 4: `index.html` baseline + `provideEnvironmentInitializer` (ENVIRONMENT_INITIALIZER yerine Angular 19+ idiom) — commit `60b1562`
+- [x] Task 5: `TranslateService` + `\| t` pipe + `tr.json`/`en.json` (63 key) — commit `2514c88`
+- [x] Task 6: `LOCALE_ID` runtime factory + `registerLocaleData(tr, en)` — commit `1f324b6`
+- [x] Task 7: `navigation.config.ts` `label` → `labelKey` migration + Ayarlar menü öğesi — commit `c773fed`
+- [x] Task 8: `app.menu.ts` runtime `t()` render — commit `7ebffa2`
+- [x] Task 9: `AppSettingsForm` paylaşılan component — commit `f8a10ac`
+- [x] Task 10: `/pages/ayarlar` tam sayfa + route — commit `9657211`
+- [x] Task 11: Topbar drawer + cog button + `AppFloatingConfigurator` silindi (login/access/error/notfound temizliği dahil, atomic commit) — commit `a05af68`
+- [x] Task 12: `LayoutService` refactor (sadece menu state) + alias/cleanup + final build — bu commit
+- [x] Production build: BAŞARILI
+- [x] Tüm subagent review döngüleri APPROVED
+
+**Manuel acceptance testleri kullanıcı tarafından yapılacak** (browser smoke test maddeleri spec §10'da listelendi).

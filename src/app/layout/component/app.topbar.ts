@@ -6,7 +6,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { DrawerModule } from 'primeng/drawer';
 import { LayoutService } from '@/app/layout/service/layout.service';
 import { AuthService } from '@/app/core/auth/auth.service';
-import { SettingsService } from '@/app/core/settings/settings.service';
 import { AppSettingsForm } from '@/app/layout/component/app.settings-form';
 import { TranslatePipe } from '@/app/core/i18n/translate.pipe';
 
@@ -94,7 +93,6 @@ import { TranslatePipe } from '@/app/core/i18n/translate.pipe';
 export class AppTopbar {
     layoutService = inject(LayoutService);
     authService = inject(AuthService);
-    settingsService = inject(SettingsService);
 
     settingsOpen = signal<boolean>(false);
 

@@ -1,7 +1,7 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { FluidModule } from 'primeng/fluid';
-import { LayoutService } from '@/app/layout/service/layout.service';
+import { SettingsService } from '@/app/core/settings/settings.service';
 
 @Component({
     selector: 'app-chart-demo',
@@ -49,7 +49,7 @@ import { LayoutService } from '@/app/layout/service/layout.service';
     `
 })
 export class ChartDemo {
-    layoutService = inject(LayoutService);
+    private readonly settings = inject(SettingsService);
 
     lineData = signal<any>(null);
 
@@ -72,7 +72,7 @@ export class ChartDemo {
     radarOptions = signal<any>(null);
 
     chartEffect = effect(() => {
-        this.layoutService.layoutConfig().darkTheme;
+        this.settings.isDark();
         setTimeout(() => this.initCharts(), 150);
     });
 
