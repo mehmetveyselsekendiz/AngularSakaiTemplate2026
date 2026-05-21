@@ -2,16 +2,7 @@
 
 import { Injectable, PLATFORM_ID, computed, effect, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import {
-    AppLanguage,
-    AppSettings,
-    DEFAULT_SETTINGS,
-    FontScale,
-    ThemeMode,
-    isValidFontScale,
-    isValidLanguage,
-    isValidThemeMode
-} from './settings.types';
+import { AppLanguage, AppSettings, DEFAULT_SETTINGS, FontScale, ThemeMode, isValidFontScale, isValidLanguage, isValidThemeMode } from './settings.types';
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
@@ -20,7 +11,6 @@ export class SettingsService {
     private readonly isBrowser = isPlatformBrowser(this.platformId);
 
     private readonly _settings = signal<AppSettings>(this.load());
-    private readonly _systemPrefersDark = signal<boolean>(this.detectSystemDark());
 
     readonly settings = this._settings.asReadonly();
     readonly themeMode = computed(() => this._settings().themeMode);
@@ -30,9 +20,6 @@ export class SettingsService {
 
     constructor() {
         if (this.isBrowser) {
-            const mq = window.matchMedia('(prefers-color-scheme: dark)');
-            mq.addEventListener('change', (e) => this._systemPrefersDark.set(e.matches));
-
             effect(() => {
                 const dark = this.isDark();
                 this.applyDarkClass(dark);
@@ -66,9 +53,7 @@ export class SettingsService {
     }
 
     private resolveDark(): boolean {
-        const mode = this._settings().themeMode;
-        if (mode === 'system') return this._systemPrefersDark();
-        return mode === 'dark';
+        return this._settings().themeMode === 'dark';
     }
 
     private applyDarkClass(dark: boolean): void {
@@ -81,11 +66,6 @@ export class SettingsService {
         } else {
             toggle();
         }
-    }
-
-    private detectSystemDark(): boolean {
-        if (!this.isBrowser) return false;
-        return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
 
     private load(): AppSettings {

@@ -16,39 +16,19 @@ import { AppLanguage, FontScale, ThemeMode } from '@/app/core/settings/settings.
             <!-- Tema -->
             <div>
                 <label class="block font-medium mb-2">{{ 'settings.theme.label' | t }}</label>
-                <p-selectButton
-                    [options]="themeOptions()"
-                    [ngModel]="themeMode()"
-                    (ngModelChange)="onThemeChange($event)"
-                    optionLabel="label"
-                    optionValue="value"
-                    [allowEmpty]="false"
-                    [ariaLabelledBy]="'settings.theme.label' | t" />
+                <p-selectButton [options]="themeOptions()" [ngModel]="themeMode()" (ngModelChange)="onThemeChange($event)" optionLabel="label" optionValue="value" [allowEmpty]="false" [ariaLabelledBy]="'settings.theme.label' | t" />
             </div>
 
             <!-- Font Scale -->
             <div>
                 <label class="block font-medium mb-2">{{ 'settings.fontScale.label' | t }}</label>
-                <p-selectButton
-                    [options]="scaleOptions"
-                    [ngModel]="fontScale()"
-                    (ngModelChange)="onScaleChange($event)"
-                    optionLabel="label"
-                    optionValue="value"
-                    [allowEmpty]="false"
-                    [ariaLabelledBy]="'settings.fontScale.label' | t" />
+                <p-selectButton [options]="scaleOptions" [ngModel]="fontScale()" (ngModelChange)="onScaleChange($event)" optionLabel="label" optionValue="value" [allowEmpty]="false" [ariaLabelledBy]="'settings.fontScale.label' | t" />
             </div>
 
             <!-- Dil -->
             <div>
                 <label class="block font-medium mb-2">{{ 'settings.language.label' | t }}</label>
-                <p-select
-                    [options]="languageOptions()"
-                    [ngModel]="language()"
-                    (ngModelChange)="onLanguageChange($event)"
-                    optionLabel="label"
-                    optionValue="value"
-                    class="w-full" />
+                <p-select [options]="languageOptions()" [ngModel]="language()" (ngModelChange)="onLanguageChange($event)" optionLabel="label" optionValue="value" class="w-full" />
             </div>
         </div>
     `
@@ -65,8 +45,7 @@ export class AppSettingsForm {
         this.translate.dict();
         return [
             { label: this.translate.t('settings.theme.light'), value: 'light' as ThemeMode },
-            { label: this.translate.t('settings.theme.dark'), value: 'dark' as ThemeMode },
-            { label: this.translate.t('settings.theme.system'), value: 'system' as ThemeMode }
+            { label: this.translate.t('settings.theme.dark'), value: 'dark' as ThemeMode }
         ];
     });
 

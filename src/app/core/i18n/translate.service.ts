@@ -42,7 +42,7 @@ export class TranslateService {
 
     private async load(lang: AppLanguage): Promise<void> {
         try {
-            const dict = await firstValueFrom(this.http.get<Dict>(`/assets/i18n/${lang}.json`));
+            const dict = await firstValueFrom(this.http.get<Dict>(`/i18n/${lang}.json`));
             this._dict.set(dict ?? {});
             this.primeng.setTranslation(this.toPrimeNgTranslation(dict ?? {}));
         } catch {
