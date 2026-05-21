@@ -84,3 +84,44 @@
   --mfa-surface-900: #1a1c1f;
   --mfa-surface-950: #0d0e10;
 }
+
+// ─── Alias token'lar (light default) ─────────────────────────────────────
+// Component'ler bu alias'ları okur; .app-dark altında otomatik dark eşleniğe kayar.
+:root {
+  --mfa-bg:          var(--mfa-surface-0);
+  --mfa-bg-elevated: var(--mfa-surface-50);
+  --mfa-bg-muted:    var(--mfa-surface-100);
+  --mfa-text:        var(--mfa-surface-900);
+  --mfa-text-muted:  var(--mfa-surface-600);
+  --mfa-border:      var(--mfa-surface-200);
+  --mfa-brand:       var(--mfa-red);
+  --mfa-brand-fg:    #ffffff;
+}
+
+// ─── Dark mode override (akromatik invert) ───────────────────────────────
+// Yalnız yüzey/metin/border ters çevrilir. 11-step paletler dokunulmaz.
+// Marka renkleri okunabilirlik için tonal kayma yapar.
+.app-dark {
+  --mfa-bg:          var(--mfa-surface-950);
+  --mfa-bg-elevated: var(--mfa-surface-900);
+  --mfa-bg-muted:    var(--mfa-surface-800);
+  --mfa-text:        var(--mfa-surface-50);
+  --mfa-text-muted:  var(--mfa-surface-300);
+  --mfa-border:      var(--mfa-surface-700);
+
+  // Marka rengi tonal ayar — palet İÇİNDEN seçim
+  --mfa-red:    var(--mfa-red-500);
+  --mfa-navy:   var(--mfa-navy-400);
+  --mfa-gold:   var(--mfa-gold-400);
+  --mfa-danger: var(--mfa-danger-500);
+  --mfa-brand:  var(--mfa-red-500);
+}
+
+// ─── Font scale (kök font-size) ──────────────────────────────────────────
+// SettingsService `data-font-scale` attribute set eder; tüm rem ölçekleri buna bağlı.
+:root              { font-size: 15px; }                     // md default
+html[data-font-scale="xs"] { font-size: 13px; }
+html[data-font-scale="sm"] { font-size: 14px; }
+html[data-font-scale="md"] { font-size: 15px; }
+html[data-font-scale="lg"] { font-size: 17px; }
+html[data-font-scale="xl"] { font-size: 19px; }
