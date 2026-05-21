@@ -1,16 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { AppFloatingConfigurator } from '../../layout/component/app.floatingconfigurator';
 import { AuthService } from '@/app/core/auth/auth.service';
 import { appEnv } from '@/app/core/config/app-env';
 
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [ButtonModule, InputTextModule, AppFloatingConfigurator],
+    imports: [ButtonModule, InputTextModule],
     template: `
-        <app-floating-configurator />
         <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-screen overflow-hidden">
             <div class="flex flex-col items-center justify-center">
                 <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
