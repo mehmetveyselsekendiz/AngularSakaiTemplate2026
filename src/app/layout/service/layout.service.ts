@@ -21,9 +21,7 @@ export class LayoutService {
     // Geriye uyumluluk: app.layout.ts ve diğer Sakai mirası bileşenler `layoutState()` çağrısı kullanıyor
     layoutState = signal<LayoutState>(DEFAULT_STATE);
 
-    readonly isSidebarActive = computed(
-        () => this.layoutState().overlayMenuActive || this.layoutState().mobileMenuActive
-    );
+    readonly isSidebarActive = computed(() => this.layoutState().overlayMenuActive || this.layoutState().mobileMenuActive);
 
     transitionComplete = signal<boolean>(false);
 

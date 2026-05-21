@@ -31,39 +31,19 @@ import { FontScale } from '@/app/core/settings/settings.types';
             <!-- 3'lü ayar grubu: Dil / Font / Tema — tek border'lı container, aralarında divider -->
             <div class="mfa-settings-group inline-flex items-stretch overflow-hidden rounded-md border" style="border-color: var(--mfa-border)">
                 <!-- Dil toggle (TR ↔ EN tek tıkla) -->
-                <button
-                    type="button"
-                    class="mfa-settings-btn"
-                    (click)="toggleLanguage()"
-                    [pTooltip]="languageTooltip()"
-                    tooltipPosition="bottom"
-                    [attr.aria-label]="languageTooltip()">
+                <button type="button" class="mfa-settings-btn" (click)="toggleLanguage()" [pTooltip]="languageTooltip()" tooltipPosition="bottom" [attr.aria-label]="languageTooltip()">
                     <i class="pi pi-language"></i>
                     <span class="text-xs font-semibold uppercase">{{ settings.language() }}</span>
                 </button>
 
                 <!-- Font scale (popover trigger, Aa metafor) -->
-                <button
-                    type="button"
-                    class="mfa-settings-btn"
-                    style="border-left: 1px solid var(--mfa-border)"
-                    (click)="fontPopover.toggle($event)"
-                    [pTooltip]="fontTooltip()"
-                    tooltipPosition="bottom"
-                    [attr.aria-label]="fontTooltip()">
+                <button type="button" class="mfa-settings-btn" style="border-left: 1px solid var(--mfa-border)" (click)="fontPopover.toggle($event)" [pTooltip]="fontTooltip()" tooltipPosition="bottom" [attr.aria-label]="fontTooltip()">
                     <span class="text-xs leading-none">A</span>
                     <span class="text-base font-bold leading-none">A</span>
                 </button>
 
                 <!-- Tema toggle (light ↔ dark tek tıkla) -->
-                <button
-                    type="button"
-                    class="mfa-settings-btn"
-                    style="border-left: 1px solid var(--mfa-border)"
-                    (click)="toggleTheme()"
-                    [pTooltip]="themeTooltip()"
-                    tooltipPosition="bottom"
-                    [attr.aria-label]="themeTooltip()">
+                <button type="button" class="mfa-settings-btn" style="border-left: 1px solid var(--mfa-border)" (click)="toggleTheme()" [pTooltip]="themeTooltip()" tooltipPosition="bottom" [attr.aria-label]="themeTooltip()">
                     <i [class]="settings.isDark() ? 'pi pi-sun' : 'pi pi-moon'"></i>
                 </button>
             </div>
@@ -71,13 +51,7 @@ import { FontScale } from '@/app/core/settings/settings.types';
             <p-popover #fontPopover>
                 <div class="flex flex-col gap-2 p-2 min-w-[16rem]">
                     <label class="block font-medium text-sm">{{ fontTooltip() }}</label>
-                    <p-selectButton
-                        [options]="scaleOptions"
-                        [ngModel]="settings.fontScale()"
-                        (ngModelChange)="settings.setFontScale($event)"
-                        optionLabel="label"
-                        optionValue="value"
-                        [allowEmpty]="false" />
+                    <p-selectButton [options]="scaleOptions" [ngModel]="settings.fontScale()" (ngModelChange)="settings.setFontScale($event)" optionLabel="label" optionValue="value" [allowEmpty]="false" />
                 </div>
             </p-popover>
 

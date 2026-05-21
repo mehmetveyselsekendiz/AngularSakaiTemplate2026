@@ -20,12 +20,7 @@ import { TranslatePipe } from '@/app/core/i18n/translate.pipe';
 
             <p-divider />
 
-            <p-button
-                [label]="'settings.reset' | t"
-                severity="secondary"
-                [outlined]="true"
-                icon="pi pi-refresh"
-                (onClick)="settings.reset()" />
+            <p-button [label]="'settings.reset' | t" severity="secondary" [outlined]="true" icon="pi pi-refresh" (onClick)="settings.reset()" />
         </div>
     `
 })

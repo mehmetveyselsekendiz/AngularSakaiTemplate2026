@@ -30,16 +30,12 @@ export class AppMenu {
         const roles = this.authService.roles();
         this.translate.dict(); // dil signal'ına abone ol → dil değişince re-eval
 
-        return NAV_GROUPS
-            .filter((g) => this.hasAccess(g.requiredRoles, roles))
-            .map((g) => ({
-                label: g.labelKey ? this.translate.t(g.labelKey) : g.label,
-                icon: g.icon,
-                separator: g.separator,
-                items: (g.items ?? [])
-                    .filter((i) => this.hasAccess(i.requiredRoles, roles))
-                    .map((i) => this.mapItem(i, roles))
-            }));
+        return NAV_GROUPS.filter((g) => this.hasAccess(g.requiredRoles, roles)).map((g) => ({
+            label: g.labelKey ? this.translate.t(g.labelKey) : g.label,
+            icon: g.icon,
+            separator: g.separator,
+            items: (g.items ?? []).filter((i) => this.hasAccess(i.requiredRoles, roles)).map((i) => this.mapItem(i, roles))
+        }));
     });
 
     private mapItem(item: NavItem, roles: string[]): MenuItem {
@@ -54,9 +50,7 @@ export class AppMenu {
             (mapped as Record<string, unknown>)['path'] = (item as Record<string, unknown>)['path'];
         }
         if (item.items?.length) {
-            mapped.items = item.items
-                .filter((sub) => this.hasAccess(sub.requiredRoles, roles))
-                .map((sub) => this.mapItem(sub, roles));
+            mapped.items = item.items.filter((sub) => this.hasAccess(sub.requiredRoles, roles)).map((sub) => this.mapItem(sub, roles));
         }
         return mapped;
     }
