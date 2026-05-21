@@ -523,31 +523,40 @@ export const appConfig: ApplicationConfig = {
 
 Mevcut Phase 0-8 ilk fazda teslim edildi. Aşağıdaki Phase'ler kurumsal kimliği "**runtime kontrol edilebilir + governance ile korunan + dünya standartlarında kullanılabilir**" hâle getirmek için tanımlandı.
 
-### Phase 7A — Devam Eden Temizlik (DEVAM)
+### Phase 7A — Devam Eden Temizlik (TAMAMLANDI)
 - [x] `navigation.config.ts` merkezi menü config
 - [x] Menü `computed()` signal (rol bazlı filtreleme)
 - [x] Auth alt-grup (Giriş / Erişim Engeli / Hata Sayfası)
 - [x] Eksik sayfa tespiti (notfound, empty, access, error, hierarchy)
-- [ ] Kalan palet ihlali temizliği (miscdemo, timelinedemo, tabledemo, crud, dashboard)
+- [x] Kritik palet ihlali temizliği (auth/access, auth/error, notfound, empty, dashboard)
+  *Not: kalan `/uikit/*` palet ihlalleri (miscdemo, timelinedemo, tabledemo, crud, mediademo) Phase 8 stylelint tarayıcısında otomatize edilecek.*
 
-### Phase 7B — Runtime Ayar Sistemi (PLAN HAZIR)
+### Phase 7B — Runtime Ayar Sistemi (TAMAMLANDI — 21 Mayıs 2026)
 **Spec:** [`superpowers/specs/2026-05-20-phase-7b-runtime-settings-design.md`](superpowers/specs/2026-05-20-phase-7b-runtime-settings-design.md)
+**Plan:** [`superpowers/plans/2026-05-20-phase-7b-runtime-settings.md`](superpowers/plans/2026-05-20-phase-7b-runtime-settings.md)
+**Kullanıcı kabul:** PASS (browser smoke test geçti)
 
-- [ ] `SettingsService` (tema/font/dil + persistence + View Transition)
-- [ ] `LayoutService` refaktör (sadece sidebar/menu state)
-- [ ] `mfa-tokens.scss` alias token'lar + `.app-dark` + `html[data-font-scale]`
-- [ ] `theme.config.ts` dark colorScheme
-- [ ] Custom `TranslateService` + `| t` pipe (0 paket)
-- [ ] `tr.json` / `en.json` (kritik ~80 key)
-- [ ] Topbar drawer + `/pages/ayarlar` (paylaşılan `<app-settings-form>`)
-- [ ] `app.floatingconfigurator.ts` silinir
-- [ ] `LOCALE_ID` runtime provider
+- [x] `SettingsService` (tema/font/dil + persistence + View Transition)
+- [x] `LayoutService` refaktör (sadece sidebar/menu state, tema-related her şey silindi)
+- [x] `mfa-tokens.scss` alias token'lar + `.app-dark` + `html[data-font-scale]`
+- [x] `theme.config.ts` dark colorScheme (light = dark surface, Aura konvansiyonu)
+- [x] Custom `TranslateService` + `| t` pipe (0 paket)
+- [x] `tr.json` / `en.json` (65 key, `public/i18n/` altında)
+- [x] Topbar 3'lü icon group + `/pages/ayarlar` tam sayfa (drawer iptal, paylaşılan `<app-settings-form>`)
+- [x] `app.floatingconfigurator.ts` silindi
+- [x] `LOCALE_ID` runtime provider (`registerLocaleData(tr, en)`)
+- [x] Light/dark only (system kaldırıldı, default light)
 
-### Phase 7C — Tam i18n
-- [ ] `/uikit/*` demo metinleri çevirisi
-- [ ] Dashboard, Kurumsal Kimlik, CRUD metinleri
-- [ ] `LOCALE_ID` runtime sınırlamasının çözümü (formatDate/formatCurrency manuel sarmalama)
-- [ ] Sözlük dosyaları lazy-load değerlendirmesi
+**Bilinen sınırlama (Phase 7C'de çözülecek):** `LOCALE_ID` factory bir kez çalışır → date/currency pipe dil değişince güncellenmez.
+
+### Phase 7C — Tam i18n (SIRADA)
+- [ ] `/uikit/*` demo metinleri çevirisi (16 sayfa)
+- [ ] Dashboard karşılama + 4 hızlı erişim kartı
+- [ ] `/pages/kurumsal-kimlik` Türkçe-yoğun içerikler (karar: EN karşılığı yoksa TR koru veya TBD)
+- [ ] `/pages/crud` örnek veri etiketleri
+- [ ] Auth sayfaları (login/access/error/notfound) hardcoded TR → key'leştirme
+- [ ] `LOCALE_ID` runtime sınırlamasının çözümü (`mfaDate`/`mfaCurrency` custom pipe)
+- [ ] Sözlük dosyaları lazy-load değerlendirmesi (eşik ~200 key)
 
 ### Phase 8 — Palet İhlali Tarayıcı + Governance Otomasyonu
 - [ ] Build-time stylelint kuralı (hardcoded hex/tailwind sabit renk yasağı)

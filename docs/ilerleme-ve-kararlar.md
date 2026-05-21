@@ -347,8 +347,67 @@ Implementation `superpowers:subagent-driven-development` skill ile, 12 task'lık
 - [x] Task 9: `AppSettingsForm` paylaşılan component — commit `f8a10ac`
 - [x] Task 10: `/pages/ayarlar` tam sayfa + route — commit `9657211`
 - [x] Task 11: Topbar drawer + cog button + `AppFloatingConfigurator` silindi (login/access/error/notfound temizliği dahil, atomic commit) — commit `a05af68`
-- [x] Task 12: `LayoutService` refactor (sadece menu state) + alias/cleanup + final build — bu commit
+- [x] Task 12: `LayoutService` refactor (sadece menu state) + alias/cleanup + final build — commit `cb42b17`
 - [x] Production build: BAŞARILI
 - [x] Tüm subagent review döngüleri APPROVED
 
-**Manuel acceptance testleri kullanıcı tarafından yapılacak** (browser smoke test maddeleri spec §10'da listelendi).
+### Phase 7B — Kullanıcı Kabul Sonrası Düzeltmeler (21 Mayıs 2026)
+
+Browser smoke test sonrası 7 bug, 3 atomic commit ile çözüldü:
+
+- [x] **Fix 1 (commit `e238b17`):** JSON 404 + drawer iptal + light/dark only
+  - `src/assets/i18n/*.json` → `public/i18n/*.json` (`angular.json` assets glob sadece `public/` kapsıyordu, src/assets bundle'a girmiyordu)
+  - `TranslateService.load()` fetch path `/i18n/${lang}.json`
+  - `ThemeMode = 'light' | 'dark'` (system kaldırıldı), default `'light'`
+  - `_systemPrefersDark` ve matchMedia listener silindi, `resolveDark()` sadeleşti
+  - Topbar drawer + `AppSettingsForm` import kaldırıldı (drawer içinde tıklama drawer'ı kapatıyordu)
+- [x] **Fix 2 (commit `032db68`):** Topbar icon group + tooltip i18n
+  - Drawer → 3'lü icon group (tek border'lı container, dikey divider)
+  - Dil: `pi-language` + TR/EN kodu, tek tıkla toggle (kocaman `<p-select>` kaldırıldı)
+  - Font: HTML `Aa` metafor (`pi-text-height` PrimeIcons 7'de gözükmüyordu), tıkla → `<p-popover>` XS-XL
+  - Tema: `pi-sun`/`pi-moon` toggle, group içine alındı
+  - Tooltip text'leri `computed()` signal'a bağlandı (`pTooltip` directive `| t` pipe değişimini algılamıyordu)
+  - CSS scoped component styles, `--mfa-*` alias token'lar (dark mode uyumlu)
+- [x] **Fix 3 (commit `8324e3d`):** Dark mode görsel değişim — Task 3 invert revert
+  - **Kök neden:** Task 3'te `colorScheme.dark.surface` invert (`0:#0d0e10 ... 950:#ffffff`) Sakai pattern'iyle uyumsuzdu. Sayfalar `bg-surface-50 dark:bg-surface-950` derken `--p-surface-950` invert ile `#ffffff` döndürüyor → dark mode'da BEYAZ zemin
+  - **Çözüm:** Dark surface = Light surface (aynı değerler). Aura konvansiyonu surface scale'i tema-bağımsız tutar; `dark:bg-surface-950` light'taki index'ten dark zemin değeri okur
+  - Aura'nın kendi `content`/`text`/`mute` semantic token'ları tema-bağımlı dark variant'ı uygular
+- [x] **Format commit `3eb53e1`:** Prettier multi-line → single-line (semantik değişiklik yok)
+- [x] **Push:** 15 commit `origin/main`'e push edildi (`add6d45..3eb53e1`)
+
+### Kullanıcı Kabul Testi — PASS (21 Mayıs 2026)
+
+Browser smoke test maddeleri geçildi:
+- ✅ Translation çalışıyor (menu.home → "Ana Sayfa" / "Home")
+- ✅ Dark mode görsel değişim (commit `8324e3d` sonrası)
+- ✅ Header icon group düzgün (dil + font + tema)
+- ✅ Tooltip dil desteği (TR/EN switch'inde tooltip değişiyor)
+- ✅ Font scale popover + XS-XL seçimleri
+- ✅ Persistence (localStorage `mfa.settings.v1`)
+- ✅ Responsive (mobile 375px viewport)
+- ✅ Reset "Varsayılana Dön" çalışıyor
+
+Bilinen sınırlama (Phase 7C'ye taşındı): `LOCALE_ID` runtime'da değişmez — `date`/`currency` pipe'ları dil değişince güncellenmez (sayfa reload gerekir).
+
+---
+
+## Sırada — 22 Mayıs 2026 / Sonraki Oturum
+
+**Aktif faz:** Phase 7C — Tam i18n
+
+Yarın başlangıç için sırasıyla oku:
+1. [`yeni-sakai-session-prompt.md`](yeni-sakai-session-prompt.md) — açılış prompt'u
+2. Bu dosyanın "Phase 7B Kapanış" bölümleri — son durum özeti
+3. [`sakai-mfa-uyarlama-plani.md`](sakai-mfa-uyarlama-plani.md) §4B Phase 7C maddesi — scope
+
+**Phase 7C iş listesi:**
+- `/uikit/*` demo metinleri çevirisi (16 sayfa: button/input/formlayout/hierarchy/editor/table/list/tree/panel/overlay/media/menu/message/file/charts/timeline/misc)
+- Dashboard karşılama + 4 hızlı erişim kartı metinleri
+- `/pages/kurumsal-kimlik` Türkçe-yoğun içerikler — kurumsal kimlik rehberinin EN karşılığı zor olabilir; resmi belgeden EN çevirisi yoksa key'leştirip TR'yi koru, EN için TBD bırak (karar gerekecek)
+- `/pages/crud` örnek veri etiketleri
+- `/pages/ayarlar` "Hakkında" bloğu zaten çevrili — ek metin gerekirse
+- Auth sayfaları (login/access/error/notfound) — şu an hardcoded Türkçe, key'leştir
+- `LOCALE_ID` runtime sınırlamasının çözümü: Angular built-in `formatDate`/`formatCurrency` fonksiyonlarını `SettingsService.language()` ile sarmalayan custom pipe'lar (`mfaDate`, `mfaCurrency`)
+- Sözlük dosyalarının büyüme durumunda lazy-load değerlendirmesi (şu an eager-load, ~70 key sorun değil ama 500+ key'de düşünülebilir)
+
+**Git durumu:** `main` ↔ `origin/main` senkron, working tree temiz.
