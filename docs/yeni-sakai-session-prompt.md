@@ -2,7 +2,7 @@
 
 Bu dosya, **`AngularSakaiTemplate2026`** dizininde **yeni bir Claude Code oturumu** başlattığında ilk mesaj olarak göndereceğin prompt'u içerir.
 
-> **Son güncelleme:** 21 Mayıs 2026 — Phase 1–7B tamamlandı, Phase 7C sırada.
+> **Son güncelleme:** 22 Mayıs 2026 — Phase 1–7C tamamlandı, Phase 8 sırada.
 
 ## Kullanım Adımları
 
@@ -24,7 +24,7 @@ bu template'i fork'layıp kendi modüllerini geliştirecek.
 
 ## MEVCUT DURUM — ÖNCE BUNU OKU
 
-Phase 1–7B tamamlandı, Phase 7C sırada. Sıfırdan başlama; kurulum
+Phase 1–7C tamamlandı, Phase 8 sırada. Sıfırdan başlama; kurulum
 adımlarını tekrar yapma.
 
 Oturumu anlamak için sırasıyla şunları oku:
@@ -33,6 +33,7 @@ Oturumu anlamak için sırasıyla şunları oku:
 2. docs/ilerleme-ve-kararlar.md — tamamlanan TÜM adımlar + kararlar
    (en alttaki "Sırada — Sonraki Oturum" bölümünden başla)
 3. docs/sakai-mfa-uyarlama-plani.md §4B — Yeni yol haritası (Phase 7A-11)
+4. docs/i18n-rehber.md — modül takımları için i18n rehberi (Phase 7C ekledi)
 
 Faz özeti:
 - Phase 1  ✓  Sakai demo temizliği (CDN font, landing, demo servisler)
@@ -45,14 +46,17 @@ Faz özeti:
               eksik sayfa tespiti, palet ihlal temizliği
 - Phase 7B ✓  Runtime Ayar Sistemi (SettingsService + tema/font/dil +
               localStorage + topbar icon group + /pages/ayarlar)
-- Phase 7C ▶  Tam i18n (uikit/dashboard/kurumsal-kimlik metinleri +
-              LOCALE_ID runtime sınırlamasının çözümü)
+- Phase 7C ✓  Template-düzeyi i18n (auth/empty/dashboard) + foundation
+              pipe'lar (mfaDate/mfaCurrency, runtime locale) + modül
+              rehberi (docs/i18n-rehber.md). K-012 ile kapsam daraltıldı:
+              /uikit/*, kurumsal-kimlik, crud template-only kabul edildi.
+- Phase 8  ▶  Palet İhlali Tarayıcı + Governance Otomasyonu
 
 ---
 
-## PHASE 7B ÖZETİ
+## PHASE 7B + 7C ÖZETİ
 
-Çalışan özellikler:
+Çalışan özellikler (7B):
 - Topbar'da 3'lü icon group: [🌐 TR/EN] [Aa font] [🌙/☀️ tema]
 - /pages/ayarlar tam sayfa (drawer YOK, paylaşılan AppSettingsForm)
 - Light/dark theme toggle (system kaldırıldı, default light)
@@ -62,9 +66,17 @@ Faz özeti:
 - Tüm runtime kontrol SettingsService (core/settings/) üzerinden
 - LayoutService sadece sidebar/menu state
 
-Bilinen sınırlama (Phase 7C'de çözülecek):
-- LOCALE_ID factory bir kez çalışır → date/currency pipe dil değişince
-  güncellenmez (sayfa reload gerekir)
+Yeni (7C):
+- auth/login, access, error, notfound, empty, dashboard → tamamen i18n
+- MfaDatePipe / MfaCurrencyPipe (src/app/core/i18n/) — pure:false + signal
+  okur → kullanıcı dil değiştirince sayfa reload OLMADAN re-format eder
+  (LOCALE_ID runtime sınırlaması K-013 ile çözüldü)
+- /uikit/*, /pages/kurumsal-kimlik, /pages/crud demo'ları TR'de bırakıldı
+  (K-012: template-only sayfalar shipping yapılmaz)
+- docs/i18n-rehber.md — modül takımları için namespace + pipe pattern'i
+
+Modüller artık `| date` / `| currency` yerine `| mfaDate` / `| mfaCurrency`
+kullanmalı. Rehber: docs/i18n-rehber.md.
 
 ---
 
@@ -137,8 +149,11 @@ Tek kaynak: src/app/core/settings/settings.service.ts
 i18n altyapı:
 - src/app/core/i18n/translate.service.ts
 - src/app/core/i18n/translate.pipe.ts (| t pipe, pure:false)
-- public/i18n/tr.json + en.json (~65 key, eager-load)
+- src/app/core/i18n/mfa-date.pipe.ts (| mfaDate, runtime locale)
+- src/app/core/i18n/mfa-currency.pipe.ts (| mfaCurrency, runtime locale)
+- public/i18n/tr.json + en.json (~95 key, eager-load)
 - navigation.config.ts → labelKey ile çevrilir
+- docs/i18n-rehber.md → modül takımları rehberi
 
 ---
 
@@ -227,6 +242,6 @@ Detay için docs/ilerleme-ve-kararlar.md'nin son bölümünü oku.
 
 - `git push` her zaman kullanıcı onayıyla.
 - Üretim build doğrulamadan commit atma (`npx ng build`).
-- Phase 7C'de `LOCALE_ID` runtime sınırlaması çözülecek
-  (Angular `formatDate`/`formatCurrency` manuel sarmalama veya kendi
-  `mfaDate`/`mfaCurrency` pipe'ları).
+- Phase 7C tamamlandı: `MfaDatePipe` / `MfaCurrencyPipe` modüllere foundation.
+- Phase 8 başlamadan önce `docs/sakai-mfa-uyarlama-plani.md` §4B Phase 8
+  maddesini oku (palet ihlali tarayıcı + governance otomasyonu).
