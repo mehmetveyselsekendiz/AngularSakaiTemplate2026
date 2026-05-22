@@ -312,4 +312,5 @@ Kullanıcının canlı kontrol edebildiği üç boyut: **tema** (light/dark/syst
 1. **`docs/sakai-mfa-uyarlama-plani.md`'ye bak** — yol haritası, faz durumları.
 2. **`docs/ilerleme-ve-kararlar.md`'ye bak** — tamamlanan adımlar, alınan kararlar (K-001...K-NNN).
 3. **`docs/superpowers/specs/`'e bak** — aktif faz için detaylı tasarım dokümanı.
-4. **Kullanıcıya sor** — Türkçe, kısa cümlelerle.
+4. **`docs/i18n-rehber.md`'ye bak** — modüller için i18n stratejisi (namespace, pipe'lar, yasaklar).
+5. **Kullanıcıya sor** — Türkçe, kısa cümlelerle.

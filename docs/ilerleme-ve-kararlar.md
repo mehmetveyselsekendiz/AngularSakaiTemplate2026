@@ -391,23 +391,75 @@ Bilinen sınırlama (Phase 7C'ye taşındı): `LOCALE_ID` runtime'da değişmez 
 
 ---
 
-## Sırada — 22 Mayıs 2026 / Sonraki Oturum
+## Oturum 4 — 22 Mayıs 2026
 
-**Aktif faz:** Phase 7C — Tam i18n
+### Phase 7C — Template-Düzeyi i18n + Foundation Pipe'lar (Tamamlandı)
 
-Yarın başlangıç için sırasıyla oku:
-1. [`yeni-sakai-session-prompt.md`](yeni-sakai-session-prompt.md) — açılış prompt'u
-2. Bu dosyanın "Phase 7B Kapanış" bölümleri — son durum özeti
-3. [`sakai-mfa-uyarlama-plani.md`](sakai-mfa-uyarlama-plani.md) §4B Phase 7C maddesi — scope
+**Bağlam değişikliği:** Phase 7C'nin orijinal kapsamı "tüm sayfalar TR/EN çevrilsin" şeklindeydi. Bu oturumda kullanıcı sorusuyla yapısal sadeleştirme yapıldı (bkz. K-012): template demo sayfaları (/uikit/*, kurumsal kimlik, CRUD) çevrilmez; sadece modüllerin shipping yapacağı template chrome ve foundation altyapı çevrilir.
 
-**Phase 7C iş listesi:**
-- `/uikit/*` demo metinleri çevirisi (16 sayfa: button/input/formlayout/hierarchy/editor/table/list/tree/panel/overlay/media/menu/message/file/charts/timeline/misc)
-- Dashboard karşılama + 4 hızlı erişim kartı metinleri
-- `/pages/kurumsal-kimlik` Türkçe-yoğun içerikler — kurumsal kimlik rehberinin EN karşılığı zor olabilir; resmi belgeden EN çevirisi yoksa key'leştirip TR'yi koru, EN için TBD bırak (karar gerekecek)
-- `/pages/crud` örnek veri etiketleri
-- `/pages/ayarlar` "Hakkında" bloğu zaten çevrili — ek metin gerekirse
-- Auth sayfaları (login/access/error/notfound) — şu an hardcoded Türkçe, key'leştir
-- `LOCALE_ID` runtime sınırlamasının çözümü: Angular built-in `formatDate`/`formatCurrency` fonksiyonlarını `SettingsService.language()` ile sarmalayan custom pipe'lar (`mfaDate`, `mfaCurrency`)
-- Sözlük dosyalarının büyüme durumunda lazy-load değerlendirmesi (şu an eager-load, ~70 key sorun değil ama 500+ key'de düşünülebilir)
+- [x] **7C-1 — Foundation pipe'lar**
+  - `src/app/core/i18n/mfa-date.pipe.ts` — `pure: false`, `SettingsService.language()` signal'ı her transform'da okur, Angular `formatDate` sarmalar
+  - `src/app/core/i18n/mfa-currency.pipe.ts` — aynı pattern, `formatCurrency` + `getCurrencySymbol` sarmalar (ISO 4217 currency code, display modu, digitsInfo)
+  - `LOCALE_ID` runtime sınırlaması artık modüller için sorun değil — bu pipe'lar tek satır API'yi kapatır
+- [x] **7C-2 — Auth sayfaları + notfound**
+  - `auth/login.ts` — 8 key (`auth.login.title/subtitle/sso.description/sso.button/dev.badge/dev.note/dev.placeholder/dev.button`); `devName` signal başlangıç değeri `''`, `onDevLogin` boşsa Türkçe fallback
+  - `auth/access.ts` — 2 key (`auth.access.title/description`) + `common.home`
+  - `auth/error.ts` — 2 key (`auth.error.title/description`) + `common.home`
+  - `notfound/notfound.ts` — `notfound.title/description` + 3 link açıklaması (`.link.home.description/library.description/corporate.description`); link başlıkları mevcut `menu.home/menu.library/menu.pages.corporate-identity` key'lerini reuse eder
+- [x] **7C-3 — Empty + Dashboard**
+  - `empty/empty.ts` — `empty.title/description`
+  - `dashboard/dashboard.ts` — `QuickLink` interface'i yeniden yapılandırıldı (`label/description` → `labelKey/descriptionKey`); 4 kart açıklaması + "İncele" buton metni + karşılama (parametreli `dashboard.welcome.title.named: "Hoş geldiniz, {name}"`)
+- [x] **7C-4 — Sözlük denetimi**
+  - `public/i18n/tr.json` + `en.json` — toplam 30+ yeni key eklendi; `settings.theme.system` ölü key'i temizlendi (Phase 7B Fix 1'de `ThemeMode = 'light' | 'dark'` olmuştu)
+- [x] **7C-5 — Modül rehberi**
+  - `docs/i18n-rehber.md` — modül takımları için namespace pattern'i, pipe kullanımı, programatik çeviri, doğrulama checklist'i, yasaklar
+  - `CLAUDE.md` §16'ya rehber referansı eklendi
+- [x] **7C-3.5 — Build doğrulaması:** `npx ng build --configuration development` — BAŞARILI (24.2 sn, 1 minor uyarı çözüldü: `displayName() ?? ''` → `displayName()`)
 
-**Git durumu:** `main` ↔ `origin/main` senkron, working tree temiz.
+### Alınan Kararlar
+
+#### K-012 — Phase 7C Kapsam Daraltma (22 Mayıs 2026)
+
+**Karar:** Phase 7C'nin orijinal "tüm sayfaları çevir" kapsamı reddedildi. Sadece **modüllerin shipping yapacağı template chrome** çevrildi: auth shell (login/access/error/notfound), empty, dashboard, settings drawer (Phase 7B'de zaten çevrildi). Demo/iç dokümantasyon sayfaları (`/uikit/*` 16 sayfa, `/pages/kurumsal-kimlik`, `/pages/crud` örnek veri) TR olarak bırakıldı.
+
+**Gerekçe:** Bu repo bir **template**. Modül takımları (vize, pasaport, personel, konsolosluk) fork'layıp kendi modüllerini geliştirecek; `/uikit/*` onlar için **referans**, `/pages/kurumsal-kimlik` **iç dokümantasyon**, `/pages/crud` **örnek**. Hiçbiri son kullanıcıya shipping yapılmaz. Bu sayfaların çevirisi 200+ key ekler, sözlük şişer, modüllerin lazy-load gerekliliğini öne çeker; faydası şüpheli.
+
+**Etki:**
+- Phase 7C ~6 task'ta bitti (orijinal plan ~16 task)
+- Modül takımları artık `docs/i18n-rehber.md` üzerinden kendi namespace'lerinde key ekleyebilir
+- Phase 8+ scope'u hızlandı (Phase 8: palet ihlali tarayıcı + governance otomasyonu)
+
+#### K-013 — Foundation Pipe Yaklaşımı (22 Mayıs 2026)
+
+**Karar:** `LOCALE_ID` runtime sınırlamasını çözmek için Angular built-in `formatDate`/`formatCurrency` fonksiyonlarını saran `MfaDatePipe`/`MfaCurrencyPipe` yazıldı (`pure: false`, signal okur).
+
+**Gerekçe:** Phase 7B'de `LOCALE_ID` factory provider eklendi ama Angular factory'i bir kez okuyor. Üç alternatif değerlendirildi:
+1. Angular'ın yeni `signal-aware pipe` API'sini beklemek — v22 stable'da olabilir, şu an yok
+2. `provideAppInitializer` ile dil değişince app restart — UX kötü
+3. **Seçilen:** Custom pipe + `pure: false` + `SettingsService.language()` signal okuma — dil signal'ı değişince Angular zaten change detection yapar; pipe transform tekrar çağırılır; yeni locale ile re-format
+
+**Etki:**
+- Modüller `| date`/`| currency` yerine `| mfaDate`/`| mfaCurrency` kullanır
+- `docs/i18n-rehber.md` §4'te kural belirtildi
+- Mevcut `/uikit/*` demo'larındaki `| currency` ve `| date` çağrıları template-only kaldığı için dokunulmadı
+
+---
+
+## Sırada — Sonraki Oturum
+
+**Tamamlanan:** Phase 7B (Runtime Ayar Sistemi) + Phase 7C (Template i18n + Foundation Pipe'lar)
+
+**Aktif aday:** Phase 8 — Palet İhlali Tarayıcı + Governance Otomasyonu
+
+Phase 8 scope (`sakai-mfa-uyarlama-plani.md` §4B):
+- Hardcoded hex / Tailwind sabit renk sınıfı tarayıcı script (`scripts/check-palette.js`)
+- npm `lint:palette` komutu, CI/pre-commit hook'u (opsiyonel)
+- `/uikit/*`'te olmayan PrimeNG component kullanımı tarama
+- Governance kuralları test edilebilir hâle getirme (CLAUDE.md §14'ün enforcement'ı)
+
+**Alternatif sıralama:**
+- Phase 9 — Component kod görüntüleme/kopyalama (`/uikit/*` "Kodu Göster" toggle)
+- Phase 10 — Responsive audit (mobile-first denetim, tablet breakpoint testleri)
+- Phase 11 — İlk modül iskeleti (örnek `features/vize/`)
+
+**Git durumu:** Phase 7C commit edilecek (~12 dosya). `main` branch.

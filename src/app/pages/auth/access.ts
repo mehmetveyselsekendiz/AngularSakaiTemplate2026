@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
+import { TranslatePipe } from '@/app/core/i18n/translate.pipe';
 
 @Component({
     selector: 'app-access',
     standalone: true,
-    imports: [ButtonModule, RouterModule, RippleModule],
+    imports: [ButtonModule, RouterModule, RippleModule, TranslatePipe],
     template: ` <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-screen overflow-hidden">
         <div class="flex flex-col items-center justify-center">
             <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, color-mix(in srgb, var(--mfa-gold) 40%, transparent) 10%, transparent 30%)">
@@ -15,11 +16,11 @@ import { RippleModule } from 'primeng/ripple';
                         <div class="flex justify-center items-center border-2 rounded-full" style="width: 3.2rem; height: 3.2rem; border-color: var(--mfa-gold)">
                             <i class="pi pi-fw pi-lock text-2xl!" style="color: var(--mfa-gold)"></i>
                         </div>
-                        <h1 class="text-surface-900 dark:text-surface-0 font-bold text-4xl lg:text-5xl mb-2">Erişim Engeli</h1>
-                        <span class="text-muted-color mb-8">Bu sayfayı görüntülemek için gerekli yetkiniz bulunmamaktadır. Lütfen yöneticinizle iletişime geçin.</span>
+                        <h1 class="text-surface-900 dark:text-surface-0 font-bold text-4xl lg:text-5xl mb-2">{{ 'auth.access.title' | t }}</h1>
+                        <span class="text-muted-color mb-8">{{ 'auth.access.description' | t }}</span>
                         <i class="pi pi-ban mb-8" style="font-size: 6rem; color: var(--mfa-gold)"></i>
                         <div class="col-span-12 mt-8 text-center">
-                            <p-button label="Ana Sayfaya Dön" routerLink="/" severity="warn" />
+                            <p-button [label]="'common.home' | t" routerLink="/" severity="warn" />
                         </div>
                     </div>
                 </div>
