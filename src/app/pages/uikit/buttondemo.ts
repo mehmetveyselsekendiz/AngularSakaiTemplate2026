@@ -1,25 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ButtonGroupModule } from 'primeng/buttongroup';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 
 @Component({
     selector: 'app-button-demo',
     standalone: true,
-    imports: [ButtonModule, ButtonGroupModule, SplitButtonModule],
+    imports: [ButtonModule, ButtonGroupModule, SplitButtonModule, CodeBlock],
     template: `<div class="flex flex-col md:flex-row gap-8">
         <div class="md:w-1/2">
             <div class="card flex flex-col gap-4">
                 <div class="font-semibold text-xl">Default</div>
+                <!-- snippet:button-default -->
                 <div class="flex flex-wrap gap-2">
                     <p-button label="Submit"></p-button>
                     <p-button label="Disabled" [disabled]="true"></p-button>
                     <p-button label="Link" class="p-button-link" />
                 </div>
+                <!-- /snippet -->
+                <app-code-block [code]="snippet('button-default')" />
             </div>
             <div class="card flex flex-col gap-4">
                 <div class="font-semibold text-xl">Severities</div>
+                <!-- snippet:button-severities -->
                 <div class="flex flex-wrap gap-2">
                     <p-button label="Primary" />
                     <p-button label="Secondary" severity="secondary" />
@@ -30,6 +36,8 @@ import { SplitButtonModule } from 'primeng/splitbutton';
                     <p-button label="Danger" severity="danger" />
                     <p-button label="Contrast" severity="contrast" />
                 </div>
+                <!-- /snippet -->
+                <app-code-block [code]="snippet('button-severities')" />
             </div>
             <div class="card flex flex-col gap-4">
                 <div class="font-semibold text-xl">Text</div>
@@ -178,6 +186,12 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     </div> `
 })
 export class ButtonDemo implements OnInit {
+    private readonly snippets = inject(SnippetService).forPage('buttondemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     items: MenuItem[] = [];
 
     loading = [false, false, false, false];

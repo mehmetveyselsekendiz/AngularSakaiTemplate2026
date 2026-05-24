@@ -8,6 +8,7 @@
         "watch": "ng build --watch --configuration development",
         "format": "prettier --write \"**/*.{js,mjs,ts,mts,d.ts,html}\" --cache",
         "lint:palette": "node scripts/check-palette.mjs",
+        "snippets": "node scripts/extract-snippets.mjs",
         "test": "ng test"
     },
     "private": true,

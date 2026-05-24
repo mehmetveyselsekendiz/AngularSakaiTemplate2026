@@ -1,0 +1,4 @@
+{
+  "button-default": "<div class=\"flex flex-wrap gap-2\">\n    <p-button label=\"Submit\"></p-button>\n    <p-button label=\"Disabled\" [disabled]=\"true\"></p-button>\n    <p-button label=\"Link\" class=\"p-button-link\" />\n</div>",
+  "button-severities": "<div class=\"flex flex-wrap gap-2\">\n    <p-button label=\"Primary\" />\n    <p-button label=\"Secondary\" severity=\"secondary\" />\n    <p-button label=\"Success\" severity=\"success\" />\n    <p-button label=\"Info\" severity=\"info\" />\n    <p-button label=\"Warn\" severity=\"warn\" />\n    <p-button label=\"Help\" severity=\"help\" />\n    <p-button label=\"Danger\" severity=\"danger\" />\n    <p-button label=\"Contrast\" severity=\"contrast\" />\n</div>"
+}
