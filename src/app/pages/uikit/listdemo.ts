@@ -7,6 +7,7 @@ import { OrderListModule } from 'primeng/orderlist';
 import { PickListModule } from 'primeng/picklist';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TagModule } from 'primeng/tag';
+import { svgPlaceholder } from '@/app/core/util/svg-placeholder';
 interface Product {
     id?: string;
     name?: string;
@@ -40,7 +41,7 @@ interface Product {
                         <div *ngFor="let item of items; let i = index">
                             <div class="flex flex-col sm:flex-row sm:items-center p-6 gap-4" [ngClass]="{ 'border-t border-surface': i !== 0 }">
                                 <div class="md:w-40 relative">
-                                    <img class="block xl:block mx-auto rounded w-full" src="https://primefaces.org/cdn/primevue/images/product/{{ item.image }}" [alt]="item.name" />
+                                    <img class="block xl:block mx-auto rounded w-full" [src]="productImage(item.name)" [alt]="item.name" />
                                     <div class="absolute bg-black/70 rounded-border" [style]="{ left: '4px', top: '4px' }">
                                         <p-tag [value]="item.inventoryStatus" [severity]="getSeverity(item)"></p-tag>
                                     </div>
@@ -62,7 +63,7 @@ interface Product {
                                                 "
                                             >
                                                 <span class="text-surface-900 font-medium text-sm">{{ item.rating }}</span>
-                                                <i class="pi pi-star-fill text-yellow-500"></i>
+                                                <i class="pi pi-star-fill" style="color: var(--mfa-gold)"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -84,7 +85,7 @@ interface Product {
                         <div *ngFor="let item of items; let i = index" class="col-span-12 sm:col-span-6 lg:col-span-4 p-2">
                             <div class="p-6 border border-surface-200 dark:border-surface-700 bg-surface-0 dark:bg-surface-900 rounded flex flex-col">
                                 <div class="relative w-full shadow-sm">
-                                    <img class="rounded w-full" src="https://primefaces.org/cdn/primevue/images/product/{{ item.image }}" [alt]="item.name" />
+                                    <img class="rounded w-full" [src]="productImage(item.name)" [alt]="item.name" />
                                     <div
                                         class="absolute bg-black/70 rounded-border"
                                         [style]="{
@@ -114,7 +115,7 @@ interface Product {
                                                 "
                                             >
                                                 <span class="text-surface-900 font-medium text-xs">{{ item.rating }}</span>
-                                                <i class="pi pi-star-fill text-yellow-500"></i>
+                                                <i class="pi pi-star-fill" style="color: var(--mfa-gold)"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -167,6 +168,10 @@ interface Product {
 })
 export class ListDemo {
     layout: 'list' | 'grid' = 'list';
+
+    productImage(name?: string): string {
+        return svgPlaceholder(300, 300, undefined, name ?? '');
+    }
 
     options = ['list', 'grid'];
 

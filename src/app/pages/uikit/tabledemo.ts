@@ -17,6 +17,8 @@ import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { TagModule } from 'primeng/tag';
 import { ObjectUtils } from 'primeng/utils';
+import { svgPlaceholder } from '@/app/core/util/svg-placeholder';
+import { brandColors } from '@/app/core/config/design-tokens';
 
 interface Representative {
     name: string;
@@ -122,7 +124,7 @@ interface expandedRows {
                                         <p-multiselect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" styleClass="w-full">
                                             <ng-template let-option #item>
                                                 <div class="flex items-center gap-2 w-44">
-                                                    <img [alt]="option.label" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ option.image }}" width="32" />
+                                                    <img [alt]="option.label" [src]="avatarImage(option.name)" width="32" />
                                                     <span>{{ option.name }}</span>
                                                 </div>
                                             </ng-template>
@@ -186,13 +188,13 @@ interface expandedRows {
                         </td>
                         <td>
                             <div class="flex items-center gap-2">
-                                <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + customer.country.code" width="30" />
+                                <img src="/demo/images/flag/flag_placeholder.png" [class]="'flag flag-' + customer.country.code" width="30" />
                                 <span>{{ customer.country.name }}</span>
                             </div>
                         </td>
                         <td>
                             <div class="flex items-center gap-2">
-                                <img [alt]="customer.representative.name" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ customer.representative.image }}" width="32" style="vertical-align: middle" />
+                                <img [alt]="customer.representative.name" [src]="avatarImage(customer.representative.name)" width="32" style="vertical-align: middle" />
                                 <span class="image-text">{{ customer.representative.name }}</span>
                             </div>
                         </td>
@@ -287,7 +289,7 @@ interface expandedRows {
                         </td>
                         <td>{{ product.name }}</td>
                         <td>
-                            <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" width="50" class="shadow-lg" />
+                            <img [src]="productImage(product.name)" [alt]="product.name" width="50" class="shadow-lg" />
                         </td>
                         <td>{{ product.price | currency: 'USD' }}</td>
                         <td>{{ product.category }}</td>
@@ -369,7 +371,7 @@ interface expandedRows {
                     <tr pRowGroupHeader>
                         <td colspan="5">
                             <div class="flex items-center gap-2">
-                                <img [alt]="customer.representative.name" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ customer.representative.image }}" width="32" style="vertical-align: middle" />
+                                <img [alt]="customer.representative.name" [src]="avatarImage(customer.representative.name)" width="32" style="vertical-align: middle" />
                                 <span class="font-bold">{{ customer.representative.name }}</span>
                             </div>
                         </td>
@@ -387,7 +389,7 @@ interface expandedRows {
                         </td>
                         <td>
                             <div class="flex items-center gap-2">
-                                <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + customer.country.code" style="width: 20px" />
+                                <img src="/demo/images/flag/flag_placeholder.png" [class]="'flag flag-' + customer.country.code" style="width: 20px" />
                                 <span>{{ customer.country.name }}</span>
                             </div>
                         </td>
@@ -416,6 +418,20 @@ interface expandedRows {
     providers: [ConfirmationService, MessageService]
 })
 export class TableDemo implements OnInit {
+    avatarImage(name?: string): string {
+        const initials = (name ?? '')
+            .split(' ')
+            .map((s) => s[0])
+            .slice(0, 2)
+            .join('')
+            .toUpperCase();
+        return svgPlaceholder(32, 32, brandColors.navy.hex, initials);
+    }
+
+    productImage(name?: string): string {
+        return svgPlaceholder(80, 80, undefined, name ?? '');
+    }
+
     customers1: Customer[] = [];
 
     customers2: Customer[] = [];

@@ -230,6 +230,7 @@ npm run start                  # ng serve, http://localhost:4200
 npm run build                  # production build
 npm run watch                  # dev build watch mode
 npm run format                 # prettier
+npm run lint:palette           # governance tarayıcı (hex/tailwind/cdn/import) — ihlalde exit 1
 npm test                       # karma + jasmine — kullanılmıyor (test stratejisi Phase 8+)
 ```
 
@@ -278,6 +279,22 @@ Modül takımları `/uikit/*` sayfalarında **gösterilen bileşenleri** kullana
 - ❌ Component template/SCSS'inde sabit Türkçe metin — yeni metin için `tr.json`/`en.json`'a key ekle, `| t` pipe kullan
 
 **Alias token tercih kuralı:** Yeni component yazılırken `var(--mfa-bg)`, `var(--mfa-text)`, `var(--mfa-border)`, `var(--mfa-brand)` kullan. Ham `--mfa-surface-0` / `--mfa-surface-900` yazmak hâlâ kabul ama dark mode'da statik kalır. PrimeNG `severity="primary"` en üst tercih — semantic preset'i okur.
+
+### Governance Otomasyonu (Phase 8+)
+
+Yukarıdaki kuralları **otomatik denetleyen** bir tarayıcı var: `scripts/check-palette.mjs` (sıfır bağımlılık, saf Node). `npm run lint:palette` ile çalışır; `src/app/**/*.ts` dosyalarını tarar. İhlal varsa `exit 1` döner (CI / pre-commit durur), temizse `exit 0`.
+
+4 kural:
+- **HEX** — hardcoded hex renk. İstisna (whitelist): `theme.config.ts`, `design-tokens.ts` (tek yetkili palet kaynakları).
+- **TAILWIND** — sabit Tailwind renk sınıfı (`bg-red-500`, `text-blue-700`) + arbitrary renk (`text-[#...]`). `surface-*` / `primary` semantic sınıfları serbest.
+- **CDN** — harici `http(s)` asset URL'i. İstisna: `w3.org` (SVG namespace), `mfa.gov.tr` (kurumun kendi domaini).
+- **IMPORT** — `features/**` içinde `/uikit/*`'te gösterilmemiş PrimeNG modülü import'u (§14 enforcement).
+
+**Kaçış:** Bir satırda kasıtlı, meşru istisna varsa satır sonuna `// mfa-ignore` ekle (ör. colorpicker default'u gibi literal-zorunlu durumlar; ama önce `design-tokens.ts`'ten import etmeyi dene).
+
+**svgPlaceholder kuralı:** Demo/örnek görseller için CDN yerine `src/app/core/util/svg-placeholder.ts` → `svgPlaceholder(w, h, bg?, label?)` kullan — MFA paletinden beslenen `data:` URI üretir. `data:` SVG içinde `var()` çözülmediği için hex değerleri `design-tokens.ts`'ten okunur.
+
+**Runtime denetim sayfası:** `/pages/kurumsal-kimlik/denetim` — açık ekranı canlı denetler (satır-içi hex, canlı token değerleri, gövde fontu) + statik tarayıcı bilgisi. Yetkili karar build-zamanı tarayıcısındadır; bu sayfa görsel/bilgilendirici yardımcıdır.
 
 ---
 

@@ -152,9 +152,9 @@ export class KurumsalKimlik {
     }
 
     bgColorOf(bg: string): string {
-        if (bg === 'white') return '#ffffff';
-        if (bg === 'black-photo') return '#1a1a1a';
+        if (bg === 'white') return 'var(--mfa-surface-0)';
+        if (bg === 'black-photo') return 'var(--mfa-surface-950)';
         const color = brandColors[bg as BrandColorKey];
-        return color ? color.hex : '#ffffff';
+        return color ? color.hex : 'var(--mfa-surface-0)';
     }
 }

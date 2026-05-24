@@ -18,6 +18,7 @@ import { TagModule } from 'primeng/tag';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { svgPlaceholder } from '@/app/core/util/svg-placeholder';
 interface Product {
     id?: string;
     code?: string;
@@ -139,7 +140,7 @@ interface ExportColumn {
                     <td style="min-width: 12rem">{{ product.code }}</td>
                     <td style="min-width: 16rem">{{ product.name }}</td>
                     <td>
-                        <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" style="width: 64px" class="rounded" />
+                        <img [src]="productImage(product.name)" [alt]="product.name" style="width: 64px" class="rounded" />
                     </td>
                     <td>{{ product.price | currency: 'USD' }}</td>
                     <td>{{ product.category }}</td>
@@ -160,11 +161,11 @@ interface ExportColumn {
         <p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true">
             <ng-template #content>
                 <div class="flex flex-col gap-6">
-                    <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-4" *ngIf="product.image" />
+                    <img [src]="productImage(product.name)" [alt]="product.name" class="block m-auto pb-4" *ngIf="product.image" />
                     <div>
                         <label for="name" class="block font-bold mb-3">Name</label>
                         <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus fluid />
-                        <small class="text-red-500" *ngIf="submitted && !product.name">Name is required.</small>
+                        <small style="color: var(--mfa-danger)" *ngIf="submitted && !product.name">Name is required.</small>
                     </div>
                     <div>
                         <label for="description" class="block font-bold mb-3">Description</label>
@@ -355,6 +356,10 @@ export class Crud implements OnInit {
             id += chars.charAt(Math.floor(Math.random() * chars.length));
         }
         return id;
+    }
+
+    productImage(name?: string): string {
+        return svgPlaceholder(160, 160, undefined, name ?? '');
     }
 
     getSeverity(status: string) {

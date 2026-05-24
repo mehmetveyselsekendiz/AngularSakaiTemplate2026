@@ -49,6 +49,7 @@ export const NAV_GROUPS: NavGroup[] = [
         labelKey: 'menu.pages',
         items: [
             { labelKey: 'menu.pages.corporate-identity', icon: 'pi pi-fw pi-palette', routerLink: ['/pages/kurumsal-kimlik'] },
+            { labelKey: 'menu.pages.audit', icon: 'pi pi-fw pi-shield', routerLink: ['/pages/kurumsal-kimlik/denetim'] },
             { labelKey: 'menu.pages.settings', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/ayarlar'] },
             { labelKey: 'menu.pages.crud', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/crud'] },
             { labelKey: 'menu.pages.empty', icon: 'pi pi-fw pi-circle-off', routerLink: ['/pages/empty'] },
@@ -88,6 +89,7 @@ export const ROUTE_LABEL_KEY_MAP: Record<string, string> = {
     '/uikit/timeline': 'menu.uikit.timeline',
     '/uikit/misc': 'menu.uikit.misc',
     '/pages/kurumsal-kimlik': 'menu.pages.corporate-identity',
+    '/pages/kurumsal-kimlik/denetim': 'menu.pages.audit',
     '/pages/crud': 'menu.pages.crud',
     '/pages/empty': 'menu.pages.empty',
     '/pages/ayarlar': 'menu.pages.settings',

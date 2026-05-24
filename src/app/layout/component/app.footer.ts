@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { TranslatePipe } from '@/app/core/i18n/translate.pipe';
 
 @Component({
     standalone: true,
     selector: 'app-footer',
-    template: `<div class="layout-footer">
-        SAKAI by
-        <a href="https://primeng.org" target="_blank" rel="noopener noreferrer" class="text-primary font-bold hover:underline">PrimeNG</a>
-    </div>`
+    imports: [TranslatePipe],
+    template: `<div class="layout-footer">{{ 'footer.text' | t }}</div>`
 })
 export class AppFooter {}

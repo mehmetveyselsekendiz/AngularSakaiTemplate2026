@@ -27,7 +27,7 @@ import { TranslatePipe } from '@/app/core/i18n/translate.pipe';
                         @if (!isSsoConfigured) {
                             <div class="mt-6 pt-6 border-t border-surface-200 dark:border-surface-700">
                                 <div class="flex items-center justify-center gap-2 mb-4">
-                                    <span class="text-xs font-semibold px-2 py-1 rounded" style="background: var(--mfa-gold); color: #1a1a1a">{{ 'auth.login.dev.badge' | t }}</span>
+                                    <span class="text-xs font-semibold px-2 py-1 rounded" style="background: var(--mfa-gold); color: var(--mfa-surface-950)">{{ 'auth.login.dev.badge' | t }}</span>
                                     <span class="text-xs text-muted-color">{{ 'auth.login.dev.note' | t }}</span>
                                 </div>
                                 <div class="flex flex-col gap-3">

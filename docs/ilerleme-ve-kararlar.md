@@ -445,21 +445,65 @@ Bilinen sınırlama (Phase 7C'ye taşındı): `LOCALE_ID` runtime'da değişmez 
 
 ---
 
+## Oturum 5 — 24 Mayıs 2026
+
+### Phase 8 — Palet İhlali Tarayıcı + Governance Otomasyonu (Tamamlandı)
+
+- [x] **`scripts/check-palette.mjs`** oluşturuldu — sıfır bağımlılık, saf Node ESM. `src/app/**/*.ts` tarar (component template + style inline olduğu için tek dosya tipi yeterli). 4 kural:
+  - **HEX** — hardcoded hex (whitelist: `theme.config.ts`, `design-tokens.ts`)
+  - **TAILWIND** — sabit Tailwind renk sınıfı + arbitrary renk (`surface-*`/`primary` serbest)
+  - **CDN** — harici http(s) asset (allowlist: `w3.org` SVG ns, `mfa.gov.tr` kurum domaini)
+  - **IMPORT** — `features/**` içinde `/uikit/*`'te gösterilmemiş PrimeNG modülü
+  - `exit 1` enforcement + `// mfa-ignore` satır kaçışı
+- [x] `package.json` → `lint:palette` komutu eklendi
+- [x] **IMPORT kuralı test edildi:** geçici `features/_test/probe.ts` ile `primeng/terminal` (uikit'te yok) işaretlendi, `primeng/button` (var) işaretlenmedi → doğrulandı, dosya silindi
+- [x] **`src/app/core/util/svg-placeholder.ts`** — paylaşılan yardımcı; MFA paletinden (`design-tokens.ts`) beslenen `data:` URI üretir (CDN görsel yerine)
+- [x] **50 mevcut ihlal temizlendi:**
+  - `app.footer.ts` — primeng.org linki kaldırıldı, `footer.text` i18n key'i ile değiştirildi (shipped chrome)
+  - `login.ts`, `kurumsal-kimlik.ts` — inline hex → `var(--mfa-surface-*)`
+  - `mediademo.ts` — MFA marka hex'leri `brandColors.*.hex` import + `var(--mfa-*)`; yerel svgPlaceholder kaldırılıp paylaşılan util'e taşındı
+  - `crud.ts`, `listdemo.ts`, `tabledemo.ts` — CDN ürün/avatar görselleri → `svgPlaceholder()`; bayraklar yerel `/demo/images/flag/flag_placeholder.png`; `text-red-500`/`text-yellow-500` → `var(--mfa-danger)`/`var(--mfa-gold)`
+  - `miscdemo.ts` — CDN avatarlar → svgPlaceholder; Material hex'ler → `var(--mfa-navy*)`
+  - `timelinedemo.ts` — Material event renkleri → `var(--mfa-red/navy/gold/gray)`
+  - `inputdemo.ts` — colorpicker default `#1976D2` → `brandColors.red.hex` (literal kalmadı, ignore'a gerek yok)
+  - `buttondemo.ts` — `http://angular.io` → `https://www.mfa.gov.tr`
+- [x] **Runtime denetim sayfası** `/pages/kurumsal-kimlik/denetim` (`denetim.ts`) — canlı DOM inline-hex taraması + canlı token swatch (computed) + gövde font denetimi + statik tarayıcı bilgi kartı + "Yeniden Tara" butonu. Route + menü (`menu.pages.audit`) + `ROUTE_LABEL_KEY_MAP` bağlandı
+- [x] `tr.json`/`en.json` — `footer.text` + `menu.pages.audit` key'leri eklendi
+- [x] Tarayıcı temiz: `npm run lint:palette` → 0 ihlal, 57 dosya
+- [x] Production build: **BAŞARILI** (17.8 sn, sadece önceden var olan Quill CommonJS uyarısı)
+
+### Alınan Kararlar
+
+#### K-014 — Governance Tarayıcı: Sıfır-Paket Custom Script (24 Mayıs 2026)
+
+**Karar:** Palet/governance denetimi için stylelint değil, sıfır bağımlılık custom Node script (`scripts/check-palette.mjs`) kullanıldı.
+
+**Gerekçe:** Bu projede tüm component template + style'lar `.ts` dosyalarının içinde inline. stylelint sadece `.css`/`.scss` dosyalarını tarar; inline template'leri, TS string literal'lerini ve Tailwind sınıf kullanımını göremez. Onları kapatmak için ek ESLint eklentileri + PostCSS-html gerekir = birden çok paket, yine de kısmi kapsama. ~150 satırlık Node script, tek geçişte tam kapsamı bizim whitelist kurallarımızla verir. Yani sıfır-paket seçeneği burada hem daha temiz hem daha kapsamlı — CLAUDE.md §3 ile de uyumlu. Kullanıcı "işimizi kolaylaştırıyorsa paket ekleyelim ama çoğaltmayalım" dedi; bu işte custom script gerçek mühendislik tercihi.
+
+**Etki:** `sakai-mfa-uyarlama-plani.md` §4B'deki "stylelint" ifadesi düzeltildi. Tarayıcı `src/app/**/*.ts` tarar; `theme.config.ts`/`design-tokens.ts` whitelist; `w3.org`/`mfa.gov.tr` URL allowlist; `// mfa-ignore` kaçışı.
+
+#### K-015 — Tam İhlal Temizliği + svgPlaceholder Stratejisi (24 Mayıs 2026)
+
+**Karar:** Tarayıcının bulduğu 50 ihlalin tamamı (shipped chrome + tüm `/uikit/*` demoları) temizlendi. CDN görseller silinmek yerine `svgPlaceholder()` data:URI'lerine çevrildi.
+
+**Gerekçe:** CLAUDE.md §14 — `/uikit/*` modül takımlarının kopyaladığı tek yetkili referans; CDN görsel/Material renk içeren bir referans, takımların o ihlalleri kopyalamasına yol açar. Governance bütünlüğü için referansın da temiz olması gerekir. svgPlaceholder yaklaşımı demoların görsel anlamını korur (kolon kaldırmaz) ve tamamen offline çalışır. `data:` SVG içinde `var()` çözülmediği için hex'ler `design-tokens.ts`'ten okunur.
+
+**Etki:** Tüm uikit demo görselleri yerel data:URI / yerel asset. `MfaPreset` zaten renkleri sağladığından demo render'ı MFA paletinde. Modül takımları artık `/uikit/*`'i temiz referans olarak kopyalayabilir.
+
+---
+
 ## Sırada — Sonraki Oturum
 
-**Tamamlanan:** Phase 7B (Runtime Ayar Sistemi) + Phase 7C (Template i18n + Foundation Pipe'lar)
+**Tamamlanan:** Phase 7B + 7C + **Phase 8** (Governance Otomasyonu)
 
-**Aktif aday:** Phase 8 — Palet İhlali Tarayıcı + Governance Otomasyonu
-
-Phase 8 scope (`sakai-mfa-uyarlama-plani.md` §4B):
-- Hardcoded hex / Tailwind sabit renk sınıfı tarayıcı script (`scripts/check-palette.js`)
-- npm `lint:palette` komutu, CI/pre-commit hook'u (opsiyonel)
-- `/uikit/*`'te olmayan PrimeNG component kullanımı tarama
-- Governance kuralları test edilebilir hâle getirme (CLAUDE.md §14'ün enforcement'ı)
+**Aktif aday:** Phase 9 — Bileşen Kodunu Görüntüleme/Kopyalama
+- `/uikit/*` her bileşen yanında "Kodu Göster" düğmesi
+- Kaynak `.ts`'ten compile-time snippet extraction (build script veya inline)
+- Snippet kopyalama UI'ı
 
 **Alternatif sıralama:**
-- Phase 9 — Component kod görüntüleme/kopyalama (`/uikit/*` "Kodu Göster" toggle)
-- Phase 10 — Responsive audit (mobile-first denetim, tablet breakpoint testleri)
-- Phase 11 — İlk modül iskeleti (örnek `features/vize/`)
+- Phase 10 — Responsive audit (5 breakpoint, touch target ≥44px, WCAG 1.4.10)
+- Phase 11 — İlk modül iskeleti (örnek `features/vize/`) + modül fork rehberi
+- Opsiyonel: pre-commit hook / CI — `lint:palette`'i otomatik tetikle (native git hook, sıfır-paket)
 
-**Git durumu:** Phase 7C commit edilecek (~12 dosya). `main` branch.
+**Git durumu:** Phase 8 commit edilecek (~14 dosya). `main` branch.

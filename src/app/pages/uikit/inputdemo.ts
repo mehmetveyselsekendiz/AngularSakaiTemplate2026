@@ -13,6 +13,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { brandColors } from '@/app/core/config/design-tokens';
 import { SliderModule } from 'primeng/slider';
 import { RatingModule } from 'primeng/rating';
 import { ColorPickerModule } from 'primeng/colorpicker';
@@ -257,7 +258,7 @@ export class InputDemo implements OnInit {
 
     ratingValue: any = null;
 
-    colorValue: string = '#1976D2';
+    colorValue: string = brandColors.red.hex;
 
     radioValue: any = null;
 

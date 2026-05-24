@@ -5,6 +5,8 @@ import { CarouselModule } from 'primeng/carousel';
 import { GalleriaModule } from 'primeng/galleria';
 import { ImageModule } from 'primeng/image';
 import { TagModule } from 'primeng/tag';
+import { brandColors } from '@/app/core/config/design-tokens';
+import { svgPlaceholder } from '@/app/core/util/svg-placeholder';
 
 interface Kart {
     id: string;
@@ -21,17 +23,9 @@ interface Gorsel {
     alt: string;
 }
 
-// MFA palette renkleriyle SVG data URI üretir — dış CDN gerektirmez
-function svgPlaceholder(w: number, h: number, bg: string, label: string): string {
-    const svg =
-        `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">` +
-        `<rect width="${w}" height="${h}" fill="${bg}"/>` +
-        (label ? `<text x="${w / 2}" y="${h / 2}" font-size="${Math.floor(h / 6)}" ` + `text-anchor="middle" dominant-baseline="middle" fill="white" font-family="Helvetica,Arial,sans-serif">${label}</text>` : '') +
-        `</svg>`;
-    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-}
-
-const MFA_RENKLER = ['#DA291C', '#003773', '#00235A', '#D7AD4D', '#53565A'];
+// svgPlaceholder data:URI içinde CSS var() çözülmez → hex değerleri tek
+// yetkili kaynaktan (design-tokens.ts) okunur, burada hardcode edilmez.
+const MFA_RENKLER = [brandColors.red.hex, brandColors.navy.hex, brandColors.navyDark.hex, brandColors.gold.hex, brandColors.gray.hex];
 const MFA_ETIKETLER = ['MFA Kırmızı', 'Lacivert', 'Koyu Lacivert', 'Altın Varak', 'Kurumsal Gri'];
 
 @Component({
@@ -81,11 +75,11 @@ const MFA_ETIKETLER = ['MFA Kırmızı', 'Lacivert', 'Koyu Lacivert', 'Altın Va
 })
 export class MediaDemo {
     kartlar = signal<Kart[]>([
-        { id: '1', baslik: 'Vize Başvurusu', aciklama: 'Schengen vize başvuru süreci', icon: 'pi pi-id-card', renk: '#DA291C', durum: 'AKTIF' },
-        { id: '2', baslik: 'Pasaport İşlemleri', aciklama: 'Pasaport yenileme ve başvuru', icon: 'pi pi-book', renk: '#003773', durum: 'AKTIF' },
-        { id: '3', baslik: 'Konsolosluk Randevu', aciklama: 'Online randevu sistemi', icon: 'pi pi-calendar', renk: '#00235A', durum: 'BEKLEMEDE' },
-        { id: '4', baslik: 'Belge Onayı', aciklama: 'Apostil ve noter onay işlemleri', icon: 'pi pi-file-check', renk: '#53565A', durum: 'AKTIF' },
-        { id: '5', baslik: 'Tercüme Hizmetleri', aciklama: 'Resmi belge tercümesi', icon: 'pi pi-language', renk: '#D7AD4D', durum: 'PASIF' }
+        { id: '1', baslik: 'Vize Başvurusu', aciklama: 'Schengen vize başvuru süreci', icon: 'pi pi-id-card', renk: 'var(--mfa-red)', durum: 'AKTIF' },
+        { id: '2', baslik: 'Pasaport İşlemleri', aciklama: 'Pasaport yenileme ve başvuru', icon: 'pi pi-book', renk: 'var(--mfa-navy)', durum: 'AKTIF' },
+        { id: '3', baslik: 'Konsolosluk Randevu', aciklama: 'Online randevu sistemi', icon: 'pi pi-calendar', renk: 'var(--mfa-navy-dark)', durum: 'BEKLEMEDE' },
+        { id: '4', baslik: 'Belge Onayı', aciklama: 'Apostil ve noter onay işlemleri', icon: 'pi pi-file-check', renk: 'var(--mfa-gray)', durum: 'AKTIF' },
+        { id: '5', baslik: 'Tercüme Hizmetleri', aciklama: 'Resmi belge tercümesi', icon: 'pi pi-language', renk: 'var(--mfa-gold)', durum: 'PASIF' }
     ]);
 
     gorseller = signal<Gorsel[]>(
@@ -96,7 +90,7 @@ export class MediaDemo {
         }))
     );
 
-    onizlemeSrc = svgPlaceholder(400, 300, '#DA291C', 'T.C. Dışişleri Bakanlığı');
+    onizlemeSrc = svgPlaceholder(400, 300, brandColors.red.hex, 'T.C. Dışişleri Bakanlığı');
 
     galleriaOptions = [
         { breakpoint: '1024px', numVisible: 5 },

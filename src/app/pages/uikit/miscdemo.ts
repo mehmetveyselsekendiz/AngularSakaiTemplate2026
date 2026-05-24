@@ -11,6 +11,8 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TagModule } from 'primeng/tag';
+import { svgPlaceholder } from '@/app/core/util/svg-placeholder';
+import { brandColors } from '@/app/core/config/design-tokens';
 
 @Component({
     selector: 'app-misc-demo',
@@ -72,18 +74,18 @@ import { TagModule } from 'primeng/tag';
                     <div class="font-semibold text-xl mb-4">Avatar</div>
                     <div class="font-semibold mb-4">Group</div>
                     <p-avatargroup styleClass="mb-4">
-                        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" size="large" shape="circle"></p-avatar>
-                        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png" size="large" shape="circle"></p-avatar>
-                        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png" size="large" shape="circle"></p-avatar>
-                        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/ionibowcher.png" size="large" shape="circle"></p-avatar>
-                        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png" size="large" shape="circle"></p-avatar>
-                        <p-avatar label="+2" shape="circle" size="large" [style]="{ 'background-color': '#9c27b0', color: '#ffffff' }"></p-avatar>
+                        <p-avatar [image]="avatarImage('AE')" size="large" shape="circle"></p-avatar>
+                        <p-avatar [image]="avatarImage('AJ')" size="large" shape="circle"></p-avatar>
+                        <p-avatar [image]="avatarImage('OL')" size="large" shape="circle"></p-avatar>
+                        <p-avatar [image]="avatarImage('IB')" size="large" shape="circle"></p-avatar>
+                        <p-avatar [image]="avatarImage('XF')" size="large" shape="circle"></p-avatar>
+                        <p-avatar label="+2" shape="circle" size="large" [style]="{ 'background-color': 'var(--mfa-navy-dark)', color: 'var(--mfa-surface-0)' }"></p-avatar>
                     </p-avatargroup>
 
                     <div class="font-semibold my-4">Label - Circle</div>
                     <p-avatar class="mr-2" label="P" size="xlarge" shape="circle"></p-avatar>
-                    <p-avatar class="mr-2" label="V" size="large" [style]="{ 'background-color': '#2196F3', color: '#ffffff' }" shape="circle"></p-avatar>
-                    <p-avatar class="mr-2" label="U" [style]="{ 'background-color': '#9c27b0', color: '#ffffff' }" shape="circle"></p-avatar>
+                    <p-avatar class="mr-2" label="V" size="large" [style]="{ 'background-color': 'var(--mfa-navy)', color: 'var(--mfa-surface-0)' }" shape="circle"></p-avatar>
+                    <p-avatar class="mr-2" label="U" [style]="{ 'background-color': 'var(--mfa-navy-dark)', color: 'var(--mfa-surface-0)' }" shape="circle"></p-avatar>
 
                     <div class="font-semibold my-4">Icon - Badge</div>
                     <p-overlaybadge value="4" severity="danger" class="inline-flex">
@@ -161,10 +163,10 @@ import { TagModule } from 'primeng/tag';
 
                     <div class="font-semibold my-4">Image</div>
                     <div class="flex items-center flex-col sm:flex-row">
-                        <p-chip label="Amy Elsner" image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" styleClass="m-1"></p-chip>
-                        <p-chip label="Asiya Javayant" image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png" styleClass="m-1"></p-chip>
-                        <p-chip label="Onyama Limba" image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png" styleClass="m-1"></p-chip>
-                        <p-chip label="Xuxue Feng" image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png" styleClass="m-1" [removable]="true"></p-chip>
+                        <p-chip label="Amy Elsner" [image]="avatarImage('AE')" styleClass="m-1"></p-chip>
+                        <p-chip label="Asiya Javayant" [image]="avatarImage('AJ')" styleClass="m-1"></p-chip>
+                        <p-chip label="Onyama Limba" [image]="avatarImage('OL')" styleClass="m-1"></p-chip>
+                        <p-chip label="Xuxue Feng" [image]="avatarImage('XF')" styleClass="m-1" [removable]="true"></p-chip>
                     </div>
                 </div>
             </div>
@@ -173,6 +175,10 @@ import { TagModule } from 'primeng/tag';
 })
 export class MiscDemo {
     value = 0;
+
+    avatarImage(label: string): string {
+        return svgPlaceholder(80, 80, brandColors.navy.hex, label);
+    }
 
     interval: any;
 
