@@ -1,0 +1,3 @@
+{
+  "chart-line": "<p-chart type=\"line\" [data]=\"lineData()\" [options]=\"lineOptions()\"></p-chart>"
+}

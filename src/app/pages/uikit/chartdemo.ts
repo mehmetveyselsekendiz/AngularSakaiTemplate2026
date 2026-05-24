@@ -2,17 +2,22 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { FluidModule } from 'primeng/fluid';
 import { SettingsService } from '@/app/core/settings/settings.service';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 
 @Component({
     selector: 'app-chart-demo',
     standalone: true,
-    imports: [ChartModule, FluidModule],
+    imports: [ChartModule, FluidModule, CodeBlock],
     template: `
         <p-fluid class="grid grid-cols-12 gap-8">
             <div class="col-span-12 xl:col-span-6">
                 <div class="card">
                     <div class="font-semibold text-xl mb-6">Linear</div>
+                    <!-- snippet:chart-line -->
                     <p-chart type="line" [data]="lineData()" [options]="lineOptions()"></p-chart>
+                    <!-- /snippet -->
+                    <app-code-block [code]="snippet('chart-line')" />
                 </div>
             </div>
             <div class="col-span-12 xl:col-span-6">
@@ -50,6 +55,11 @@ import { SettingsService } from '@/app/core/settings/settings.service';
 })
 export class ChartDemo {
     private readonly settings = inject(SettingsService);
+    private readonly snippets = inject(SnippetService).forPage('chartdemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
 
     lineData = signal<any>(null);
 

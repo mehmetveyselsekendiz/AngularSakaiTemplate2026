@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
 import { GalleriaModule } from 'primeng/galleria';
@@ -7,6 +7,8 @@ import { ImageModule } from 'primeng/image';
 import { TagModule } from 'primeng/tag';
 import { brandColors } from '@/app/core/config/design-tokens';
 import { svgPlaceholder } from '@/app/core/util/svg-placeholder';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 
 interface Kart {
     id: string;
@@ -31,7 +33,7 @@ const MFA_ETIKETLER = ['MFA Kırmızı', 'Lacivert', 'Koyu Lacivert', 'Altın Va
 @Component({
     selector: 'app-media-demo',
     standalone: true,
-    imports: [CommonModule, CarouselModule, ButtonModule, GalleriaModule, ImageModule, TagModule],
+    imports: [CommonModule, CarouselModule, ButtonModule, GalleriaModule, ImageModule, TagModule, CodeBlock],
     template: `
         <div class="card">
             <div class="font-semibold text-xl mb-4">Carousel</div>
@@ -57,7 +59,10 @@ const MFA_ETIKETLER = ['MFA Kırmızı', 'Lacivert', 'Koyu Lacivert', 'Altın Va
 
         <div class="card">
             <div class="font-semibold text-xl mb-4">Image (Önizleme)</div>
+            <!-- snippet:media-image -->
             <p-image [src]="onizlemeSrc" alt="MFA Kurumsal Görsel" width="250" [preview]="true" />
+            <!-- /snippet -->
+            <app-code-block [code]="snippet('media-image')" />
         </div>
 
         <div class="card">
@@ -74,6 +79,12 @@ const MFA_ETIKETLER = ['MFA Kırmızı', 'Lacivert', 'Koyu Lacivert', 'Altın Va
     `
 })
 export class MediaDemo {
+    private readonly snippets = inject(SnippetService).forPage('mediademo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     kartlar = signal<Kart[]>([
         { id: '1', baslik: 'Vize Başvurusu', aciklama: 'Schengen vize başvuru süreci', icon: 'pi pi-id-card', renk: 'var(--mfa-red)', durum: 'AKTIF' },
         { id: '2', baslik: 'Pasaport İşlemleri', aciklama: 'Pasaport yenileme ve başvuru', icon: 'pi pi-book', renk: 'var(--mfa-navy)', durum: 'AKTIF' },

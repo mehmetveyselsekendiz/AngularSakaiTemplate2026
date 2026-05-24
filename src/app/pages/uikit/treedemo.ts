@@ -1,18 +1,23 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { TreeModule } from 'primeng/tree';
 import { FormsModule } from '@angular/forms';
 import { TreeTableModule } from 'primeng/treetable';
 import { CommonModule } from '@angular/common';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 
 @Component({
     selector: 'app-tree-demo',
     standalone: true,
-    imports: [CommonModule, FormsModule, TreeModule, TreeTableModule],
+    imports: [CommonModule, FormsModule, TreeModule, TreeTableModule, CodeBlock],
     template: `
         <div class="card">
             <div class="font-semibold text-xl">Tree</div>
+            <!-- snippet:tree-basic -->
             <p-tree [value]="treeValue()" selectionMode="checkbox" [(selection)]="selectedTreeValue"></p-tree>
+            <!-- /snippet -->
+            <app-code-block [code]="snippet('tree-basic')" />
         </div>
 
         <div class="card">
@@ -41,6 +46,12 @@ import { CommonModule } from '@angular/common';
     `
 })
 export class TreeDemo implements OnInit {
+    private readonly snippets = inject(SnippetService).forPage('treedemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     treeValue = signal<TreeNode[]>([]);
 
     treeTableValue = signal<TreeNode[]>([]);

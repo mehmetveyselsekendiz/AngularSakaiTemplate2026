@@ -1,16 +1,18 @@
 import {CommonModule} from '@angular/common';
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MessageService, ToastMessageOptions} from 'primeng/api';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {MessageModule} from 'primeng/message';
 import {ToastModule} from 'primeng/toast';
+import {CodeBlock} from './code-block';
+import {SnippetService} from './snippet.service';
 
 @Component({
     selector: 'app-messages-demo',
     standalone: true,
-    imports: [CommonModule, ToastModule, ButtonModule, InputTextModule, MessageModule, FormsModule],
+    imports: [CommonModule, ToastModule, ButtonModule, InputTextModule, MessageModule, FormsModule, CodeBlock],
     template: `
         <div class="flex flex-col md:flex-row gap-8">
             <div class="md:w-1/2">
@@ -40,6 +42,7 @@ import {ToastModule} from 'primeng/toast';
             <div class="md:w-1/2">
                 <div class="card">
                     <div class="font-semibold text-xl mb-4">Message</div>
+                    <!-- snippet:message-severities -->
                     <div class="flex flex-col gap-4 mb-4">
                         <p-message severity="success">Success Message</p-message>
                         <p-message severity="info">Info Message</p-message>
@@ -48,6 +51,8 @@ import {ToastModule} from 'primeng/toast';
                         <p-message severity="secondary">Secondary Message</p-message>
                         <p-message severity="contrast">Contrast Message</p-message>
                     </div>
+                    <!-- /snippet -->
+                    <app-code-block [code]="snippet('message-severities')" />
                 </div>
             </div>
         </div>
@@ -55,6 +60,12 @@ import {ToastModule} from 'primeng/toast';
     providers: [MessageService]
 })
 export class MessagesDemo {
+    private readonly snippets = inject(SnippetService).forPage('messagesdemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     msgs: ToastMessageOptions[] | null = [];
 
     username: string | undefined;

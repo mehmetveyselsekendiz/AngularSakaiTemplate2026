@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccordionModule } from 'primeng/accordion';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
@@ -36,12 +38,14 @@ import { ToolbarModule } from 'primeng/toolbar';
         PanelModule,
         TabsModule,
         IconFieldModule,
-        InputIconModule
+        InputIconModule,
+        CodeBlock
     ],
     template: `
         <div class="flex flex-col">
             <div class="card">
                 <div class="font-semibold text-xl mb-4">Toolbar</div>
+                <!-- snippet:panel-toolbar -->
                 <p-toolbar>
                     <ng-template #start>
                         <p-button icon="pi pi-plus" class="mr-2" severity="secondary" text />
@@ -60,6 +64,8 @@ import { ToolbarModule } from 'primeng/toolbar';
 
                     <ng-template #end><p-splitbutton label="Save" [model]="items"></p-splitbutton></ng-template>
                 </p-toolbar>
+                <!-- /snippet -->
+                <app-code-block [code]="snippet('panel-toolbar')" />
             </div>
 
             <div class="flex flex-col md:flex-row gap-8">
@@ -214,6 +220,12 @@ import { ToolbarModule } from 'primeng/toolbar';
     `
 })
 export class PanelsDemo {
+    private readonly snippets = inject(SnippetService).forPage('panelsdemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     items: MenuItem[] = [
         {
             label: 'Save',

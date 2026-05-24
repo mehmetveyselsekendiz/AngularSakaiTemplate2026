@@ -1,0 +1,3 @@
+{
+  "timeline-left": "<p-timeline [value]=\"events1\">\n    <ng-template #content let-event>\n        {{ event.status }}\n    </ng-template>\n</p-timeline>"
+}

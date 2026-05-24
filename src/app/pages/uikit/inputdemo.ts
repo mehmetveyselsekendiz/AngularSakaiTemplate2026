@@ -29,6 +29,8 @@ import { TextareaModule } from 'primeng/textarea';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CountryService } from '@/app/pages/service/country.service';
 import { TreeNode } from 'primeng/api';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 
 interface Country {
     name: string;
@@ -65,17 +67,21 @@ interface Country {
         MultiSelectModule,
         ListboxModule,
         InputGroupAddonModule,
-        TextareaModule
+        TextareaModule,
+        CodeBlock
     ],
     template: ` <p-fluid class="flex flex-col md:flex-row gap-8">
             <div class="md:w-1/2">
                 <div class="card flex flex-col gap-4">
                     <div class="font-semibold text-xl">InputText</div>
+                    <!-- snippet:input-text -->
                     <div class="flex flex-col md:flex-row gap-4">
                         <input pInputText type="text" placeholder="Default" />
                         <input pInputText type="text" placeholder="Disabled" [disabled]="true" />
                         <input pInputText type="text" placeholder="Invalid" class="ng-dirty ng-invalid" />
                     </div>
+                    <!-- /snippet -->
+                    <app-code-block [code]="snippet('input-text')" />
 
                     <div class="font-semibold text-xl">Icons</div>
                     <p-iconfield>
@@ -242,6 +248,12 @@ interface Country {
     providers: [CountryService]
 })
 export class InputDemo implements OnInit {
+    private readonly snippets = inject(SnippetService).forPage('inputdemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     floatValue: any = null;
 
     autoValue: any[] | undefined;

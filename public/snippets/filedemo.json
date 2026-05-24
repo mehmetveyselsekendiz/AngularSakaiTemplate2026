@@ -1,0 +1,3 @@
+{
+  "file-advanced": "<p-fileupload name=\"dosya[]\" (onUpload)=\"onUpload($event)\" [multiple]=\"true\" accept=\"image/*,application/pdf\" [maxFileSize]=\"5000000\" mode=\"advanced\" url=\"/api/upload\">\n    <ng-template #empty>\n        <div>Dosyaları buraya sürükleyip bırakın veya seçin.</div>\n    </ng-template>\n</p-fileupload>"
+}

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -19,6 +19,8 @@ import { TagModule } from 'primeng/tag';
 import { ObjectUtils } from 'primeng/utils';
 import { svgPlaceholder } from '@/app/core/util/svg-placeholder';
 import { brandColors } from '@/app/core/config/design-tokens';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 
 interface Representative {
     name: string;
@@ -70,10 +72,12 @@ interface expandedRows {
         ButtonModule,
         RatingModule,
         RippleModule,
-        IconFieldModule
+        IconFieldModule,
+        CodeBlock
     ],
     template: ` <div class="card">
             <div class="font-semibold text-xl mb-4">Filtering</div>
+            <!-- snippet:table-filtering -->
             <p-table
                 #dt1
                 [value]="customers1"
@@ -226,6 +230,8 @@ interface expandedRows {
                     </tr>
                 </ng-template>
             </p-table>
+            <!-- /snippet -->
+            <app-code-block [code]="snippet('table-filtering')" />
         </div>
 
         <div class="card">
@@ -418,6 +424,12 @@ interface expandedRows {
     providers: [ConfirmationService, MessageService]
 })
 export class TableDemo implements OnInit {
+    private readonly snippets = inject(SnippetService).forPage('tabledemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     avatarImage(name?: string): string {
         const initials = (name ?? '')
             .split(' ')

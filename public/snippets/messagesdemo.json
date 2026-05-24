@@ -1,0 +1,3 @@
+{
+  "message-severities": "<div class=\"flex flex-col gap-4 mb-4\">\n    <p-message severity=\"success\">Success Message</p-message>\n    <p-message severity=\"info\">Info Message</p-message>\n    <p-message severity=\"warn\">Warn Message</p-message>\n    <p-message severity=\"error\">Error Message</p-message>\n    <p-message severity=\"secondary\">Secondary Message</p-message>\n    <p-message severity=\"contrast\">Contrast Message</p-message>\n</div>"
+}

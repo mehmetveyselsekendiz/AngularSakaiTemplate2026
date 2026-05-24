@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DataViewModule } from 'primeng/dataview';
@@ -8,6 +8,8 @@ import { PickListModule } from 'primeng/picklist';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TagModule } from 'primeng/tag';
 import { svgPlaceholder } from '@/app/core/util/svg-placeholder';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 interface Product {
     id?: string;
     name?: string;
@@ -21,10 +23,11 @@ interface Product {
 @Component({
     selector: 'app-list-demo',
     standalone: true,
-    imports: [CommonModule, DataViewModule, FormsModule, SelectButtonModule, PickListModule, OrderListModule, TagModule, ButtonModule],
+    imports: [CommonModule, DataViewModule, FormsModule, SelectButtonModule, PickListModule, OrderListModule, TagModule, ButtonModule, CodeBlock],
     template: ` <div class="flex flex-col">
         <div class="card">
             <div class="font-semibold text-xl">DataView</div>
+            <!-- snippet:list-dataview -->
             <p-dataview [value]="products" [layout]="layout">
                 <ng-template #header>
                     <div class="flex justify-end">
@@ -132,6 +135,8 @@ interface Product {
                     </div>
                 </ng-template>
             </p-dataview>
+            <!-- /snippet -->
+            <app-code-block [code]="snippet('list-dataview')" />
         </div>
 
         <div class="flex flex-col lg:flex-row gap-20">
@@ -167,6 +172,12 @@ interface Product {
     `
 })
 export class ListDemo {
+    private readonly snippets = inject(SnippetService).forPage('listdemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     layout: 'list' | 'grid' = 'list';
 
     productImage(name?: string): string {

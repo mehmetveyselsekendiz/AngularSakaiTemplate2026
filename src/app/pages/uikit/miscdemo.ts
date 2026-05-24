@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { BadgeModule } from 'primeng/badge';
@@ -13,14 +13,17 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { TagModule } from 'primeng/tag';
 import { svgPlaceholder } from '@/app/core/util/svg-placeholder';
 import { brandColors } from '@/app/core/config/design-tokens';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 
 @Component({
     selector: 'app-misc-demo',
     standalone: true,
-    imports: [CommonModule, ProgressBarModule, BadgeModule, AvatarModule, ScrollPanelModule, TagModule, ChipModule, ButtonModule, SkeletonModule, AvatarGroupModule, ScrollTopModule, OverlayBadgeModule],
+    imports: [CommonModule, ProgressBarModule, BadgeModule, AvatarModule, ScrollPanelModule, TagModule, ChipModule, ButtonModule, SkeletonModule, AvatarGroupModule, ScrollTopModule, OverlayBadgeModule, CodeBlock],
     template: `
         <div class="card">
             <div class="font-semibold text-xl mb-4">ProgressBar</div>
+            <!-- snippet:misc-progressbar -->
             <div class="flex flex-col md:flex-row gap-4">
                 <div class="md:w-1/2">
                     <p-progressbar [value]="value" [showValue]="true"></p-progressbar>
@@ -29,6 +32,8 @@ import { brandColors } from '@/app/core/config/design-tokens';
                     <p-progressbar [value]="50" [showValue]="false"></p-progressbar>
                 </div>
             </div>
+            <!-- /snippet -->
+            <app-code-block [code]="snippet('misc-progressbar')" />
         </div>
 
         <div class="flex flex-col md:flex-row gap-8">
@@ -175,6 +180,12 @@ import { brandColors } from '@/app/core/config/design-tokens';
 })
 export class MiscDemo {
     value = 0;
+
+    private readonly snippets = inject(SnippetService).forPage('miscdemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
 
     avatarImage(label: string): string {
         return svgPlaceholder(80, 80, brandColors.navy.hex, label);

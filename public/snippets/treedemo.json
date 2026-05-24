@@ -1,0 +1,3 @@
+{
+  "tree-basic": "<p-tree [value]=\"treeValue()\" selectionMode=\"checkbox\" [(selection)]=\"selectedTreeValue\"></p-tree>"
+}

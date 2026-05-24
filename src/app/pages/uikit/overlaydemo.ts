@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
@@ -22,11 +24,12 @@ interface Product {
 @Component({
     selector: 'app-overlay-demo',
     standalone: true,
-    imports: [CommonModule, ToastModule, DialogModule, ButtonModule, DrawerModule, PopoverModule, ConfirmPopupModule, InputTextModule, FormsModule, TooltipModule, TableModule],
+    imports: [CommonModule, ToastModule, DialogModule, ButtonModule, DrawerModule, PopoverModule, ConfirmPopupModule, InputTextModule, FormsModule, TooltipModule, TableModule, CodeBlock],
     template: `<div class="flex flex-col md:flex-row gap-8">
         <div class="md:w-1/2">
             <div class="card">
                 <div class="font-semibold text-xl mb-4">Dialog</div>
+                <!-- snippet:overlay-dialog -->
                 <p-dialog header="Dialog" [(visible)]="display" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '30vw' }" [modal]="true">
                     <p class="leading-normal m-0">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -37,6 +40,8 @@ interface Product {
                     </ng-template>
                 </p-dialog>
                 <p-button label="Show" [style]="{ width: 'auto' }" (click)="open()" />
+                <!-- /snippet -->
+                <app-code-block [code]="snippet('overlay-dialog')" />
             </div>
 
             <div class="card">
@@ -147,6 +152,12 @@ interface Product {
     providers: [ConfirmationService, MessageService]
 })
 export class OverlayDemo implements OnInit {
+    private readonly snippets = inject(SnippetService).forPage('overlaydemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     display: boolean = false;
 
     products: Product[] = [];

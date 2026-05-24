@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { OrganizationChartModule } from 'primeng/organizationchart';
 import type { TreeNode } from 'primeng/api';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 
 // p-organizationchart: hiyerarşik organizasyon şeması bileşeni
 const MFA_HIERARCHY: TreeNode[] = [
@@ -34,7 +36,7 @@ const MFA_HIERARCHY: TreeNode[] = [
 @Component({
     selector: 'app-hierarchy-demo',
     standalone: true,
-    imports: [OrganizationChartModule],
+    imports: [OrganizationChartModule, CodeBlock],
     template: `
         <div class="card">
             <div class="font-semibold text-xl mb-4">Hiyerarşi (Organization Chart)</div>
@@ -42,7 +44,10 @@ const MFA_HIERARCHY: TreeNode[] = [
                 Organizasyonel yapıyı ağaç biçiminde görselleştirmek için
                 <code>p-organizationchart</code> kullanılır.
             </p>
+            <!-- snippet:hierarchy-basic -->
             <p-organizationchart [value]="data" styleClass="w-full overflow-auto" />
+            <!-- /snippet -->
+            <app-code-block [code]="snippet('hierarchy-basic')" />
         </div>
 
         <div class="card mt-4">
@@ -57,6 +62,12 @@ const MFA_HIERARCHY: TreeNode[] = [
     `
 })
 export class HierarchyDemo {
+    private readonly snippets = inject(SnippetService).forPage('hierarchydemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     readonly data = MFA_HIERARCHY;
     selected: TreeNode | null = null;
 }

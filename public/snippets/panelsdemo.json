@@ -1,0 +1,3 @@
+{
+  "panel-toolbar": "<p-toolbar>\n    <ng-template #start>\n        <p-button icon=\"pi pi-plus\" class=\"mr-2\" severity=\"secondary\" text />\n        <p-button icon=\"pi pi-print\" class=\"mr-2\" severity=\"secondary\" text />\n        <p-button icon=\"pi pi-upload\" severity=\"secondary\" text />\n    </ng-template>\n\n    <ng-template #center>\n        <p-iconfield>\n            <p-inputicon>\n                <i class=\"pi pi-search\"></i>\n            </p-inputicon>\n            <input pInputText placeholder=\"Search\" />\n        </p-iconfield>\n    </ng-template>\n\n    <ng-template #end><p-splitbutton label=\"Save\" [model]=\"items\"></p-splitbutton></ng-template>\n</p-toolbar>"
+}

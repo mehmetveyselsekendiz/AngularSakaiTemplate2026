@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { ContextMenuModule } from 'primeng/contextmenu';
@@ -13,6 +13,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { StepperModule } from 'primeng/stepper';
 import { IconField, IconFieldModule } from 'primeng/iconfield';
 import { InputIcon, InputIconModule } from 'primeng/inputicon';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 
 @Component({
     selector: 'app-menu-demo',
@@ -35,11 +37,13 @@ import { InputIcon, InputIconModule } from 'primeng/inputicon';
         StepperModule,
         TabsModule,
         IconField,
-        InputIcon
+        InputIcon,
+        CodeBlock
     ],
     template: `
         <div class="card">
             <div class="font-semibold text-xl mb-4">Menubar</div>
+            <!-- snippet:menu-menubar -->
             <p-menubar [model]="nestedMenuItems">
                 <ng-template #end>
                     <p-iconfield>
@@ -48,6 +52,8 @@ import { InputIcon, InputIconModule } from 'primeng/inputicon';
                     </p-iconfield>
                 </ng-template>
             </p-menubar>
+            <!-- /snippet -->
+            <app-code-block [code]="snippet('menu-menubar')" />
         </div>
 
         <div class="card">
@@ -130,6 +136,12 @@ import { InputIcon, InputIconModule } from 'primeng/inputicon';
     `
 })
 export class MenuDemo {
+    private readonly snippets = inject(SnippetService).forPage('menudemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     nestedMenuItems = [
         {
             label: 'Customers',

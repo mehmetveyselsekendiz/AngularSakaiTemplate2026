@@ -1,22 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 
 @Component({
     selector: 'app-timeline-demo',
     standalone: true,
-    imports: [CommonModule, TimelineModule, ButtonModule, CardModule],
+    imports: [CommonModule, TimelineModule, ButtonModule, CardModule, CodeBlock],
     template: `<div class="grid grid-cols-12 gap-8">
         <div class="col-span-12 sm:col-span-6">
             <div class="card">
                 <div class="font-semibold text-xl mb-4">Left Align</div>
+                <!-- snippet:timeline-left -->
                 <p-timeline [value]="events1">
                     <ng-template #content let-event>
                         {{ event.status }}
                     </ng-template>
                 </p-timeline>
+                <!-- /snippet -->
+                <app-code-block [code]="snippet('timeline-left')" />
             </div>
         </div>
         <div class="col-span-12 sm:col-span-6">
@@ -103,6 +108,12 @@ import { ButtonModule } from 'primeng/button';
     </div>`
 })
 export class TimelineDemo {
+    private readonly snippets = inject(SnippetService).forPage('timelinedemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     events1: any[] = [];
 
     events2: any[] = [];

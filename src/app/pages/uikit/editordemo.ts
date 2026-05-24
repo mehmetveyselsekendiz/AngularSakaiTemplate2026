@@ -1,17 +1,20 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { EditorModule } from 'primeng/editor';
 import { MessageModule } from 'primeng/message';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 
 @Component({
     selector: 'app-editor-demo',
     standalone: true,
-    imports: [FormsModule, EditorModule, ButtonModule, MessageModule],
+    imports: [FormsModule, EditorModule, ButtonModule, MessageModule, CodeBlock],
     template: `
         <div class="flex flex-col gap-8">
             <div class="card">
                 <div class="font-semibold text-xl mb-4">Zengin Metin Editörü (p-editor)</div>
+                <!-- snippet:editor-rich -->
                 <p-editor [(ngModel)]="icerik" [style]="{ height: '320px' }">
                     <ng-template #header>
                         <span class="ql-formats">
@@ -49,6 +52,8 @@ import { MessageModule } from 'primeng/message';
                         </span>
                     </ng-template>
                 </p-editor>
+                <!-- /snippet -->
+                <app-code-block [code]="snippet('editor-rich')" />
                 <div class="flex gap-2 mt-4">
                     <p-button label="İçeriği Temizle" severity="secondary" outlined (click)="temizle()" />
                     <p-button label="Varsayılanı Yükle" (click)="varsayilanYukle()" />
@@ -71,6 +76,12 @@ import { MessageModule } from 'primeng/message';
     `
 })
 export class EditorDemo {
+    private readonly snippets = inject(SnippetService).forPage('editordemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     icerik = signal<string>('');
 
     saltOkunurIcerik =

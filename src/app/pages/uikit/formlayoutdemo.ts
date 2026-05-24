@@ -1,20 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FluidModule } from 'primeng/fluid';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { TextareaModule } from 'primeng/textarea';
+import { CodeBlock } from './code-block';
+import { SnippetService } from './snippet.service';
 
 @Component({
     selector: 'app-formlayout-demo',
     standalone: true,
-    imports: [InputTextModule, FluidModule, ButtonModule, SelectModule, FormsModule, TextareaModule],
+    imports: [InputTextModule, FluidModule, ButtonModule, SelectModule, FormsModule, TextareaModule, CodeBlock],
     template: `<p-fluid>
         <div class="flex flex-col md:flex-row gap-8">
             <div class="md:w-1/2">
                 <div class="card flex flex-col gap-4">
                     <div class="font-semibold text-xl">Vertical</div>
+                    <!-- snippet:formlayout-vertical -->
                     <div class="flex flex-col gap-2">
                         <label for="name1">Name</label>
                         <input pInputText id="name1" type="text" />
@@ -27,6 +30,8 @@ import { TextareaModule } from 'primeng/textarea';
                         <label for="age1">Age</label>
                         <input pInputText id="age1" type="text" />
                     </div>
+                    <!-- /snippet -->
+                    <app-code-block [code]="snippet('formlayout-vertical')" />
                 </div>
 
                 <div class="card flex flex-col gap-4">
@@ -119,6 +124,12 @@ import { TextareaModule } from 'primeng/textarea';
     </p-fluid>`
 })
 export class FormLayoutDemo {
+    private readonly snippets = inject(SnippetService).forPage('formlayoutdemo');
+
+    snippet(id: string): string {
+        return this.snippets()[id] ?? '';
+    }
+
     dropdownItems = [
         { name: 'Option 1', code: 'Option 1' },
         { name: 'Option 2', code: 'Option 2' },
