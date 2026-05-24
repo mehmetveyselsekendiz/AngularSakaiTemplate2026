@@ -492,18 +492,44 @@ Bilinen sınırlama (Phase 7C'ye taşındı): `LOCALE_ID` runtime'da değişmez 
 
 ---
 
+## Oturum 6 — 24-25 Mayıs 2026
+
+### Phase 9 — Bileşen Kodunu Görüntüleme/Kopyalama (Tamamlandı)
+
+Build-script tabanlı snippet extraction + paylaşılan `CodeBlock` component. Önce buttondemo pilotu doğrulandı (tarayıcıda light/dark), sonra tüm `/uikit/*`'e yayıldı.
+
+- [x] **`scripts/extract-snippets.mjs`** (sıfır-paket) + `npm run snippets` — demo `.ts` template'lerindeki `<!-- snippet:ID -->...<!-- /snippet -->` bloklarını dedent edip `public/snippets/<sayfa>.json` üretir
+- [x] **`src/app/pages/uikit/code-block.ts`** — `CodeBlock` standalone component: "Kodu Göster/Gizle" + "Kopyala" (clipboard zarif fallback), `<pre><code>`, alias token dark-aware; syntax highlight YOK (sıfır-paket)
+- [x] **`src/app/pages/uikit/snippet.service.ts`** — `SnippetService`: `public/snippets/<sayfa>.json` yükler (HttpClient + signal, sayfa-bazlı cache)
+- [x] **Pilot (buttondemo):** Default + Severities örnekleri; tarayıcıda doğrulandı (toggle + render + light/dark) — commit `e8891d7`
+- [x] **Yayılım (16 sayfa):** input, formlayout, panel, overlay, table, list, tree, hierarchy, message, file, media, menu, charts, timeline, misc, editor — her sayfanın ana örneği işaretlendi
+- [x] Toplam **18 snippet, 17 sayfa**; tarayıcıda button/table/editor doğrulandı (basit/karmaşık/büyük) — commit `d2e0569`
+- [x] build temiz, `lint:palette` temiz (59 dosya)
+
+### Alınan Kararlar
+
+#### K-016 — Snippet Extraction: Build Script (24 Mayıs 2026)
+
+**Karar:** "Kodu Göster" snippet'leri manuel string veya `?raw` import yerine build-script ile demo `.ts`'ten üretilir (`extract-snippets.mjs` → `public/snippets/*.json`, sayfa fetch eder).
+
+**Gerekçe:** Kaynak kod tek yerde kalır (DRY) — snippet ayrı string olarak tutulsa demo ile snippet ikiye bölünür, senkron yükü doğar. `?raw` import Angular CLI/esbuild varsayılanında yok, ek loader gerektirir (sıfır-paket felsefesiyle çelişir). HTML-yorumu marker'lar (`<!-- snippet:ID -->`) canlı sayfada görünmez, governance tarayıcısını tetiklemez.
+
+**Etki:** Demo düzenlendiğinde `npm run snippets` yeniden çalıştırılmalı (şimdilik manuel; ileride prebuild hook'a bağlanabilir). Yeni uikit örneği eklerken pattern: marker + `<app-code-block [code]="snippet('id')" />` + sayfa class'ında `SnippetService.forPage()`.
+
+---
+
 ## Sırada — Sonraki Oturum
 
-**Tamamlanan:** Phase 7B + 7C + **Phase 8** (Governance Otomasyonu)
+**Tamamlanan:** Phase 7B + 7C + 8 + **9** (Kod görüntüleme/kopyalama)
 
-**Aktif aday:** Phase 9 — Bileşen Kodunu Görüntüleme/Kopyalama
-- `/uikit/*` her bileşen yanında "Kodu Göster" düğmesi
-- Kaynak `.ts`'ten compile-time snippet extraction (build script veya inline)
-- Snippet kopyalama UI'ı
+**Aktif aday:** Phase 10 — Responsive Audit
+- Tüm sayfaların 5 breakpoint'te (360/768/1024/1440/1920) doğrulanması
+- Kırık layout düzeltmeleri, touch hedef ≥44px, WCAG 2.1 SC 1.4.10 (Reflow)
 
-**Alternatif sıralama:**
-- Phase 10 — Responsive audit (5 breakpoint, touch target ≥44px, WCAG 1.4.10)
-- Phase 11 — İlk modül iskeleti (örnek `features/vize/`) + modül fork rehberi
-- Opsiyonel: pre-commit hook / CI — `lint:palette`'i otomatik tetikle (native git hook, sıfır-paket)
+**Alternatif / sonraki:**
+- Phase 11 — İlk modül iskeleti (`features/vize/`) + modül fork rehberi + OpenShift Docker + README
+- Opsiyonel iyileştirmeler: `npm run snippets`'i prebuild'e bağla; pre-commit hook (`lint:palette`); uikit sayfalarında birden fazla örneğe snippet ekleme
 
-**Git durumu:** Phase 8 commit edilecek (~14 dosya). `main` branch.
+**Bilinen küçük borç:** `timelinedemo.ts` "Templating" kartında `/demo/images/product/<x>.jpg` kırık yerel görsel (CDN değil, governance ihlali değil) — sonra `svgPlaceholder`'a çevrilebilir.
+
+**Git durumu:** Phase 9 commit'leri (`e8891d7` pilot + `d2e0569` rollout) atıldı. `main` branch.
