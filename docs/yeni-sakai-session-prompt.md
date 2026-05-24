@@ -2,7 +2,7 @@
 
 Bu dosya, **`AngularSakaiTemplate2026`** dizininde **yeni bir Claude Code oturumu** başlattığında ilk mesaj olarak göndereceğin prompt'u içerir.
 
-> **Son güncelleme:** 22 Mayıs 2026 — Phase 1–7C tamamlandı, Phase 8 sırada.
+> **Son güncelleme:** 25 Mayıs 2026 — Phase 1–8 tamamlandı, Phase 9 sırada.
 
 ## Kullanım Adımları
 
@@ -24,7 +24,7 @@ bu template'i fork'layıp kendi modüllerini geliştirecek.
 
 ## MEVCUT DURUM — ÖNCE BUNU OKU
 
-Phase 1–7C tamamlandı, Phase 8 sırada. Sıfırdan başlama; kurulum
+Phase 1–8 tamamlandı, Phase 9 sırada. Sıfırdan başlama; kurulum
 adımlarını tekrar yapma.
 
 Oturumu anlamak için sırasıyla şunları oku:
@@ -50,7 +50,10 @@ Faz özeti:
               pipe'lar (mfaDate/mfaCurrency, runtime locale) + modül
               rehberi (docs/i18n-rehber.md). K-012 ile kapsam daraltıldı:
               /uikit/*, kurumsal-kimlik, crud template-only kabul edildi.
-- Phase 8  ▶  Palet İhlali Tarayıcı + Governance Otomasyonu
+- Phase 8  ✓  Palet İhlali Tarayıcı + Governance (check-palette.mjs +
+              npm run lint:palette; 50 ihlal temizlendi; /pages/
+              kurumsal-kimlik/denetim runtime sayfası; K-014, K-015)
+- Phase 9  ▶  Bileşen Kodunu Görüntüleme/Kopyalama
 
 ---
 
@@ -213,6 +216,9 @@ Yeni Claude sırasıyla şunları yapacak:
 | `src/app/core/config/navigation.config.ts` | Menü yapısı (labelKey) + breadcrumb map |
 | `src/app/core/settings/` | SettingsService + types (Phase 7B) |
 | `src/app/core/i18n/` | TranslateService + pipe (Phase 7B) |
+| `scripts/check-palette.mjs` | Governance tarayıcı (Phase 8) — `npm run lint:palette` |
+| `src/app/core/util/svg-placeholder.ts` | CDN görsel yerine data:URI üretici (Phase 8) |
+| `src/app/pages/kurumsal-kimlik/denetim.ts` | Runtime palet denetim sayfası (Phase 8) |
 | `src/app/core/auth/` | OIDC auth altyapısı (5 dosya) |
 | `src/app/layout/component/app.topbar.ts` | Header icon group (dil/font/tema) |
 | `src/app/layout/component/app.settings-form.ts` | Paylaşılan ayar formu |
@@ -231,7 +237,7 @@ Eğer bu oturuma **yeni bir özellik isteğiyle** başlıyorsan, promptun başı
 --- OTURUM BAĞLAMI ---
 [isteğini buraya yaz]
 
-Not: Phase 1-7B tamamlandı, Phase 7C sırada.
+Not: Phase 1-8 tamamlandı, Phase 9 sırada.
 Detay için docs/ilerleme-ve-kararlar.md'nin son bölümünü oku.
 --- OTURUM BAĞLAMI SONU ---
 ```
@@ -242,6 +248,8 @@ Detay için docs/ilerleme-ve-kararlar.md'nin son bölümünü oku.
 
 - `git push` her zaman kullanıcı onayıyla.
 - Üretim build doğrulamadan commit atma (`npx ng build`).
-- Phase 7C tamamlandı: `MfaDatePipe` / `MfaCurrencyPipe` modüllere foundation.
-- Phase 8 başlamadan önce `docs/sakai-mfa-uyarlama-plani.md` §4B Phase 8
-  maddesini oku (palet ihlali tarayıcı + governance otomasyonu).
+- Phase 8 tamamlandı: `npm run lint:palette` governance gate (HEX/TAILWIND/CDN/IMPORT,
+  ihlalde exit 1). Yeni component yazarken kullan; CDN görsel yerine
+  `src/app/core/util/svg-placeholder.ts`.
+- Phase 9 başlamadan önce `docs/sakai-mfa-uyarlama-plani.md` §4B Phase 9
+  maddesini oku (bileşen kodu görüntüleme/kopyalama).
