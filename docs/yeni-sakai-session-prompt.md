@@ -2,7 +2,7 @@
 
 Bu dosya, **`AngularSakaiTemplate2026`** dizininde **yeni bir Claude Code oturumu** başlattığında ilk mesaj olarak göndereceğin prompt'u içerir.
 
-> **Son güncelleme:** 25 Mayıs 2026 — Phase 1–9 tamamlandı, Phase 10 sırada.
+> **Son güncelleme:** 25 Mayıs 2026 — Phase 1–8 + 9.0 (kısmi) tamamlandı. **Phase 9 yeniden tasarlandı (K-017)** — aktif faz: Phase 9 (Yeniden) — Bileşen Vitrini + Kütüphane Zenginleştirme.
 
 ## Kullanım Adımları
 
@@ -24,8 +24,14 @@ bu template'i fork'layıp kendi modüllerini geliştirecek.
 
 ## MEVCUT DURUM — ÖNCE BUNU OKU
 
-Phase 1–9 tamamlandı, Phase 10 sırada. Sıfırdan başlama; kurulum
-adımlarını tekrar yapma.
+Phase 1–8 + 9.0 (kısmi) tamamlandı. Phase 9 yeniden tasarlandı; aktif faz
+Phase 9 (Yeniden) — Bileşen Vitrini + Kütüphane Zenginleştirme. Sıfırdan
+başlama; kurulum adımlarını tekrar yapma.
+
+>>> BU OTURUMDA ÖNCE ŞUNLARI OKU:
+>>>   docs/superpowers/specs/2026-05-25-phase-9-component-library-design.md
+>>>   docs/superpowers/plans/2026-05-25-phase-9-component-library.md
+>>> Sonra plandaki 9A görevinden başla (ComponentShowcase + buttondemo/inputdemo pilot).
 
 Oturumu anlamak için sırasıyla şunları oku:
 
@@ -53,9 +59,13 @@ Faz özeti:
 - Phase 8  ✓  Palet İhlali Tarayıcı + Governance (check-palette.mjs +
               npm run lint:palette; 50 ihlal temizlendi; /pages/
               kurumsal-kimlik/denetim runtime sayfası; K-014, K-015)
-- Phase 9  ✓  Kod görüntüleme/kopyalama (extract-snippets.mjs + CodeBlock +
-              SnippetService; tüm /uikit/* "Kodu Göster"; K-016)
-- Phase 10 ▶  Responsive Audit (5 breakpoint, touch ≥44px, WCAG 1.4.10)
+- Phase 9.0 ✓ Kod görüntüleme altyapısı (extract-snippets.mjs + CodeBlock +
+              SnippetService); ANCAK kısmi (18/105 örnek, tab yok) — K-017 ile
+              yeniden tasarlandı
+- Phase 9  ▶  YENİDEN — Bileşen Vitrini (ComponentShowcase: kart + p-tabs
+              Önizleme/Kod) + HER örnek + eksik bileşenler + Kurumsal Desenler.
+              Spec/plan: superpowers/specs+plans/2026-05-25-phase-9-*
+- Phase 10 ⏳ Responsive Audit (5 breakpoint, touch ≥44px, WCAG 1.4.10)
 
 ---
 
@@ -224,6 +234,8 @@ Yeni Claude sırasıyla şunları yapacak:
 | `scripts/extract-snippets.mjs` | Snippet üretici (Phase 9) — `npm run snippets` |
 | `src/app/pages/uikit/code-block.ts` | "Kodu Göster/Kopyala" component (Phase 9) |
 | `src/app/pages/uikit/snippet.service.ts` | Snippet JSON yükleyici (Phase 9) |
+| `docs/superpowers/specs/2026-05-25-phase-9-component-library-design.md` | **Phase 9 (Yeniden) TASARIM — önce bunu oku** |
+| `docs/superpowers/plans/2026-05-25-phase-9-component-library.md` | **Phase 9 (Yeniden) GÖREV PLANI — 9A→9D** |
 | `src/app/core/auth/` | OIDC auth altyapısı (5 dosya) |
 | `src/app/layout/component/app.topbar.ts` | Header icon group (dil/font/tema) |
 | `src/app/layout/component/app.settings-form.ts` | Paylaşılan ayar formu |
@@ -256,7 +268,10 @@ Detay için docs/ilerleme-ve-kararlar.md'nin son bölümünü oku.
 - Phase 8 tamamlandı: `npm run lint:palette` governance gate (HEX/TAILWIND/CDN/IMPORT,
   ihlalde exit 1). Yeni component yazarken kullan; CDN görsel yerine
   `src/app/core/util/svg-placeholder.ts`.
-- Phase 9 tamamlandı: `/uikit/*`'te "Kodu Göster". Yeni örnek eklerken `<!-- snippet:ID -->`
-  marker + `<app-code-block [code]="snippet('id')" />`, sonra `npm run snippets`.
-- Phase 10 başlamadan önce `docs/sakai-mfa-uyarlama-plani.md` §4B Phase 10
-  maddesini oku (responsive audit).
+- Phase 9 YENİDEN tasarlandı (K-017): `ComponentShowcase` (kart + `p-tabs`
+  Önizleme/Kod) + HER örnek + eksik PrimeNG bileşenleri + "Kurumsal Desenler" sayfası.
+  9.0 altyapısı (extractor/SnippetService/CodeBlock) korunur. ÖNCE spec+plan oku:
+  docs/superpowers/specs+plans/2026-05-25-phase-9-component-library*.
+- Yeni uikit örneği = `<app-showcase>` + `<!-- snippet:ID -->` + `snippet()` + `npm run snippets`.
+- Skill/subagent serbest (ecc:angular-developer, gap analizi için subagent) — ama
+  SIFIR PAKET kuralı geçerli (CLAUDE.md §3), dependency eklenmez.

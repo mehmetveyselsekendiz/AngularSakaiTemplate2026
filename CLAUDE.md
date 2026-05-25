@@ -296,6 +296,17 @@ Yukarıdaki kuralları **otomatik denetleyen** bir tarayıcı var: `scripts/chec
 
 **Runtime denetim sayfası:** `/pages/kurumsal-kimlik/denetim` — açık ekranı canlı denetler (satır-içi hex, canlı token değerleri, gövde fontu) + statik tarayıcı bilgisi. Yetkili karar build-zamanı tarayıcısındadır; bu sayfa görsel/bilgilendirici yardımcıdır.
 
+### Bileşen Vitrini — "Kodu Göster" Standardı (Phase 9+)
+
+`/uikit/*` her örnek bölümü **`<app-showcase>`** (`src/app/pages/uikit/component-showcase.ts`) ile sarılır: kurumsal kart + header'da kopyala + `p-tabs` (**Önizleme** / **Kod**). Tek-kaynak: örnek markup `ng-content` ile canlı render edilir **ve** `<!-- snippet:ID -->...<!-- /snippet -->` ile sarılıp `npm run snippets` ile `public/snippets/<sayfa>.json`'a çıkarılır (kopya kod tutulmaz).
+
+**Yeni uikit örneği eklerken zorunlu desen:**
+1. Örneği `<app-showcase title="..." snippetId="x" [code]="snippet('x')">` içine al, içeride `<!-- snippet:x -->...<!-- /snippet -->`.
+2. Sayfa class'ında `private snippets = inject(SnippetService).forPage('<sayfa>'); snippet(id){ return this.snippets()[id] ?? ''; }`.
+3. `npm run snippets` çalıştır (demo `.ts` değişince tekrar).
+
+**Tasarım/plan:** `docs/superpowers/specs/2026-05-25-phase-9-component-library-design.md` + `.../plans/2026-05-25-phase-9-component-library.md`. Showcase etiketleri (Önizleme/Kod/Kopyala) `/uikit` template-only kapsamında TR sabit kabul (K-012).
+
 ---
 
 ## 15. Runtime Ayar Sistemi (Phase 7B+)
