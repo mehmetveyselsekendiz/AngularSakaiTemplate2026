@@ -3,17 +3,16 @@ import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ButtonGroupModule } from 'primeng/buttongroup';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { CodeBlock } from './code-block';
+import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
 
 @Component({
     selector: 'app-button-demo',
     standalone: true,
-    imports: [ButtonModule, ButtonGroupModule, SplitButtonModule, CodeBlock],
+    imports: [ButtonModule, ButtonGroupModule, SplitButtonModule, ComponentShowcase],
     template: `<div class="flex flex-col md:flex-row gap-8">
-        <div class="md:w-1/2">
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">Default</div>
+        <div class="md:w-1/2 flex flex-col gap-6">
+            <app-showcase title="Default" snippetId="button-default" [code]="snippet('button-default')">
                 <!-- snippet:button-default -->
                 <div class="flex flex-wrap gap-2">
                     <p-button label="Submit"></p-button>
@@ -21,10 +20,9 @@ import { SnippetService } from './snippet.service';
                     <p-button label="Link" class="p-button-link" />
                 </div>
                 <!-- /snippet -->
-                <app-code-block [code]="snippet('button-default')" />
-            </div>
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">Severities</div>
+            </app-showcase>
+
+            <app-showcase title="Severities" snippetId="button-severities" [code]="snippet('button-severities')">
                 <!-- snippet:button-severities -->
                 <div class="flex flex-wrap gap-2">
                     <p-button label="Primary" />
@@ -37,10 +35,10 @@ import { SnippetService } from './snippet.service';
                     <p-button label="Contrast" severity="contrast" />
                 </div>
                 <!-- /snippet -->
-                <app-code-block [code]="snippet('button-severities')" />
-            </div>
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">Text</div>
+            </app-showcase>
+
+            <app-showcase title="Text" snippetId="button-text" [code]="snippet('button-text')">
+                <!-- snippet:button-text -->
                 <div class="flex flex-wrap gap-2">
                     <p-button label="Primary" text />
                     <p-button label="Secondary" severity="secondary" text />
@@ -51,9 +49,11 @@ import { SnippetService } from './snippet.service';
                     <p-button label="Danger" severity="danger" text />
                     <p-button label="Plain" text />
                 </div>
-            </div>
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">Outlined</div>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="Outlined" snippetId="button-outlined" [code]="snippet('button-outlined')">
+                <!-- snippet:button-outlined -->
                 <div class="flex flex-wrap gap-2">
                     <p-button label="Primary" outlined />
                     <p-button label="Secondary" severity="secondary" outlined />
@@ -64,9 +64,11 @@ import { SnippetService } from './snippet.service';
                     <p-button label="Danger" severity="danger" outlined />
                     <p-button label="Contrast" severity="contrast" outlined />
                 </div>
-            </div>
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">Group</div>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="Group" snippetId="button-group" [code]="snippet('button-group')">
+                <!-- snippet:button-group -->
                 <div class="flex flex-wrap gap-2">
                     <p-buttongroup>
                         <p-button label="Save" icon="pi pi-check" />
@@ -74,9 +76,11 @@ import { SnippetService } from './snippet.service';
                         <p-button label="Cancel" icon="pi pi-times" />
                     </p-buttongroup>
                 </div>
-            </div>
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">SplitButton</div>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="SplitButton" snippetId="button-split" [code]="snippet('button-split')">
+                <!-- snippet:button-split -->
                 <div class="flex flex-wrap gap-2">
                     <p-splitbutton label="Save" [model]="items"></p-splitbutton>
                     <p-splitbutton label="Save" [model]="items" severity="secondary"></p-splitbutton>
@@ -87,9 +91,11 @@ import { SnippetService } from './snippet.service';
                     <p-splitbutton label="Save" [model]="items" severity="danger"></p-splitbutton>
                     <p-splitbutton label="Save" [model]="items" severity="contrast"></p-splitbutton>
                 </div>
-            </div>
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">Templating</div>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="Templating" snippetId="button-templating" [code]="snippet('button-templating')">
+                <!-- snippet:button-templating -->
                 <div class="flex flex-wrap gap-2">
                     <p-button type="button">
                         <i class="pi pi-star mr-2"></i>
@@ -100,19 +106,22 @@ import { SnippetService } from './snippet.service';
                         <span class="font-bold">Onaylandı</span>
                     </p-button>
                 </div>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
         </div>
-        <div class="md:w-1/2">
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">Icons</div>
+        <div class="md:w-1/2 flex flex-col gap-6">
+            <app-showcase title="Icons" snippetId="button-icons" [code]="snippet('button-icons')">
+                <!-- snippet:button-icons -->
                 <div class="flex flex-wrap gap-2">
                     <p-button icon="pi pi-bookmark"></p-button>
                     <p-button label="Bookmark" icon="pi pi-bookmark"></p-button>
                     <p-button label="Bookmark" icon="pi pi-bookmark" iconPos="right"></p-button>
                 </div>
-            </div>
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">Raised</div>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="Raised" snippetId="button-raised" [code]="snippet('button-raised')">
+                <!-- snippet:button-raised -->
                 <div class="flex flex-wrap gap-2">
                     <p-button label="Primary" raised />
                     <p-button label="Secondary" severity="secondary" raised />
@@ -123,9 +132,11 @@ import { SnippetService } from './snippet.service';
                     <p-button label="Danger" severity="danger" raised />
                     <p-button label="Contrast" severity="contrast" raised />
                 </div>
-            </div>
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">Rounded</div>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="Rounded" snippetId="button-rounded" [code]="snippet('button-rounded')">
+                <!-- snippet:button-rounded -->
                 <div class="flex flex-wrap gap-2">
                     <p-button label="Primary" rounded />
                     <p-button label="Secondary" severity="secondary" rounded />
@@ -136,9 +147,11 @@ import { SnippetService } from './snippet.service';
                     <p-button label="Danger" severity="danger" rounded />
                     <p-button label="Contrast" severity="contrast" rounded />
                 </div>
-            </div>
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">Rounded Icons</div>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="Rounded Icons" snippetId="button-rounded-icons" [code]="snippet('button-rounded-icons')">
+                <!-- snippet:button-rounded-icons -->
                 <div class="flex flex-wrap gap-2">
                     <p-button icon="pi pi-check" rounded />
                     <p-button icon="pi pi-bookmark" severity="secondary" rounded />
@@ -148,9 +161,11 @@ import { SnippetService } from './snippet.service';
                     <p-button icon="pi pi-heart" severity="help" rounded />
                     <p-button icon="pi pi-times" severity="danger" rounded />
                 </div>
-            </div>
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">Rounded Text</div>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="Rounded Text" snippetId="button-rounded-text" [code]="snippet('button-rounded-text')">
+                <!-- snippet:button-rounded-text -->
                 <div class="flex flex-wrap gap-2">
                     <p-button icon="pi pi-check" text raised rounded />
                     <p-button icon="pi pi-bookmark" severity="secondary" text raised rounded />
@@ -160,9 +175,11 @@ import { SnippetService } from './snippet.service';
                     <p-button icon="pi pi-heart" severity="help" text raised rounded />
                     <p-button icon="pi pi-times" severity="danger" text raised rounded />
                 </div>
-            </div>
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">Rounded Outlined</div>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="Rounded Outlined" snippetId="button-rounded-outlined" [code]="snippet('button-rounded-outlined')">
+                <!-- snippet:button-rounded-outlined -->
                 <div class="flex flex-wrap gap-2">
                     <p-button icon="pi pi-check" rounded outlined />
                     <p-button icon="pi pi-bookmark" severity="secondary" rounded outlined />
@@ -172,16 +189,19 @@ import { SnippetService } from './snippet.service';
                     <p-button icon="pi pi-heart" severity="help" rounded outlined />
                     <p-button icon="pi pi-times" severity="danger" rounded outlined />
                 </div>
-            </div>
-            <div class="card flex flex-col gap-4">
-                <div class="font-semibold text-xl">Loading</div>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="Loading" snippetId="button-loading" [code]="snippet('button-loading')">
+                <!-- snippet:button-loading -->
                 <div class="flex flex-wrap gap-2">
                     <p-button type="button" label="Search" icon="pi pi-search" [loading]="loading[0]" (click)="load(0)" />
                     <p-button type="button" label="Search" icon="pi pi-search" iconPos="right" [loading]="loading[1]" (click)="load(1)" />
                     <p-button type="button" styleClass="h-full" icon="pi pi-search" [loading]="loading[2]" (click)="load(2)" />
                     <p-button type="button" label="Search" [loading]="loading[3]" (click)="load(3)" />
                 </div>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
         </div>
     </div> `
 })

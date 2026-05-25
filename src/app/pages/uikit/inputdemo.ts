@@ -29,7 +29,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CountryService } from '@/app/pages/service/country.service';
 import { TreeNode } from 'primeng/api';
-import { CodeBlock } from './code-block';
+import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
 
 interface Country {
@@ -68,12 +68,11 @@ interface Country {
         ListboxModule,
         InputGroupAddonModule,
         TextareaModule,
-        CodeBlock
+        ComponentShowcase
     ],
     template: ` <p-fluid class="flex flex-col md:flex-row gap-8">
-            <div class="md:w-1/2">
-                <div class="card flex flex-col gap-4">
-                    <div class="font-semibold text-xl">InputText</div>
+            <div class="md:w-1/2 flex flex-col gap-6">
+                <app-showcase title="InputText" snippetId="input-text" [code]="snippet('input-text')">
                     <!-- snippet:input-text -->
                     <div class="flex flex-col md:flex-row gap-4">
                         <input pInputText type="text" placeholder="Default" />
@@ -81,60 +80,86 @@ interface Country {
                         <input pInputText type="text" placeholder="Invalid" class="ng-dirty ng-invalid" />
                     </div>
                     <!-- /snippet -->
-                    <app-code-block [code]="snippet('input-text')" />
+                </app-showcase>
 
-                    <div class="font-semibold text-xl">Icons</div>
-                    <p-iconfield>
-                        <p-inputicon class="pi pi-user" />
-                        <input pInputText type="text" placeholder="Username" />
-                    </p-iconfield>
-                    <p-iconfield iconPosition="left">
-                        <input pInputText type="text" placeholder="Search" />
-                        <p-inputicon class="pi pi-search" />
-                    </p-iconfield>
+                <app-showcase title="Icons" snippetId="input-icons" [code]="snippet('input-icons')">
+                    <!-- snippet:input-icons -->
+                    <div class="flex flex-col gap-4">
+                        <p-iconfield>
+                            <p-inputicon class="pi pi-user" />
+                            <input pInputText type="text" placeholder="Username" />
+                        </p-iconfield>
+                        <p-iconfield iconPosition="left">
+                            <input pInputText type="text" placeholder="Search" />
+                            <p-inputicon class="pi pi-search" />
+                        </p-iconfield>
+                    </div>
+                    <!-- /snippet -->
+                </app-showcase>
 
-                    <div class="font-semibold text-xl">Float Label</div>
+                <app-showcase title="Float Label" snippetId="input-floatlabel" [code]="snippet('input-floatlabel')">
+                    <!-- snippet:input-floatlabel -->
                     <p-floatlabel>
                         <input pInputText id="username" type="text" [(ngModel)]="floatValue" />
                         <label for="username">Username</label>
                     </p-floatlabel>
+                    <!-- /snippet -->
+                </app-showcase>
 
-                    <div class="font-semibold text-xl">Textarea</div>
+                <app-showcase title="Textarea" snippetId="input-textarea" [code]="snippet('input-textarea')">
+                    <!-- snippet:input-textarea -->
                     <textarea pTextarea placeholder="Your Message" [autoResize]="true" rows="3" cols="30"></textarea>
+                    <!-- /snippet -->
+                </app-showcase>
 
-                    <div class="font-semibold text-xl">AutoComplete</div>
+                <app-showcase title="AutoComplete" snippetId="input-autocomplete" [code]="snippet('input-autocomplete')">
+                    <!-- snippet:input-autocomplete -->
                     <p-autocomplete [(ngModel)]="selectedAutoValue" [suggestions]="autoFilteredValue" optionLabel="name" placeholder="Search" dropdown multiple display="chip" (completeMethod)="filterCountry($event)" />
+                    <!-- /snippet -->
+                </app-showcase>
 
-                    <div class="font-semibold text-xl">DatePicker</div>
+                <app-showcase title="DatePicker" snippetId="input-datepicker" [code]="snippet('input-datepicker')">
+                    <!-- snippet:input-datepicker -->
                     <p-datepicker [showIcon]="true" [showButtonBar]="true" [(ngModel)]="calendarValue"></p-datepicker>
+                    <!-- /snippet -->
+                </app-showcase>
 
-                    <div class="font-semibold text-xl">InputNumber</div>
+                <app-showcase title="InputNumber" snippetId="input-number" [code]="snippet('input-number')">
+                    <!-- snippet:input-number -->
                     <p-inputnumber [(ngModel)]="inputNumberValue" showButtons mode="decimal"></p-inputnumber>
-                </div>
+                    <!-- /snippet -->
+                </app-showcase>
 
-                <div class="card flex flex-col gap-4">
-                    <div class="font-semibold text-xl">Slider</div>
-                    <input pInputText [(ngModel)]="sliderValue" type="number" />
-                    <p-slider [(ngModel)]="sliderValue" />
-
-                    <div class="flex flex-row mt-6">
-                        <div class="flex flex-col gap-4 w-1/2">
-                            <div class="font-semibold text-xl">Rating</div>
-                            <p-rating [(ngModel)]="ratingValue" />
-                        </div>
-                        <div class="flex flex-col gap-4 w-1/2">
-                            <div class="font-semibold text-xl">ColorPicker</div>
-                            <p-colorpicker [style]="{ width: '2rem' }" [(ngModel)]="colorValue" />
-                        </div>
+                <app-showcase title="Slider" snippetId="input-slider" [code]="snippet('input-slider')">
+                    <!-- snippet:input-slider -->
+                    <div class="flex flex-col gap-4">
+                        <input pInputText [(ngModel)]="sliderValue" type="number" />
+                        <p-slider [(ngModel)]="sliderValue" />
                     </div>
+                    <!-- /snippet -->
+                </app-showcase>
 
-                    <div class="font-semibold text-xl">Knob</div>
+                <app-showcase title="Rating" snippetId="input-rating" [code]="snippet('input-rating')">
+                    <!-- snippet:input-rating -->
+                    <p-rating [(ngModel)]="ratingValue" />
+                    <!-- /snippet -->
+                </app-showcase>
+
+                <app-showcase title="ColorPicker" snippetId="input-colorpicker" [code]="snippet('input-colorpicker')">
+                    <!-- snippet:input-colorpicker -->
+                    <p-colorpicker [style]="{ width: '2rem' }" [(ngModel)]="colorValue" />
+                    <!-- /snippet -->
+                </app-showcase>
+
+                <app-showcase title="Knob" snippetId="input-knob" [code]="snippet('input-knob')">
+                    <!-- snippet:input-knob -->
                     <p-knob [(ngModel)]="knobValue" [step]="10" [min]="-50" [max]="50" valueTemplate="{value}%" />
-                </div>
+                    <!-- /snippet -->
+                </app-showcase>
             </div>
-            <div class="md:w-1/2">
-                <div class="card flex flex-col gap-4">
-                    <div class="font-semibold text-xl">RadioButton</div>
+            <div class="md:w-1/2 flex flex-col gap-6">
+                <app-showcase title="RadioButton" snippetId="input-radio" [code]="snippet('input-radio')">
+                    <!-- snippet:input-radio -->
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="flex items-center">
                             <p-radiobutton id="option1" name="option" value="Chicago" [(ngModel)]="radioValue" />
@@ -149,8 +174,11 @@ interface Country {
                             <label for="option3" class="leading-none ml-2">New York</label>
                         </div>
                     </div>
+                    <!-- /snippet -->
+                </app-showcase>
 
-                    <div class="font-semibold text-xl">Checkbox</div>
+                <app-showcase title="Checkbox" snippetId="input-checkbox" [code]="snippet('input-checkbox')">
+                    <!-- snippet:input-checkbox -->
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="flex items-center">
                             <p-checkbox id="checkOption1" name="option" value="Chicago" [(ngModel)]="checkboxValue" />
@@ -165,19 +193,29 @@ interface Country {
                             <label for="checkOption3" class="ml-2">New York</label>
                         </div>
                     </div>
+                    <!-- /snippet -->
+                </app-showcase>
 
-                    <div class="font-semibold text-xl">ToggleSwitch</div>
+                <app-showcase title="ToggleSwitch" snippetId="input-toggleswitch" [code]="snippet('input-toggleswitch')">
+                    <!-- snippet:input-toggleswitch -->
                     <p-toggleswitch [(ngModel)]="switchValue" />
-                </div>
+                    <!-- /snippet -->
+                </app-showcase>
 
-                <div class="card flex flex-col gap-4">
-                    <div class="font-semibold text-xl">Listbox</div>
+                <app-showcase title="Listbox" snippetId="input-listbox" [code]="snippet('input-listbox')">
+                    <!-- snippet:input-listbox -->
                     <p-listbox [(ngModel)]="listboxValue" [options]="listboxValues" optionLabel="name" [filter]="true" />
+                    <!-- /snippet -->
+                </app-showcase>
 
-                    <div class="font-semibold text-xl">Select</div>
+                <app-showcase title="Select" snippetId="input-select" [code]="snippet('input-select')">
+                    <!-- snippet:input-select -->
                     <p-select [(ngModel)]="dropdownValue" [options]="dropdownValues" optionLabel="name" placeholder="Select" />
+                    <!-- /snippet -->
+                </app-showcase>
 
-                    <div class="font-semibold text-xl">MultiSelect</div>
+                <app-showcase title="MultiSelect" snippetId="input-multiselect" [code]="snippet('input-multiselect')">
+                    <!-- snippet:input-multiselect -->
                     <p-multiselect [options]="multiselectCountries" [(ngModel)]="multiselectSelectedCountries" placeholder="Select Countries" optionLabel="name" display="chip" [filter]="true">
                         <ng-template #selecteditems let-countries>
                             @for (country of countries; track country.code) {
@@ -194,56 +232,67 @@ interface Country {
                             </div>
                         </ng-template>
                     </p-multiselect>
+                    <!-- /snippet -->
+                </app-showcase>
 
-                    <div class="font-semibold text-xl">TreeSelect</div>
+                <app-showcase title="TreeSelect" snippetId="input-treeselect" [code]="snippet('input-treeselect')">
+                    <!-- snippet:input-treeselect -->
                     <p-treeselect [(ngModel)]="selectedNode" [options]="treeSelectNodes" placeholder="Select Item"></p-treeselect>
-                </div>
+                    <!-- /snippet -->
+                </app-showcase>
 
-                <div class="card flex flex-col gap-4">
-                    <div class="font-semibold text-xl">ToggleButton</div>
+                <app-showcase title="ToggleButton" snippetId="input-togglebutton" [code]="snippet('input-togglebutton')">
+                    <!-- snippet:input-togglebutton -->
                     <p-togglebutton [(ngModel)]="toggleValue" onLabel="Yes" offLabel="No" [style]="{ width: '10em' }" />
+                    <!-- /snippet -->
+                </app-showcase>
 
-                    <div class="font-semibold text-xl">SelectButton</div>
+                <app-showcase title="SelectButton" snippetId="input-selectbutton" [code]="snippet('input-selectbutton')">
+                    <!-- snippet:input-selectbutton -->
                     <p-selectbutton [(ngModel)]="selectButtonValue" [options]="selectButtonValues" optionLabel="name" />
-                </div>
+                    <!-- /snippet -->
+                </app-showcase>
             </div>
         </p-fluid>
 
         <p-fluid class="flex mt-8">
-            <div class="card flex flex-col gap-6 w-full">
-                <div class="font-semibold text-xl">InputGroup</div>
-                <div class="flex flex-col md:flex-row gap-6">
-                    <p-inputgroup>
-                        <p-inputgroup-addon>
-                            <i class="pi pi-user"></i>
-                        </p-inputgroup-addon>
-                        <input pInputText placeholder="Username" />
-                    </p-inputgroup>
-                    <p-inputgroup>
-                        <p-inputgroup-addon>
-                            <i class="pi pi-clock"></i>
-                        </p-inputgroup-addon>
-                        <p-inputgroup-addon>
-                            <i class="pi pi-star-fill"></i>
-                        </p-inputgroup-addon>
-                        <p-inputnumber placeholder="Price" />
-                        <p-inputgroup-addon>$</p-inputgroup-addon>
-                        <p-inputgroup-addon>.00</p-inputgroup-addon>
-                    </p-inputgroup>
+            <app-showcase title="InputGroup" snippetId="input-group" [code]="snippet('input-group')" class="w-full">
+                <!-- snippet:input-group -->
+                <div class="flex flex-col gap-6">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <p-inputgroup>
+                            <p-inputgroup-addon>
+                                <i class="pi pi-user"></i>
+                            </p-inputgroup-addon>
+                            <input pInputText placeholder="Username" />
+                        </p-inputgroup>
+                        <p-inputgroup>
+                            <p-inputgroup-addon>
+                                <i class="pi pi-clock"></i>
+                            </p-inputgroup-addon>
+                            <p-inputgroup-addon>
+                                <i class="pi pi-star-fill"></i>
+                            </p-inputgroup-addon>
+                            <p-inputnumber placeholder="Price" />
+                            <p-inputgroup-addon>$</p-inputgroup-addon>
+                            <p-inputgroup-addon>.00</p-inputgroup-addon>
+                        </p-inputgroup>
+                    </div>
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <p-inputgroup>
+                            <p-button label="Search" />
+                            <input pInputText placeholder="Keyword" />
+                        </p-inputgroup>
+                        <p-inputgroup>
+                            <p-inputgroup-addon>
+                                <p-checkbox [(ngModel)]="inputGroupValue" [binary]="true" />
+                            </p-inputgroup-addon>
+                            <input pInputText placeholder="Confirm" />
+                        </p-inputgroup>
+                    </div>
                 </div>
-                <div class="flex flex-col md:flex-row gap-6">
-                    <p-inputgroup>
-                        <p-button label="Search" />
-                        <input pInputText placeholder="Keyword" />
-                    </p-inputgroup>
-                    <p-inputgroup>
-                        <p-inputgroup-addon>
-                            <p-checkbox [(ngModel)]="inputGroupValue" [binary]="true" />
-                        </p-inputgroup-addon>
-                        <input pInputText placeholder="Confirm" />
-                    </p-inputgroup>
-                </div>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
         </p-fluid>`,
     providers: [CountryService]
 })
