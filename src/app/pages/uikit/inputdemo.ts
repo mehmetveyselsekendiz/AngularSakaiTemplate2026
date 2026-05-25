@@ -27,6 +27,11 @@ import { ListboxModule } from 'primeng/listbox';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { TextareaModule } from 'primeng/textarea';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { PasswordModule } from 'primeng/password';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputOtpModule } from 'primeng/inputotp';
+import { CascadeSelectModule } from 'primeng/cascadeselect';
+import { KeyFilterModule } from 'primeng/keyfilter';
 import { CountryService } from '@/app/pages/service/country.service';
 import { TreeNode } from 'primeng/api';
 import { ComponentShowcase } from './component-showcase';
@@ -68,6 +73,11 @@ interface Country {
         ListboxModule,
         InputGroupAddonModule,
         TextareaModule,
+        PasswordModule,
+        InputMaskModule,
+        InputOtpModule,
+        CascadeSelectModule,
+        KeyFilterModule,
         ComponentShowcase
     ],
     template: ` <p-fluid class="flex flex-col md:flex-row gap-8">
@@ -293,6 +303,64 @@ interface Country {
                 </div>
                 <!-- /snippet -->
             </app-showcase>
+        </p-fluid>
+
+        <p-fluid class="flex flex-col md:flex-row gap-8 mt-8">
+            <div class="md:w-1/2 flex flex-col gap-6">
+                <app-showcase title="Password" snippetId="input-password" [code]="snippet('input-password')" description="Şifre alanı: göster/gizle (toggleMask) ve güç ölçer (feedback).">
+                    <!-- snippet:input-password -->
+                    <div class="flex flex-col gap-4">
+                        <p-password [(ngModel)]="passwordValue" [toggleMask]="true" promptLabel="Şifre girin" weakLabel="Zayıf" mediumLabel="Orta" strongLabel="Güçlü" />
+                        <p-password [(ngModel)]="passwordNoFeedback" [feedback]="false" [toggleMask]="true" placeholder="Geri bildirimsiz" />
+                    </div>
+                    <!-- /snippet -->
+                </app-showcase>
+
+                <app-showcase title="InputMask" snippetId="input-mask" [code]="snippet('input-mask')" description="Maskeli giriş: T.C. kimlik, pasaport, telefon ve tarih desenleri.">
+                    <!-- snippet:input-mask -->
+                    <div class="flex flex-col gap-4">
+                        <p-inputmask [(ngModel)]="kimlikNo" mask="99999999999" placeholder="T.C. Kimlik No" />
+                        <p-inputmask [(ngModel)]="pasaportNo" mask="a9999999" placeholder="Pasaport No (U1234567)" />
+                        <p-inputmask [(ngModel)]="telefon" mask="(0999) 999 99 99" placeholder="(0xxx) xxx xx xx" />
+                        <p-inputmask [(ngModel)]="dogumTarihi" mask="99/99/9999" slotChar="gg/aa/yyyy" placeholder="GG/AA/YYYY" />
+                    </div>
+                    <!-- /snippet -->
+                </app-showcase>
+
+                <app-showcase title="KeyFilter" snippetId="input-keyfilter" [code]="snippet('input-keyfilter')" description="Tuş kısıtı (pKeyFilter): sadece sayı, para veya harf girişine izin verir.">
+                    <!-- snippet:input-keyfilter -->
+                    <div class="flex flex-col gap-4">
+                        <input pInputText pKeyFilter="int" placeholder="Sadece tam sayı" />
+                        <input pInputText pKeyFilter="money" placeholder="Para (1.234,56)" />
+                        <input pInputText pKeyFilter="alpha" placeholder="Sadece harf" />
+                    </div>
+                    <!-- /snippet -->
+                </app-showcase>
+            </div>
+            <div class="md:w-1/2 flex flex-col gap-6">
+                <app-showcase title="InputOtp" snippetId="input-otp" [code]="snippet('input-otp')" description="Tek kullanımlık kod (OTP / 2FA) girişi; maskeli ve sadece-rakam varyantları.">
+                    <!-- snippet:input-otp -->
+                    <div class="flex flex-col gap-4">
+                        <p-inputotp [(ngModel)]="otpValue" [length]="6" />
+                        <p-inputotp [(ngModel)]="otpMaskValue" [length]="4" [mask]="true" [integerOnly]="true" />
+                    </div>
+                    <!-- /snippet -->
+                </app-showcase>
+
+                <app-showcase title="CascadeSelect" snippetId="input-cascadeselect" [code]="snippet('input-cascadeselect')" description="Bağımlı/hiyerarşik seçim: Ülke → Bölge → Şehir (konsolosluk seçimi gibi).">
+                    <!-- snippet:input-cascadeselect -->
+                    <p-cascadeselect
+                        [(ngModel)]="selectedCity"
+                        [options]="cascadeCountries"
+                        optionLabel="cname"
+                        optionGroupLabel="name"
+                        [optionGroupChildren]="['states', 'cities']"
+                        placeholder="Şehir seçin"
+                        [style]="{ minWidth: '14rem' }"
+                    />
+                    <!-- /snippet -->
+                </app-showcase>
+            </div>
         </p-fluid>`,
     providers: [CountryService]
 })
@@ -375,6 +443,40 @@ export class InputDemo implements OnInit {
     treeSelectNodes!: TreeNode[];
 
     selectedNode: any = null;
+
+    passwordValue: any = null;
+
+    passwordNoFeedback: any = null;
+
+    kimlikNo: any = null;
+
+    pasaportNo: any = null;
+
+    telefon: any = null;
+
+    dogumTarihi: any = null;
+
+    otpValue: any = null;
+
+    otpMaskValue: any = null;
+
+    selectedCity: any = null;
+
+    cascadeCountries: any[] = [
+        {
+            name: 'Türkiye',
+            code: 'TR',
+            states: [
+                { name: 'Marmara', cities: [{ cname: 'İstanbul', code: 'IST' }, { cname: 'Bursa', code: 'BRS' }] },
+                { name: 'İç Anadolu', cities: [{ cname: 'Ankara', code: 'ANK' }, { cname: 'Konya', code: 'KON' }] }
+            ]
+        },
+        {
+            name: 'Almanya',
+            code: 'DE',
+            states: [{ name: 'Bavyera', cities: [{ cname: 'Münih', code: 'MUC' }, { cname: 'Nürnberg', code: 'NUE' }] }]
+        }
+    ];
 
     countryService = inject(CountryService);
 

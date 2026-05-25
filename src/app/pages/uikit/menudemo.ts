@@ -11,6 +11,7 @@ import { TabsModule } from 'primeng/tabs';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
 import { StepperModule } from 'primeng/stepper';
+import { SpeedDialModule } from 'primeng/speeddial';
 import { IconField, IconFieldModule } from 'primeng/iconfield';
 import { InputIcon, InputIconModule } from 'primeng/inputicon';
 import { ComponentShowcase } from './component-showcase';
@@ -34,6 +35,7 @@ import { SnippetService } from './snippet.service';
         MenubarModule,
         InputTextModule,
         StepperModule,
+        SpeedDialModule,
         IconField,
         InputIcon,
         ComponentShowcase
@@ -144,6 +146,18 @@ import { SnippetService } from './snippet.service';
                     </app-showcase>
                 </div>
             </div>
+
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2">
+                    <app-showcase title="SpeedDial" snippetId="menu-speeddial" [code]="snippet('menu-speeddial')" description="Yüzen aksiyon düğmesi (FAB) — sık kullanılan eylemleri tek noktada toplar.">
+                        <!-- snippet:menu-speeddial -->
+                        <div class="relative" style="height: 200px">
+                            <p-speeddial [model]="speedDialItems" direction="up" [style]="{ position: 'absolute', right: 0, bottom: 0 }" />
+                        </div>
+                        <!-- /snippet -->
+                    </app-showcase>
+                </div>
+            </div>
         </div>
     `
 })
@@ -153,6 +167,13 @@ export class MenuDemo {
     snippet(id: string): string {
         return this.snippets()[id] ?? '';
     }
+
+    speedDialItems = [
+        { icon: 'pi pi-pencil', tooltipOptions: { tooltipLabel: 'Düzenle' } },
+        { icon: 'pi pi-refresh', tooltipOptions: { tooltipLabel: 'Yenile' } },
+        { icon: 'pi pi-trash', tooltipOptions: { tooltipLabel: 'Sil' } },
+        { icon: 'pi pi-upload', tooltipOptions: { tooltipLabel: 'Dışa Aktar' } }
+    ];
 
     nestedMenuItems = [
         {

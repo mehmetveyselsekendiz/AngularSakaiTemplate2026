@@ -39,12 +39,7 @@ const MFA_HIERARCHY: TreeNode[] = [
     imports: [OrganizationChartModule, ComponentShowcase],
     template: `
         <div class="flex flex-col gap-6">
-            <app-showcase
-                title="Hiyerarşi (Organization Chart)"
-                snippetId="hierarchy-basic"
-                [code]="snippet('hierarchy-basic')"
-                description="Organizasyonel yapıyı ağaç biçiminde görselleştirmek için p-organizationchart kullanılır."
-            >
+            <app-showcase title="Hiyerarşi (Organization Chart)" snippetId="hierarchy-basic" [code]="snippet('hierarchy-basic')" description="Organizasyonel yapıyı ağaç biçiminde görselleştirmek için p-organizationchart kullanılır.">
                 <!-- snippet:hierarchy-basic -->
                 <p-organizationchart [value]="data" styleClass="w-full overflow-auto" />
                 <!-- /snippet -->

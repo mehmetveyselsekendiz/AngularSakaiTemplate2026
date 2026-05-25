@@ -5,6 +5,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectModule } from 'primeng/select';
 import { SliderModule } from 'primeng/slider';
 import { Table, TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
+import { ScrollerModule } from 'primeng/scroller';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToastModule } from 'primeng/toast';
@@ -73,6 +75,8 @@ interface expandedRows {
         RatingModule,
         RippleModule,
         IconFieldModule,
+        PaginatorModule,
+        ScrollerModule,
         ComponentShowcase
     ],
     template: ` <div class="flex flex-col gap-6">
@@ -414,6 +418,27 @@ interface expandedRows {
             </p-table>
             <!-- /snippet -->
         </app-showcase>
+
+        <app-showcase title="Paginator" snippetId="table-paginator" [code]="snippet('table-paginator')" description="Bağımsız sayfalama bileşeni — sunucu-taraflı liste/DataView ile kullanılır.">
+            <!-- snippet:table-paginator -->
+            <div class="flex flex-col gap-3">
+                <p-paginator (onPageChange)="onPageChange($event)" [first]="paginatorFirst" [rows]="paginatorRows" [totalRecords]="120" [rowsPerPageOptions]="[10, 20, 30]" />
+                <span class="text-sm text-muted-color">Başlangıç: {{ paginatorFirst }} · Sayfa boyutu: {{ paginatorRows }}</span>
+            </div>
+            <!-- /snippet -->
+        </app-showcase>
+
+        <app-showcase title="Scroller (Sanal Kaydırma)" snippetId="table-scroller" [code]="snippet('table-scroller')" description="Çok büyük listelerde yalnızca görünen öğeleri render eder; 1000 kayıt sorunsuz akar.">
+            <!-- snippet:table-scroller -->
+            <p-scroller [items]="scrollerItems" [itemSize]="50" scrollHeight="200px" styleClass="border border-surface rounded-border" [style]="{ width: '100%', height: '200px' }">
+                <ng-template #item let-item let-options="options">
+                    <div class="flex items-center px-4" [ngClass]="{ 'bg-surface-100 dark:bg-surface-800': options.odd }" [style]="{ height: '50px' }">
+                        {{ item }}
+                    </div>
+                </ng-template>
+            </p-scroller>
+            <!-- /snippet -->
+        </app-showcase>
     </div>`,
     styles: `
         .p-datatable-frozen-tbody {
@@ -474,6 +499,12 @@ export class TableDemo implements OnInit {
     balanceFrozen: boolean = false;
 
     loading: boolean = false;
+
+    paginatorFirst: number = 0;
+
+    paginatorRows: number = 10;
+
+    scrollerItems: string[] = Array.from({ length: 1000 }, (_, i) => 'Kayıt #' + (i + 1));
 
     @ViewChild('filter') filter!: ElementRef;
 
@@ -655,6 +686,11 @@ export class TableDemo implements OnInit {
 
     formatCurrency(value: number) {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    }
+
+    onPageChange(event: any) {
+        this.paginatorFirst = event.first;
+        this.paginatorRows = event.rows;
     }
 
     onGlobalFilter(table: Table, event: Event) {

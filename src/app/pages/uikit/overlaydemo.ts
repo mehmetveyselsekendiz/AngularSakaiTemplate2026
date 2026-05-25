@@ -13,6 +13,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+
 interface Product {
     id?: string;
     name?: string;
@@ -21,10 +24,37 @@ interface Product {
     inventoryStatus?: string;
 }
 
+/** DynamicDialog içeriği — DialogService.open() ile çalışma zamanında oluşturulur. */
+@Component({
+    selector: 'app-overlay-dynamic-content',
+    standalone: true,
+    imports: [ButtonModule],
+    template: `
+        <div class="flex flex-col gap-4">
+            <p class="m-0 leading-normal">Bu içerik DialogService ile çalışma zamanında oluşturuldu. Modüller kayıt detayı, hızlı form veya onay akışı için bu deseni kullanabilir.</p>
+            <div class="flex justify-end gap-2">
+                <p-button label="Kapat" severity="secondary" [text]="true" (click)="kapat()" />
+                <p-button label="Onayla" (click)="onayla()" />
+            </div>
+        </div>
+    `
+})
+export class OverlayDynamicContent {
+    private readonly ref = inject(DynamicDialogRef);
+
+    kapat(): void {
+        this.ref.close();
+    }
+
+    onayla(): void {
+        this.ref.close('onaylandi');
+    }
+}
+
 @Component({
     selector: 'app-overlay-demo',
     standalone: true,
-    imports: [CommonModule, ToastModule, DialogModule, ButtonModule, DrawerModule, PopoverModule, ConfirmPopupModule, InputTextModule, FormsModule, TooltipModule, TableModule, ComponentShowcase],
+    imports: [CommonModule, ToastModule, DialogModule, ButtonModule, DrawerModule, PopoverModule, ConfirmPopupModule, ConfirmDialogModule, InputTextModule, FormsModule, TooltipModule, TableModule, ComponentShowcase],
     template: `<div class="flex flex-col md:flex-row gap-8">
         <div class="md:w-1/2 flex flex-col gap-6">
             <app-showcase title="Dialog" snippetId="overlay-dialog" [code]="snippet('overlay-dialog')">
@@ -135,27 +165,28 @@ interface Product {
                 <!-- /snippet -->
             </app-showcase>
 
-            <app-showcase title="ConfirmDialog" snippetId="overlay-confirmdialog" [code]="snippet('overlay-confirmdialog')">
+            <app-showcase title="ConfirmDialog" snippetId="overlay-confirmdialog" [code]="snippet('overlay-confirmdialog')" description="Servis tabanlı modal onay (ConfirmationService) — silme/kritik işlemler için.">
                 <!-- snippet:overlay-confirmdialog -->
-                <p-button label="Delete" icon="pi pi-trash" severity="danger" [style]="{ width: 'auto' }" (click)="openConfirmation()" />
-                <p-dialog header="Confirmation" [(visible)]="displayConfirmation" [style]="{ width: '350px' }" [modal]="true">
-                    <div class="flex items-center justify-center">
-                        <i class="pi pi-exclamation-triangle mr-6" style="font-size: 2rem"> </i>
-                        <span>Are you sure you want to proceed?</span>
-                    </div>
-                    <ng-template #footer>
-                        <p-button label="No" icon="pi pi-times" (click)="closeConfirmation()" text severity="secondary" />
-                        <p-button label="Yes" icon="pi pi-check" (click)="closeConfirmation()" severity="danger" outlined autofocus />
-                    </ng-template>
-                </p-dialog>
+                <p-confirmdialog />
+                <p-button label="Sil" icon="pi pi-trash" severity="danger" [style]="{ width: 'auto' }" (click)="confirmDelete()" />
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="DynamicDialog" snippetId="overlay-dynamicdialog" [code]="snippet('overlay-dynamicdialog')" description="DialogService ile çalışma zamanında bileşen yükleyen dialog; sonucu onClose ile döner.">
+                <!-- snippet:overlay-dynamicdialog -->
+                <p-button label="Detayı Aç" icon="pi pi-window-maximize" [style]="{ width: 'auto' }" (click)="openDynamic()" />
                 <!-- /snippet -->
             </app-showcase>
         </div>
     </div>`,
-    providers: [ConfirmationService, MessageService]
+    providers: [ConfirmationService, MessageService, DialogService]
 })
 export class OverlayDemo implements OnInit {
     private readonly snippets = inject(SnippetService).forPage('overlaydemo');
+
+    private readonly dialogService = inject(DialogService);
+
+    private dynamicRef: DynamicDialogRef | null = null;
 
     snippet(id: string): string {
         return this.snippets()[id] ?? '';
@@ -174,8 +205,6 @@ export class OverlayDemo implements OnInit {
     visibleBottom: boolean = false;
 
     visibleFull: boolean = false;
-
-    displayConfirmation: boolean = false;
 
     selectedProduct!: Product;
 
@@ -247,11 +276,40 @@ export class OverlayDemo implements OnInit {
         });
     }
 
-    openConfirmation() {
-        this.displayConfirmation = true;
+    confirmDelete() {
+        this.confirmationService.confirm({
+            message: 'Bu kaydı kalıcı olarak silmek istediğinize emin misiniz?',
+            header: 'Silme Onayı',
+            icon: 'pi pi-exclamation-triangle',
+            rejectButtonProps: {
+                label: 'İptal',
+                severity: 'secondary',
+                outlined: true
+            },
+            acceptButtonProps: {
+                label: 'Sil',
+                severity: 'danger'
+            },
+            accept: () => {
+                this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt silindi.' });
+            },
+            reject: () => {
+                this.messageService.add({ severity: 'warn', summary: 'İptal', detail: 'İşlem iptal edildi.' });
+            }
+        });
     }
 
-    closeConfirmation() {
-        this.displayConfirmation = false;
+    openDynamic() {
+        this.dynamicRef = this.dialogService.open(OverlayDynamicContent, {
+            header: 'Kayıt Detayı',
+            width: '30rem',
+            modal: true,
+            breakpoints: { '960px': '75vw' }
+        });
+        this.dynamicRef?.onClose.subscribe((sonuc) => {
+            if (sonuc) {
+                this.messageService.add({ severity: 'success', summary: 'Tamam', detail: 'Dinamik dialog onaylandı.' });
+            }
+        });
     }
 }

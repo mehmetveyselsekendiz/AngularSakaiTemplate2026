@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { BadgeModule } from 'primeng/badge';
@@ -7,6 +8,12 @@ import { ButtonModule } from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUIModule } from 'primeng/blockui';
+import { MeterGroupModule } from 'primeng/metergroup';
+import { InplaceModule } from 'primeng/inplace';
+import { PanelModule } from 'primeng/panel';
+import { InputTextModule } from 'primeng/inputtext';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -19,7 +26,28 @@ import { SnippetService } from './snippet.service';
 @Component({
     selector: 'app-misc-demo',
     standalone: true,
-    imports: [CommonModule, ProgressBarModule, BadgeModule, AvatarModule, ScrollPanelModule, TagModule, ChipModule, ButtonModule, SkeletonModule, AvatarGroupModule, ScrollTopModule, OverlayBadgeModule, ComponentShowcase],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ProgressBarModule,
+        ProgressSpinnerModule,
+        BlockUIModule,
+        MeterGroupModule,
+        InplaceModule,
+        PanelModule,
+        InputTextModule,
+        BadgeModule,
+        AvatarModule,
+        ScrollPanelModule,
+        TagModule,
+        ChipModule,
+        ButtonModule,
+        SkeletonModule,
+        AvatarGroupModule,
+        ScrollTopModule,
+        OverlayBadgeModule,
+        ComponentShowcase
+    ],
     template: `
         <div class="flex flex-col gap-6">
             <app-showcase title="ProgressBar" snippetId="misc-progressbar" [code]="snippet('misc-progressbar')">
@@ -180,11 +208,69 @@ import { SnippetService } from './snippet.service';
                     </app-showcase>
                 </div>
             </div>
+
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2 flex flex-col gap-6">
+                    <app-showcase title="ProgressSpinner" snippetId="misc-progressspinner" [code]="snippet('misc-progressspinner')" description="Belirsiz süreli yükleme göstergesi (httpResource bekleme durumu).">
+                        <!-- snippet:misc-progressspinner -->
+                        <div class="flex items-center gap-6">
+                            <p-progressspinner ariaLabel="Yükleniyor" />
+                            <p-progressspinner styleClass="w-12 h-12" strokeWidth="6" animationDuration=".6s" ariaLabel="Yükleniyor" />
+                        </div>
+                        <!-- /snippet -->
+                    </app-showcase>
+
+                    <app-showcase title="MeterGroup" snippetId="misc-metergroup" [code]="snippet('misc-metergroup')" description="Birden çok değeri tek çubukta gösteren gösterge (kota, ilerleme dağılımı).">
+                        <!-- snippet:misc-metergroup -->
+                        <p-metergroup [value]="meterValues" />
+                        <!-- /snippet -->
+                    </app-showcase>
+                </div>
+                <div class="md:w-1/2 flex flex-col gap-6">
+                    <app-showcase title="BlockUI" snippetId="misc-blockui" [code]="snippet('misc-blockui')" description="Async işlem (kaydetme/silme) sırasında bir bölümü kilitler; etkileşimi engeller.">
+                        <!-- snippet:misc-blockui -->
+                        <div class="flex flex-col gap-3">
+                            <div class="flex gap-2">
+                                <p-button label="Kilitle" icon="pi pi-lock" (click)="blocked = true" />
+                                <p-button label="Kilidi Aç" icon="pi pi-lock-open" severity="secondary" (click)="blocked = false" />
+                            </div>
+                            <p-panel #blockPanel header="İşlem Bölümü">
+                                <p class="m-0 leading-normal">Bu bölüm BlockUI ile kilitlendiğinde içindeki alanlar tıklanamaz. Modüller bu deseni kaydetme/silme sırasında kullanır.</p>
+                            </p-panel>
+                            <p-blockui [target]="blockPanel" [blocked]="blocked" />
+                        </div>
+                        <!-- /snippet -->
+                    </app-showcase>
+
+                    <app-showcase title="Inplace" snippetId="misc-inplace" [code]="snippet('misc-inplace')" description="Tıkla-düzenle: görüntüleme modundan giriş moduna geçer.">
+                        <!-- snippet:misc-inplace -->
+                        <p-inplace>
+                            <ng-template #display>
+                                <span class="inline-flex items-center gap-2"><i class="pi pi-pencil"></i> Düzenlemek için tıklayın</span>
+                            </ng-template>
+                            <ng-template #content>
+                                <input pInputText type="text" [(ngModel)]="inplaceValue" placeholder="Değer girin" />
+                            </ng-template>
+                        </p-inplace>
+                        <!-- /snippet -->
+                    </app-showcase>
+                </div>
+            </div>
         </div>
     `
 })
 export class MiscDemo {
     value = 0;
+
+    blocked = false;
+
+    inplaceValue = '';
+
+    meterValues = [
+        { label: 'Tamamlanan', color: 'var(--mfa-navy)', value: 40, icon: 'pi pi-check' },
+        { label: 'Devam Eden', color: 'var(--mfa-gold)', value: 25, icon: 'pi pi-clock' },
+        { label: 'Bekleyen', color: 'var(--mfa-gray)', value: 15, icon: 'pi pi-hourglass' }
+    ];
 
     private readonly snippets = inject(SnippetService).forPage('miscdemo');
 

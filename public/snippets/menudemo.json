@@ -9,5 +9,6 @@
   "menu-context": "<div #anchor>\n    Right click to display.\n    <p-contextmenu [target]=\"anchor\" [model]=\"contextMenuItems\"></p-contextmenu>\n</div>",
   "menu-megamenu-h": "<p-megamenu [model]=\"megaMenuItems\" />",
   "menu-megamenu-v": "<p-megamenu [model]=\"megaMenuItems\" orientation=\"vertical\" />",
-  "menu-panelmenu": "<p-panelmenu [model]=\"panelMenuItems\" />"
+  "menu-panelmenu": "<p-panelmenu [model]=\"panelMenuItems\" />",
+  "menu-speeddial": "<div class=\"relative\" style=\"height: 200px\">\n    <p-speeddial [model]=\"speedDialItems\" direction=\"up\" [style]=\"{ position: 'absolute', right: 0, bottom: 0 }\" />\n</div>"
 }
