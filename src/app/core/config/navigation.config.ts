@@ -42,7 +42,8 @@ export const NAV_GROUPS: NavGroup[] = [
             { labelKey: 'menu.uikit.file', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file'] },
             { labelKey: 'menu.uikit.charts', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts'] },
             { labelKey: 'menu.uikit.timeline', icon: 'pi pi-fw pi-calendar', routerLink: ['/uikit/timeline'] },
-            { labelKey: 'menu.uikit.misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'] }
+            { labelKey: 'menu.uikit.misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'] },
+            { labelKey: 'menu.uikit.patterns', icon: 'pi pi-fw pi-objects-column', routerLink: ['/uikit/patterns'] }
         ]
     },
     {
@@ -88,6 +89,7 @@ export const ROUTE_LABEL_KEY_MAP: Record<string, string> = {
     '/uikit/charts': 'menu.uikit.charts',
     '/uikit/timeline': 'menu.uikit.timeline',
     '/uikit/misc': 'menu.uikit.misc',
+    '/uikit/patterns': 'menu.uikit.patterns',
     '/pages/kurumsal-kimlik': 'menu.pages.corporate-identity',
     '/pages/kurumsal-kimlik/denetim': 'menu.pages.audit',
     '/pages/crud': 'menu.pages.crud',

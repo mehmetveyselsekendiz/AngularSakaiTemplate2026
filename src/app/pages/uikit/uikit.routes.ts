@@ -16,6 +16,7 @@ import { TableDemo } from './tabledemo';
 import { OverlayDemo } from './overlaydemo';
 import { TreeDemo } from './treedemo';
 import { MenuDemo } from './menudemo';
+import { PatternsDemo } from './patternsdemo';
 
 export default [
     { path: 'button', data: { breadcrumb: 'Butonlar' }, component: ButtonDemo },
@@ -35,5 +36,6 @@ export default [
     { path: 'overlay', data: { breadcrumb: 'Overlay' }, component: OverlayDemo },
     { path: 'tree', data: { breadcrumb: 'Ağaç' }, component: TreeDemo },
     { path: 'menu', data: { breadcrumb: 'Menü' }, component: MenuDemo },
+    { path: 'patterns', data: { breadcrumb: 'Kurumsal Desenler' }, component: PatternsDemo },
     { path: '**', redirectTo: '/notfound' }
 ] as Routes;
