@@ -349,15 +349,7 @@ interface Country {
 
                 <app-showcase title="CascadeSelect" snippetId="input-cascadeselect" [code]="snippet('input-cascadeselect')" description="Bağımlı/hiyerarşik seçim: Ülke → Bölge → Şehir (konsolosluk seçimi gibi).">
                     <!-- snippet:input-cascadeselect -->
-                    <p-cascadeselect
-                        [(ngModel)]="selectedCity"
-                        [options]="cascadeCountries"
-                        optionLabel="cname"
-                        optionGroupLabel="name"
-                        [optionGroupChildren]="['states', 'cities']"
-                        placeholder="Şehir seçin"
-                        [style]="{ minWidth: '14rem' }"
-                    />
+                    <p-cascadeselect [(ngModel)]="selectedCity" [options]="cascadeCountries" optionLabel="cname" optionGroupLabel="name" [optionGroupChildren]="['states', 'cities']" placeholder="Şehir seçin" [style]="{ minWidth: '14rem' }" />
                     <!-- /snippet -->
                 </app-showcase>
             </div>
@@ -467,14 +459,34 @@ export class InputDemo implements OnInit {
             name: 'Türkiye',
             code: 'TR',
             states: [
-                { name: 'Marmara', cities: [{ cname: 'İstanbul', code: 'IST' }, { cname: 'Bursa', code: 'BRS' }] },
-                { name: 'İç Anadolu', cities: [{ cname: 'Ankara', code: 'ANK' }, { cname: 'Konya', code: 'KON' }] }
+                {
+                    name: 'Marmara',
+                    cities: [
+                        { cname: 'İstanbul', code: 'IST' },
+                        { cname: 'Bursa', code: 'BRS' }
+                    ]
+                },
+                {
+                    name: 'İç Anadolu',
+                    cities: [
+                        { cname: 'Ankara', code: 'ANK' },
+                        { cname: 'Konya', code: 'KON' }
+                    ]
+                }
             ]
         },
         {
             name: 'Almanya',
             code: 'DE',
-            states: [{ name: 'Bavyera', cities: [{ cname: 'Münih', code: 'MUC' }, { cname: 'Nürnberg', code: 'NUE' }] }]
+            states: [
+                {
+                    name: 'Bavyera',
+                    cities: [
+                        { cname: 'Münih', code: 'MUC' },
+                        { cname: 'Nürnberg', code: 'NUE' }
+                    ]
+                }
+            ]
         }
     ];
 

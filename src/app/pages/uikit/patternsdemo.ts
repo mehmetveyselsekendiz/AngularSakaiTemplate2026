@@ -63,12 +63,7 @@ interface Basvuru {
     ],
     template: `
         <div class="flex flex-col gap-6">
-            <app-showcase
-                title="Sayfa Başlığı (Page Header)"
-                snippetId="pattern-page-header"
-                [code]="snippet('pattern-page-header')"
-                description="Başlık + breadcrumb + sağda birincil aksiyonlar. Her modül sayfasının üst şeridi."
-            >
+            <app-showcase title="Sayfa Başlığı (Page Header)" snippetId="pattern-page-header" [code]="snippet('pattern-page-header')" description="Başlık + breadcrumb + sağda birincil aksiyonlar. Her modül sayfasının üst şeridi.">
                 <!-- snippet:pattern-page-header -->
                 <div class="flex flex-col gap-3">
                     <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" />
@@ -86,12 +81,7 @@ interface Basvuru {
                 <!-- /snippet -->
             </app-showcase>
 
-            <app-showcase
-                title="Tablo + Araç Çubuğu"
-                snippetId="pattern-table-toolbar"
-                [code]="snippet('pattern-table-toolbar')"
-                description="Araç çubuğu (toplu aksiyon + arama) ile listeleme tablosu; sayfalama ve çoklu seçim."
-            >
+            <app-showcase title="Tablo + Araç Çubuğu" snippetId="pattern-table-toolbar" [code]="snippet('pattern-table-toolbar')" description="Araç çubuğu (toplu aksiyon + arama) ile listeleme tablosu; sayfalama ve çoklu seçim.">
                 <!-- snippet:pattern-table-toolbar -->
                 <p-toolbar styleClass="mb-4">
                     <ng-template #start>
@@ -130,12 +120,7 @@ interface Basvuru {
                 <!-- /snippet -->
             </app-showcase>
 
-            <app-showcase
-                title="Form Kartı (Reactive Forms)"
-                snippetId="pattern-form-card"
-                [code]="snippet('pattern-form-card')"
-                description="p-fluid düzeninde doğrulamalı Reactive Form; kaydet/iptal aksiyonları (CLAUDE.md §7)."
-            >
+            <app-showcase title="Form Kartı (Reactive Forms)" snippetId="pattern-form-card" [code]="snippet('pattern-form-card')" description="p-fluid düzeninde doğrulamalı Reactive Form; kaydet/iptal aksiyonları (CLAUDE.md §7).">
                 <!-- snippet:pattern-form-card -->
                 <form [formGroup]="basvuruForm" (ngSubmit)="kaydet()">
                     <p-fluid>
