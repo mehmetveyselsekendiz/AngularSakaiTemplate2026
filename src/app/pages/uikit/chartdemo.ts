@@ -10,7 +10,7 @@ import { SnippetService } from './snippet.service';
     standalone: true,
     imports: [ChartModule, FluidModule, ComponentShowcase],
     template: `
-        <p-fluid class="grid grid-cols-12 gap-8">
+        <p-fluid class="grid grid-cols-12 gap-4 md:gap-8">
             <div class="col-span-12 xl:col-span-6">
                 <app-showcase title="Linear" snippetId="chart-line" [code]="snippet('chart-line')">
                     <!-- snippet:chart-line -->

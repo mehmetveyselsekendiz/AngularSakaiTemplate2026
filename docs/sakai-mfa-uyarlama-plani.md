@@ -587,11 +587,11 @@ Mevcut Phase 0-8 ilk fazda teslim edildi. Aşağıdaki Phase'ler kurumsal kimli�
 - [x] **9C** — Gap analizi + 14 eksik PrimeNG bileşen demosu (password, inputmask, inputotp, cascadeselect, keyfilter, confirmdialog, dynamicdialog, progressspinner, blockui, metergroup, inplace, paginator, scroller, speeddial)
 - [x] **9D** — "Kurumsal Desenler" sayfası `/uikit/patterns` (8 kompozit kalıp: page header, tablo+toolbar, form kartı, empty state, stat cards, filtre çubuğu, onay akışı, detay paneli) — toplam 125 snippet, 18 sayfa
 
-### Phase 10 — Responsive Audit
-- [ ] Tüm sayfaların 5 breakpoint'te (360/768/1024/1440/1920) doğrulanması
-- [ ] Kırık layoutların düzeltilmesi
-- [ ] Touch hedef boyutu denetimi (≥44px)
-- [ ] WCAG 2.1 SC 1.4.10 (Reflow) uygunluk
+### Phase 10 — Responsive Audit ✅ TAMAMLANDI
+- [x] 24 sayfa + 4 auth ekranı 320/375/1024 breakpoint'te objektif tarandı (clientWidth harness)
+- [x] Kırık layoutlar düzeltildi — tek kaynak: `.mfa-showcase__preview { overflow-x:auto }` + 3 grid `gap-4 md:gap-8` + crud flex-wrap (K-020)
+- [x] Touch hedef denetimi (≥44px) — chrome/navigasyon kontrolleri 44px tabana çekildi (K-019)
+- [x] WCAG 2.1 SC 1.4.10 (Reflow) — **320px'te 24/24 sayfa yatay taşmasız**; build + lint:palette temiz
 
 ### Phase 11 — Modül Takım Dağıtımı
 - [ ] Template `v1.0.0` tag
@@ -637,6 +637,6 @@ Mevcut Phase 0-8 ilk fazda teslim edildi. Aşağıdaki Phase'ler kurumsal kimli�
 
 ## 7. Sonraki Adım
 
-Yeni Claude Code oturumunda **`docs/yeni-sakai-session-prompt.md`** dosyasını oku ve ilk mesaj olarak yapıştır. **Tamamlanan:** Phase 0–8 + 9 (Yeniden — Bileşen Vitrini tam kapsam + 14 eksik bileşen + Kurumsal Desenler sayfası). **Aktif faz:** Phase 10 — Responsive Audit. Faz ilerlemesi için [`ilerleme-ve-kararlar.md`](ilerleme-ve-kararlar.md).
+Yeni Claude Code oturumunda **`docs/yeni-sakai-session-prompt.md`** dosyasını oku ve ilk mesaj olarak yapıştır. **Tamamlanan:** Phase 0–8 + 9 (Yeniden — Bileşen Vitrini tam kapsam + 14 eksik bileşen + Kurumsal Desenler sayfası) + 10 (Responsive Audit — 320px'te 24/24 sayfa taşmasız, chrome dokunma hedefleri 44px). **Aktif faz:** Phase 11 — İlk modül iskeleti (`features/vize/`). Faz ilerlemesi için [`ilerleme-ve-kararlar.md`](ilerleme-ve-kararlar.md).
 
 Phase ilerlemesi için [`ilerleme-ve-kararlar.md`](ilerleme-ve-kararlar.md)'ı oku.

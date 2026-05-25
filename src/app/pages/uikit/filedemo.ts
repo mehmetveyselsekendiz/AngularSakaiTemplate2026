@@ -11,7 +11,7 @@ import { SnippetService } from './snippet.service';
     standalone: true,
     imports: [FileUploadModule, ToastModule, ButtonModule, ComponentShowcase],
     template: `<p-toast />
-        <div class="grid grid-cols-12 gap-8">
+        <div class="grid grid-cols-12 gap-4 md:gap-8">
             <div class="col-span-full lg:col-span-6">
                 <app-showcase title="Gelişmiş Yükleme" snippetId="file-advanced" [code]="snippet('file-advanced')">
                     <!-- snippet:file-advanced -->

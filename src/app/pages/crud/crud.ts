@@ -94,7 +94,7 @@ interface ExportColumn {
             [rowsPerPageOptions]="[10, 20, 30]"
         >
             <ng-template #caption>
-                <div class="flex items-center justify-between">
+                <div class="flex flex-wrap items-center justify-between gap-2">
                     <h5 class="m-0">Manage Products</h5>
                     <p-iconfield>
                         <p-inputicon styleClass="pi pi-search" />

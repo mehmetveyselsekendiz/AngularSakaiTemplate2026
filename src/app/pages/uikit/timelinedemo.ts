@@ -10,7 +10,7 @@ import { SnippetService } from './snippet.service';
     selector: 'app-timeline-demo',
     standalone: true,
     imports: [CommonModule, TimelineModule, ButtonModule, CardModule, ComponentShowcase],
-    template: `<div class="grid grid-cols-12 gap-8">
+    template: `<div class="grid grid-cols-12 gap-4 md:gap-8">
         <div class="col-span-12 sm:col-span-6">
             <app-showcase title="Left Align" snippetId="timeline-left" [code]="snippet('timeline-left')">
                 <!-- snippet:timeline-left -->

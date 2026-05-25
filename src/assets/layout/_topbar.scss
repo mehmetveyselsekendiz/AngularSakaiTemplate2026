@@ -44,6 +44,10 @@
         border-radius: 50%;
         width: 2.5rem;
         height: 2.5rem;
+        /* Dokunma hedefi tabanı 44px (WCAG 2.1 SC 2.5.5). px kasıtlı: dokunma hedefi
+           font ölçeğiyle 44px altına düşmemeli; ikon hâlâ rem ile büyür. */
+        min-width: 44px;
+        min-height: 44px;
         color: var(--text-color);
         transition: background-color var(--element-transition-duration);
         cursor: pointer;

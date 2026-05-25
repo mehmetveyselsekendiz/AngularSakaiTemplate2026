@@ -88,7 +88,8 @@ import { FontScale } from '@/app/core/settings/settings.types';
                 gap: 0.35rem;
                 padding: 0 0.85rem;
                 min-width: 2.75rem;
-                height: 2.5rem;
+                /* Dokunma hedefi tabanı 44px (WCAG 2.1 SC 2.5.5) — px kasıtlı. */
+                min-height: 44px;
                 color: var(--mfa-text);
                 background: transparent;
                 border: none;

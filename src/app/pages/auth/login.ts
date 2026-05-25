@@ -21,7 +21,7 @@ import { TranslatePipe } from '@/app/core/i18n/translate.pipe';
 
                         <div class="flex flex-col items-center gap-4">
                             <p class="text-surface-500 text-sm text-center max-w-xs">{{ 'auth.login.sso.description' | t }}</p>
-                            <p-button [label]="'auth.login.sso.button' | t" icon="pi pi-sign-in" styleClass="w-full" (onClick)="onSsoLogin()" />
+                            <p-button [label]="'auth.login.sso.button' | t" icon="pi pi-sign-in" styleClass="w-full" [style]="{ minHeight: '44px' }" (onClick)="onSsoLogin()" />
                         </div>
 
                         @if (!isSsoConfigured) {
@@ -32,7 +32,7 @@ import { TranslatePipe } from '@/app/core/i18n/translate.pipe';
                                 </div>
                                 <div class="flex flex-col gap-3">
                                     <input pInputText class="w-full" [placeholder]="'auth.login.dev.placeholder' | t" [value]="devName()" (input)="devName.set($any($event.target).value)" />
-                                    <p-button [label]="'auth.login.dev.button' | t" icon="pi pi-code" severity="secondary" styleClass="w-full" (onClick)="onDevLogin()" />
+                                    <p-button [label]="'auth.login.dev.button' | t" icon="pi pi-code" severity="secondary" styleClass="w-full" [style]="{ minHeight: '44px' }" (onClick)="onDevLogin()" />
                                 </div>
                             </div>
                         }
