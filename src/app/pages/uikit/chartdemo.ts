@@ -2,53 +2,56 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { FluidModule } from 'primeng/fluid';
 import { SettingsService } from '@/app/core/settings/settings.service';
-import { CodeBlock } from './code-block';
+import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
 
 @Component({
     selector: 'app-chart-demo',
     standalone: true,
-    imports: [ChartModule, FluidModule, CodeBlock],
+    imports: [ChartModule, FluidModule, ComponentShowcase],
     template: `
         <p-fluid class="grid grid-cols-12 gap-8">
             <div class="col-span-12 xl:col-span-6">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-6">Linear</div>
+                <app-showcase title="Linear" snippetId="chart-line" [code]="snippet('chart-line')">
                     <!-- snippet:chart-line -->
                     <p-chart type="line" [data]="lineData()" [options]="lineOptions()"></p-chart>
                     <!-- /snippet -->
-                    <app-code-block [code]="snippet('chart-line')" />
-                </div>
+                </app-showcase>
             </div>
             <div class="col-span-12 xl:col-span-6">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-6">Bar</div>
+                <app-showcase title="Bar" snippetId="chart-bar" [code]="snippet('chart-bar')">
+                    <!-- snippet:chart-bar -->
                     <p-chart type="bar" [data]="barData()" [options]="barOptions()"></p-chart>
-                </div>
+                    <!-- /snippet -->
+                </app-showcase>
             </div>
             <div class="col-span-12 xl:col-span-6">
-                <div class="card flex flex-col items-center">
-                    <div class="font-semibold text-xl mb-6">Pie</div>
+                <app-showcase title="Pie" snippetId="chart-pie" [code]="snippet('chart-pie')">
+                    <!-- snippet:chart-pie -->
                     <p-chart type="pie" [data]="pieData()" [options]="pieOptions()"></p-chart>
-                </div>
+                    <!-- /snippet -->
+                </app-showcase>
             </div>
             <div class="col-span-12 xl:col-span-6">
-                <div class="card flex flex-col items-center">
-                    <div class="font-semibold text-xl mb-6">Doughnut</div>
+                <app-showcase title="Doughnut" snippetId="chart-doughnut" [code]="snippet('chart-doughnut')">
+                    <!-- snippet:chart-doughnut -->
                     <p-chart type="doughnut" [data]="pieData()" [options]="pieOptions()"></p-chart>
-                </div>
+                    <!-- /snippet -->
+                </app-showcase>
             </div>
             <div class="col-span-12 xl:col-span-6">
-                <div class="card flex flex-col items-center">
-                    <div class="font-semibold text-xl mb-6">Polar Area</div>
+                <app-showcase title="Polar Area" snippetId="chart-polar" [code]="snippet('chart-polar')">
+                    <!-- snippet:chart-polar -->
                     <p-chart type="polarArea" [data]="polarData()" [options]="polarOptions()"></p-chart>
-                </div>
+                    <!-- /snippet -->
+                </app-showcase>
             </div>
             <div class="col-span-12 xl:col-span-6">
-                <div class="card flex flex-col items-center">
-                    <div class="font-semibold text-xl mb-6">Radar</div>
+                <app-showcase title="Radar" snippetId="chart-radar" [code]="snippet('chart-radar')">
+                    <!-- snippet:chart-radar -->
                     <p-chart type="radar" [data]="radarData()" [options]="radarOptions()"></p-chart>
-                </div>
+                    <!-- /snippet -->
+                </app-showcase>
             </div>
         </p-fluid>
     `

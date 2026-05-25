@@ -1,3 +1,4 @@
 {
-  "file-advanced": "<p-fileupload name=\"dosya[]\" (onUpload)=\"onUpload($event)\" [multiple]=\"true\" accept=\"image/*,application/pdf\" [maxFileSize]=\"5000000\" mode=\"advanced\" url=\"/api/upload\">\n    <ng-template #empty>\n        <div>Dosyaları buraya sürükleyip bırakın veya seçin.</div>\n    </ng-template>\n</p-fileupload>"
+  "file-advanced": "<p-fileupload name=\"dosya[]\" (onUpload)=\"onUpload($event)\" [multiple]=\"true\" accept=\"image/*,application/pdf\" [maxFileSize]=\"5000000\" mode=\"advanced\" url=\"/api/upload\">\n    <ng-template #empty>\n        <div>Dosyaları buraya sürükleyip bırakın veya seçin.</div>\n    </ng-template>\n</p-fileupload>",
+  "file-basic": "<div class=\"flex flex-col gap-4 items-center justify-center\">\n    <p-fileupload #fu mode=\"basic\" chooseLabel=\"Dosya Seç\" chooseIcon=\"pi pi-upload\" name=\"dosya[]\" url=\"/api/upload\" accept=\"image/*,application/pdf\" [maxFileSize]=\"5000000\" (onUpload)=\"onUpload($event)\" />\n    <p-button label=\"Yükle\" (onClick)=\"fu.upload()\" severity=\"secondary\" />\n</div>"
 }

@@ -8,7 +8,7 @@ import { PickListModule } from 'primeng/picklist';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TagModule } from 'primeng/tag';
 import { svgPlaceholder } from '@/app/core/util/svg-placeholder';
-import { CodeBlock } from './code-block';
+import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
 interface Product {
     id?: string;
@@ -23,10 +23,9 @@ interface Product {
 @Component({
     selector: 'app-list-demo',
     standalone: true,
-    imports: [CommonModule, DataViewModule, FormsModule, SelectButtonModule, PickListModule, OrderListModule, TagModule, ButtonModule, CodeBlock],
-    template: ` <div class="flex flex-col">
-        <div class="card">
-            <div class="font-semibold text-xl">DataView</div>
+    imports: [CommonModule, DataViewModule, FormsModule, SelectButtonModule, PickListModule, OrderListModule, TagModule, ButtonModule, ComponentShowcase],
+    template: ` <div class="flex flex-col gap-6">
+        <app-showcase title="DataView" snippetId="list-dataview" [code]="snippet('list-dataview')">
             <!-- snippet:list-dataview -->
             <p-dataview [value]="products" [layout]="layout">
                 <ng-template #header>
@@ -136,30 +135,31 @@ interface Product {
                 </ng-template>
             </p-dataview>
             <!-- /snippet -->
-            <app-code-block [code]="snippet('list-dataview')" />
-        </div>
+        </app-showcase>
 
-        <div class="flex flex-col lg:flex-row gap-20">
+        <div class="flex flex-col lg:flex-row gap-8">
             <div class="lg:w-2/3">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-4">PickList</div>
+                <app-showcase title="PickList" snippetId="list-picklist" [code]="snippet('list-picklist')">
+                    <!-- snippet:list-picklist -->
                     <p-pick-list [source]="sourceCities" [target]="targetCities" breakpoint="1400px">
                         <ng-template #item let-item>
                             {{ item.name }}
                         </ng-template>
                     </p-pick-list>
-                </div>
+                    <!-- /snippet -->
+                </app-showcase>
             </div>
 
             <div class="lg:w-1/3">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-4">OrderList</div>
+                <app-showcase title="OrderList" snippetId="list-orderlist" [code]="snippet('list-orderlist')">
+                    <!-- snippet:list-orderlist -->
                     <p-orderlist [value]="orderCities" dataKey="id" breakpoint="575px">
                         <ng-template #option let-option>
                             {{ option.name }}
                         </ng-template>
                     </p-orderlist>
-                </div>
+                    <!-- /snippet -->
+                </app-showcase>
             </div>
         </div>
     </div>`,

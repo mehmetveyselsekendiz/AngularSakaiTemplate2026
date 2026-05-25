@@ -13,7 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { StepperModule } from 'primeng/stepper';
 import { IconField, IconFieldModule } from 'primeng/iconfield';
 import { InputIcon, InputIconModule } from 'primeng/inputicon';
-import { CodeBlock } from './code-block';
+import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
 
 @Component({
@@ -33,103 +33,115 @@ import { SnippetService } from './snippet.service';
         TabsModule,
         MenubarModule,
         InputTextModule,
-        TabsModule,
         StepperModule,
-        TabsModule,
         IconField,
         InputIcon,
-        CodeBlock
+        ComponentShowcase
     ],
     template: `
-        <div class="card">
-            <div class="font-semibold text-xl mb-4">Menubar</div>
-            <!-- snippet:menu-menubar -->
-            <p-menubar [model]="nestedMenuItems">
-                <ng-template #end>
-                    <p-iconfield>
-                        <p-inputicon class="pi pi-search" />
-                        <input type="text" pInputText placeholder="Search" />
-                    </p-iconfield>
-                </ng-template>
-            </p-menubar>
-            <!-- /snippet -->
-            <app-code-block [code]="snippet('menu-menubar')" />
-        </div>
+        <div class="flex flex-col gap-6">
+            <app-showcase title="Menubar" snippetId="menu-menubar" [code]="snippet('menu-menubar')">
+                <!-- snippet:menu-menubar -->
+                <p-menubar [model]="nestedMenuItems">
+                    <ng-template #end>
+                        <p-iconfield>
+                            <p-inputicon class="pi pi-search" />
+                            <input type="text" pInputText placeholder="Search" />
+                        </p-iconfield>
+                    </ng-template>
+                </p-menubar>
+                <!-- /snippet -->
+            </app-showcase>
 
-        <div class="card">
-            <div class="font-semibold text-xl mb-4">Breadcrumb</div>
-            <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome"></p-breadcrumb>
-        </div>
+            <app-showcase title="Breadcrumb" snippetId="menu-breadcrumb" [code]="snippet('menu-breadcrumb')">
+                <!-- snippet:menu-breadcrumb -->
+                <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome"></p-breadcrumb>
+                <!-- /snippet -->
+            </app-showcase>
 
-        <div class="flex flex-col md:flex-row gap-8">
-            <div class="md:w-1/2">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-4">Steps</div>
-                    <p-stepper [value]="1">
-                        <p-step-list>
-                            <p-step [value]="1">Header I</p-step>
-                            <p-step [value]="2">Header II</p-step>
-                            <p-step [value]="3">Header III</p-step>
-                        </p-step-list>
-                    </p-stepper>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2">
+                    <app-showcase title="Steps" snippetId="menu-steps" [code]="snippet('menu-steps')">
+                        <!-- snippet:menu-steps -->
+                        <p-stepper [value]="1">
+                            <p-step-list>
+                                <p-step [value]="1">Header I</p-step>
+                                <p-step [value]="2">Header II</p-step>
+                                <p-step [value]="3">Header III</p-step>
+                            </p-step-list>
+                        </p-stepper>
+                        <!-- /snippet -->
+                    </app-showcase>
+                </div>
+                <div class="md:w-1/2">
+                    <app-showcase title="TabMenu" snippetId="menu-tabmenu" [code]="snippet('menu-tabmenu')">
+                        <!-- snippet:menu-tabmenu -->
+                        <p-tabs [value]="0">
+                            <p-tablist>
+                                <p-tab [value]="0">Header I</p-tab>
+                                <p-tab [value]="1">Header II</p-tab>
+                                <p-tab [value]="2">Header III</p-tab>
+                            </p-tablist>
+                        </p-tabs>
+                        <!-- /snippet -->
+                    </app-showcase>
                 </div>
             </div>
-            <div class="md:w-1/2">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-4">TabMenu</div>
-                    <p-tabs [value]="0">
-                        <p-tablist>
-                            <p-tab [value]="0">Header I</p-tab>
-                            <p-tab [value]="1">Header II</p-tab>
-                            <p-tab [value]="2">Header III</p-tab>
-                        </p-tablist>
-                    </p-tabs>
-                </div>
-            </div>
-        </div>
 
-        <div class="flex flex-col md:flex-row gap-8 mt-6">
-            <div class="md:w-1/3">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-4">Tiered Menu</div>
-                    <p-tieredmenu [model]="tieredMenuItems"></p-tieredmenu>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/3">
+                    <app-showcase title="Tiered Menu" snippetId="menu-tiered" [code]="snippet('menu-tiered')">
+                        <!-- snippet:menu-tiered -->
+                        <p-tieredmenu [model]="tieredMenuItems"></p-tieredmenu>
+                        <!-- /snippet -->
+                    </app-showcase>
                 </div>
-            </div>
-            <div class="md:w-1/3">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-4">Plain Menu</div>
-                    <p-menu [model]="menuItems"></p-menu>
+                <div class="md:w-1/3">
+                    <app-showcase title="Plain Menu" snippetId="menu-plain" [code]="snippet('menu-plain')">
+                        <!-- snippet:menu-plain -->
+                        <p-menu [model]="menuItems"></p-menu>
+                        <!-- /snippet -->
+                    </app-showcase>
                 </div>
-            </div>
-            <div class="md:w-1/3">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-4">Overlay Menu</div>
-                    <p-menu #menu [popup]="true" [model]="overlayMenuItems"></p-menu>
-                    <button type="button" pButton icon="pi pi-chevron-down" label="Options" (click)="menu.toggle($event)" style="width:auto"></button>
-                </div>
+                <div class="md:w-1/3 flex flex-col gap-6">
+                    <app-showcase title="Overlay Menu" snippetId="menu-overlay" [code]="snippet('menu-overlay')">
+                        <!-- snippet:menu-overlay -->
+                        <p-menu #menu [popup]="true" [model]="overlayMenuItems"></p-menu>
+                        <button type="button" pButton icon="pi pi-chevron-down" label="Options" (click)="menu.toggle($event)" style="width:auto"></button>
+                        <!-- /snippet -->
+                    </app-showcase>
 
-                <div class="card" #anchor>
-                    <div class="font-semibold text-xl mb-4">Context Menu</div>
-                    Right click to display.
-                    <p-contextmenu [target]="anchor" [model]="contextMenuItems"></p-contextmenu>
+                    <app-showcase title="Context Menu" snippetId="menu-context" [code]="snippet('menu-context')">
+                        <!-- snippet:menu-context -->
+                        <div #anchor>
+                            Right click to display.
+                            <p-contextmenu [target]="anchor" [model]="contextMenuItems"></p-contextmenu>
+                        </div>
+                        <!-- /snippet -->
+                    </app-showcase>
                 </div>
             </div>
-        </div>
 
-        <div class="flex flex-col md:flex-row gap-8 mt-8">
-            <div class="md:w-1/2">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-4">MegaMenu | Horizontal</div>
-                    <p-megamenu [model]="megaMenuItems" />
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2 flex flex-col gap-6">
+                    <app-showcase title="MegaMenu | Horizontal" snippetId="menu-megamenu-h" [code]="snippet('menu-megamenu-h')">
+                        <!-- snippet:menu-megamenu-h -->
+                        <p-megamenu [model]="megaMenuItems" />
+                        <!-- /snippet -->
+                    </app-showcase>
 
-                    <div class="font-semibold text-xl mb-4 mt-8">MegaMenu | Vertical</div>
-                    <p-megamenu [model]="megaMenuItems" orientation="vertical" />
+                    <app-showcase title="MegaMenu | Vertical" snippetId="menu-megamenu-v" [code]="snippet('menu-megamenu-v')">
+                        <!-- snippet:menu-megamenu-v -->
+                        <p-megamenu [model]="megaMenuItems" orientation="vertical" />
+                        <!-- /snippet -->
+                    </app-showcase>
                 </div>
-            </div>
-            <div class="md:w-1/2">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-4">PanelMenu</div>
-                    <p-panelmenu [model]="panelMenuItems" />
+                <div class="md:w-1/2">
+                    <app-showcase title="PanelMenu" snippetId="menu-panelmenu" [code]="snippet('menu-panelmenu')">
+                        <!-- snippet:menu-panelmenu -->
+                        <p-panelmenu [model]="panelMenuItems" />
+                        <!-- /snippet -->
+                    </app-showcase>
                 </div>
             </div>
         </div>

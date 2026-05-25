@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccordionModule } from 'primeng/accordion';
-import { CodeBlock } from './code-block';
+import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -39,12 +39,11 @@ import { ToolbarModule } from 'primeng/toolbar';
         TabsModule,
         IconFieldModule,
         InputIconModule,
-        CodeBlock
+        ComponentShowcase
     ],
     template: `
-        <div class="flex flex-col">
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Toolbar</div>
+        <div class="flex flex-col gap-6">
+            <app-showcase title="Toolbar" snippetId="panel-toolbar" [code]="snippet('panel-toolbar')">
                 <!-- snippet:panel-toolbar -->
                 <p-toolbar>
                     <ng-template #start>
@@ -65,13 +64,12 @@ import { ToolbarModule } from 'primeng/toolbar';
                     <ng-template #end><p-splitbutton label="Save" [model]="items"></p-splitbutton></ng-template>
                 </p-toolbar>
                 <!-- /snippet -->
-                <app-code-block [code]="snippet('panel-toolbar')" />
-            </div>
+            </app-showcase>
 
             <div class="flex flex-col md:flex-row gap-8">
-                <div class="md:w-1/2">
-                    <div class="card">
-                        <div class="font-semibold text-xl mb-4">Accordion</div>
+                <div class="md:w-1/2 flex flex-col gap-6">
+                    <app-showcase title="Accordion" snippetId="panel-accordion" [code]="snippet('panel-accordion')">
+                        <!-- snippet:panel-accordion -->
                         <p-accordion value="0">
                             <p-accordion-panel value="0">
                                 <p-accordion-header>Header I</p-accordion-header>
@@ -106,9 +104,11 @@ import { ToolbarModule } from 'primeng/toolbar';
                                 </p-accordion-content>
                             </p-accordion-panel>
                         </p-accordion>
-                    </div>
-                    <div class="card">
-                        <div class="font-semibold text-xl mb-4">Tabs</div>
+                        <!-- /snippet -->
+                    </app-showcase>
+
+                    <app-showcase title="Tabs" snippetId="panel-tabs" [code]="snippet('panel-tabs')">
+                        <!-- snippet:panel-tabs -->
                         <p-tabs value="0">
                             <p-tablist>
                                 <p-tab value="0">Header I</p-tab>
@@ -139,11 +139,12 @@ import { ToolbarModule } from 'primeng/toolbar';
                                 </p-tabpanel>
                             </p-tabpanels>
                         </p-tabs>
-                    </div>
+                        <!-- /snippet -->
+                    </app-showcase>
                 </div>
-                <div class="md:w-1/2 mt-6 md:mt-0">
-                    <div class="card">
-                        <div class="font-semibold text-xl mb-4">Panel</div>
+                <div class="md:w-1/2 flex flex-col gap-6">
+                    <app-showcase title="Panel" snippetId="panel-panel" [code]="snippet('panel-panel')">
+                        <!-- snippet:panel-panel -->
                         <p-panel header="Header" [toggleable]="true">
                             <p class="m-0">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -151,9 +152,11 @@ import { ToolbarModule } from 'primeng/toolbar';
                                 id est laborum.
                             </p>
                         </p-panel>
-                    </div>
-                    <div class="card">
-                        <div class="font-semibold text-xl mb-4">Fieldset</div>
+                        <!-- /snippet -->
+                    </app-showcase>
+
+                    <app-showcase title="Fieldset" snippetId="panel-fieldset" [code]="snippet('panel-fieldset')">
+                        <!-- snippet:panel-fieldset -->
                         <p-fieldset legend="Legend" [toggleable]="true">
                             <p class="m-0">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -161,12 +164,13 @@ import { ToolbarModule } from 'primeng/toolbar';
                                 id est laborum.
                             </p>
                         </p-fieldset>
-                    </div>
+                        <!-- /snippet -->
+                    </app-showcase>
                 </div>
             </div>
 
-            <div class="card mt-8">
-                <div class="font-semibold text-xl mb-4">Divider</div>
+            <app-showcase title="Divider" snippetId="panel-divider" [code]="snippet('panel-divider')">
+                <!-- snippet:panel-divider -->
                 <div class="flex flex-col md:flex-row">
                     <div class="w-full md:w-5/12 flex flex-col items-center justify-center gap-3 py-5">
                         <div class="flex flex-col gap-2">
@@ -189,10 +193,11 @@ import { ToolbarModule } from 'primeng/toolbar';
                         <p-button label="Sign Up" icon="pi pi-user-plus" severity="success" class="w-full" styleClass="w-full max-w-[17.35rem] mx-auto"></p-button>
                     </div>
                 </div>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
 
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Splitter</div>
+            <app-showcase title="Splitter" snippetId="panel-splitter" [code]="snippet('panel-splitter')">
+                <!-- snippet:panel-splitter -->
                 <p-splitter [style]="{ height: '300px' }" [panelSizes]="[20, 80]" [minSizes]="[10, 0]" styleClass="mb-8">
                     <ng-template #panel>
                         <div class="col flex items-center justify-center">Panel 1</div>
@@ -215,7 +220,8 @@ import { ToolbarModule } from 'primeng/toolbar';
                         </p-splitter>
                     </ng-template>
                 </p-splitter>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
         </div>
     `
 })

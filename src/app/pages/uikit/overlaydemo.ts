@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CodeBlock } from './code-block';
+import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -24,11 +24,10 @@ interface Product {
 @Component({
     selector: 'app-overlay-demo',
     standalone: true,
-    imports: [CommonModule, ToastModule, DialogModule, ButtonModule, DrawerModule, PopoverModule, ConfirmPopupModule, InputTextModule, FormsModule, TooltipModule, TableModule, CodeBlock],
+    imports: [CommonModule, ToastModule, DialogModule, ButtonModule, DrawerModule, PopoverModule, ConfirmPopupModule, InputTextModule, FormsModule, TooltipModule, TableModule, ComponentShowcase],
     template: `<div class="flex flex-col md:flex-row gap-8">
-        <div class="md:w-1/2">
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Dialog</div>
+        <div class="md:w-1/2 flex flex-col gap-6">
+            <app-showcase title="Dialog" snippetId="overlay-dialog" [code]="snippet('overlay-dialog')">
                 <!-- snippet:overlay-dialog -->
                 <p-dialog header="Dialog" [(visible)]="display" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '30vw' }" [modal]="true">
                     <p class="leading-normal m-0">
@@ -41,11 +40,10 @@ interface Product {
                 </p-dialog>
                 <p-button label="Show" [style]="{ width: 'auto' }" (click)="open()" />
                 <!-- /snippet -->
-                <app-code-block [code]="snippet('overlay-dialog')" />
-            </div>
+            </app-showcase>
 
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Popover</div>
+            <app-showcase title="Popover" snippetId="overlay-popover" [code]="snippet('overlay-popover')">
+                <!-- snippet:overlay-popover -->
                 <div class="flex flex-wrap gap-2">
                     <p-button type="button" label="Show" (click)="toggleDataTable(op2, $event)" />
                     <p-popover #op2 id="overlay_panel" [style]="{ width: '380px' }">
@@ -72,19 +70,21 @@ interface Product {
                     </p-popover>
                     <p-toast />
                 </div>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
 
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Tooltip</div>
+            <app-showcase title="Tooltip" snippetId="overlay-tooltip" [code]="snippet('overlay-tooltip')">
+                <!-- snippet:overlay-tooltip -->
                 <div class="inline-flex gap-4">
                     <input pInputText type="text" placeholder="Username" pTooltip="Your username" />
                     <p-button type="button" label="Save" pTooltip="Click to proceed" />
                 </div>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
         </div>
-        <div class="md:w-1/2">
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Drawer</div>
+        <div class="md:w-1/2 flex flex-col gap-6">
+            <app-showcase title="Drawer" snippetId="overlay-drawer" [code]="snippet('overlay-drawer')">
+                <!-- snippet:overlay-drawer -->
                 <p-drawer [(visible)]="visibleLeft" header="Drawer">
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -125,16 +125,18 @@ interface Product {
                 <p-button icon="pi pi-arrow-down" (click)="visibleTop = true" [style]="{ marginRight: '0.25em' }" />
                 <p-button icon="pi pi-arrow-up" (click)="visibleBottom = true" [style]="{ marginRight: '0.25em' }" />
                 <p-button icon="pi pi-external-link" (click)="visibleFull = true" />
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
 
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">ConfirmPopup</div>
+            <app-showcase title="ConfirmPopup" snippetId="overlay-confirmpopup" [code]="snippet('overlay-confirmpopup')">
+                <!-- snippet:overlay-confirmpopup -->
                 <p-confirmpopup key="confirm2"></p-confirmpopup>
                 <p-button #popup (click)="confirm($event)" icon="pi pi-check" label="Confirm" class="mr-2"></p-button>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
 
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">ConfirmDialog</div>
+            <app-showcase title="ConfirmDialog" snippetId="overlay-confirmdialog" [code]="snippet('overlay-confirmdialog')">
+                <!-- snippet:overlay-confirmdialog -->
                 <p-button label="Delete" icon="pi pi-trash" severity="danger" [style]="{ width: 'auto' }" (click)="openConfirmation()" />
                 <p-dialog header="Confirmation" [(visible)]="displayConfirmation" [style]="{ width: '350px' }" [modal]="true">
                     <div class="flex items-center justify-center">
@@ -146,7 +148,8 @@ interface Product {
                         <p-button label="Yes" icon="pi pi-check" (click)="closeConfirmation()" severity="danger" outlined autofocus />
                     </ng-template>
                 </p-dialog>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
         </div>
     </div>`,
     providers: [ConfirmationService, MessageService]

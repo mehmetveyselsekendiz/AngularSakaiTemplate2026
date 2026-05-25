@@ -1,23 +1,23 @@
-import {CommonModule} from '@angular/common';
-import {Component, inject} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {MessageService, ToastMessageOptions} from 'primeng/api';
-import {ButtonModule} from 'primeng/button';
-import {InputTextModule} from 'primeng/inputtext';
-import {MessageModule} from 'primeng/message';
-import {ToastModule} from 'primeng/toast';
-import {CodeBlock} from './code-block';
-import {SnippetService} from './snippet.service';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MessageService, ToastMessageOptions } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
+import { ComponentShowcase } from './component-showcase';
+import { SnippetService } from './snippet.service';
 
 @Component({
     selector: 'app-messages-demo',
     standalone: true,
-    imports: [CommonModule, ToastModule, ButtonModule, InputTextModule, MessageModule, FormsModule, CodeBlock],
+    imports: [CommonModule, ToastModule, ButtonModule, InputTextModule, MessageModule, FormsModule, ComponentShowcase],
     template: `
         <div class="flex flex-col md:flex-row gap-8">
-            <div class="md:w-1/2">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-4">Toast</div>
+            <div class="md:w-1/2 flex flex-col gap-6">
+                <app-showcase title="Toast" snippetId="message-toast" [code]="snippet('message-toast')">
+                    <!-- snippet:message-toast -->
                     <div class="flex flex-wrap gap-2">
                         <p-button (click)="showSuccessViaToast()" label="Success" severity="success" />
                         <p-button (click)="showInfoViaToast()" label="Info" severity="info" />
@@ -25,25 +25,30 @@ import {SnippetService} from './snippet.service';
                         <p-button (click)="showErrorViaToast()" label="Error" severity="danger" />
                         <p-toast />
                     </div>
+                    <!-- /snippet -->
+                </app-showcase>
 
-                    <div class="font-semibold text-xl mt-4 mb-4">Inline</div>
-                    <div class="flex mb-4 gap-1">
-                        <input pInputText [(ngModel)]="username" placeholder="Username" aria-label="username" class="ng-dirty ng-invalid" />
-                        <p-message severity="error" size="small" styleClass="h-auto w-full " [pt]="pt">Username is required</p-message>
+                <app-showcase title="Inline" snippetId="message-inline" [code]="snippet('message-inline')">
+                    <!-- snippet:message-inline -->
+                    <div class="flex flex-col gap-4">
+                        <div class="flex gap-1">
+                            <input pInputText [(ngModel)]="username" placeholder="Username" aria-label="username" class="ng-dirty ng-invalid" />
+                            <p-message severity="error" size="small" styleClass="h-auto w-full " [pt]="pt">Username is required</p-message>
+                        </div>
+                        <div class="flex flex-wrap gap-1">
+                            <input pInputText [(ngModel)]="email" placeholder="Email" aria-label="email" class="ng-dirty ng-invalid" />
+                            <p-message severity="error" size="small" styleClass="flex items-center text-center justify-center h-auto w-11" [pt]="pt">
+                                <i class="pi pi-times-circle"></i>
+                            </p-message>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1">
-                        <input pInputText [(ngModel)]="email" placeholder="Email" aria-label="email" class="ng-dirty ng-invalid" />
-                        <p-message severity="error" size="small" styleClass="flex items-center text-center justify-center h-auto w-11" [pt]="pt">
-                            <i class="pi pi-times-circle"></i>
-                        </p-message>
-                    </div>
-                </div>
+                    <!-- /snippet -->
+                </app-showcase>
             </div>
-            <div class="md:w-1/2">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-4">Message</div>
+            <div class="md:w-1/2 flex flex-col gap-6">
+                <app-showcase title="Message" snippetId="message-severities" [code]="snippet('message-severities')">
                     <!-- snippet:message-severities -->
-                    <div class="flex flex-col gap-4 mb-4">
+                    <div class="flex flex-col gap-4">
                         <p-message severity="success">Success Message</p-message>
                         <p-message severity="info">Info Message</p-message>
                         <p-message severity="warn">Warn Message</p-message>
@@ -52,8 +57,7 @@ import {SnippetService} from './snippet.service';
                         <p-message severity="contrast">Contrast Message</p-message>
                     </div>
                     <!-- /snippet -->
-                    <app-code-block [code]="snippet('message-severities')" />
-                </div>
+                </app-showcase>
             </div>
         </div>
     `,

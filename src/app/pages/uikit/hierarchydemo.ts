@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { OrganizationChartModule } from 'primeng/organizationchart';
 import type { TreeNode } from 'primeng/api';
-import { CodeBlock } from './code-block';
+import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
 
 // p-organizationchart: hiyerarşik organizasyon şeması bileşeni
@@ -36,28 +36,30 @@ const MFA_HIERARCHY: TreeNode[] = [
 @Component({
     selector: 'app-hierarchy-demo',
     standalone: true,
-    imports: [OrganizationChartModule, CodeBlock],
+    imports: [OrganizationChartModule, ComponentShowcase],
     template: `
-        <div class="card">
-            <div class="font-semibold text-xl mb-4">Hiyerarşi (Organization Chart)</div>
-            <p class="text-muted-color mb-6">
-                Organizasyonel yapıyı ağaç biçiminde görselleştirmek için
-                <code>p-organizationchart</code> kullanılır.
-            </p>
-            <!-- snippet:hierarchy-basic -->
-            <p-organizationchart [value]="data" styleClass="w-full overflow-auto" />
-            <!-- /snippet -->
-            <app-code-block [code]="snippet('hierarchy-basic')" />
-        </div>
+        <div class="flex flex-col gap-6">
+            <app-showcase
+                title="Hiyerarşi (Organization Chart)"
+                snippetId="hierarchy-basic"
+                [code]="snippet('hierarchy-basic')"
+                description="Organizasyonel yapıyı ağaç biçiminde görselleştirmek için p-organizationchart kullanılır."
+            >
+                <!-- snippet:hierarchy-basic -->
+                <p-organizationchart [value]="data" styleClass="w-full overflow-auto" />
+                <!-- /snippet -->
+            </app-showcase>
 
-        <div class="card mt-4">
-            <div class="font-semibold text-xl mb-4">Seçilebilir Düğümler</div>
-            <p-organizationchart [value]="data" selectionMode="single" [(selection)]="selected" styleClass="w-full overflow-auto" />
-            @if (selected) {
-                <p class="mt-4 text-sm text-muted-color">
-                    Seçili: <strong>{{ selected.label }}</strong>
-                </p>
-            }
+            <app-showcase title="Seçilebilir Düğümler" snippetId="hierarchy-selectable" [code]="snippet('hierarchy-selectable')">
+                <!-- snippet:hierarchy-selectable -->
+                <p-organizationchart [value]="data" selectionMode="single" [(selection)]="selected" styleClass="w-full overflow-auto" />
+                @if (selected) {
+                    <p class="mt-4 text-sm text-muted-color">
+                        Seçili: <strong>{{ selected.label }}</strong>
+                    </p>
+                }
+                <!-- /snippet -->
+            </app-showcase>
         </div>
     `
 })

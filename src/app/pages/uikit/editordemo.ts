@@ -3,17 +3,16 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { EditorModule } from 'primeng/editor';
 import { MessageModule } from 'primeng/message';
-import { CodeBlock } from './code-block';
+import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
 
 @Component({
     selector: 'app-editor-demo',
     standalone: true,
-    imports: [FormsModule, EditorModule, ButtonModule, MessageModule, CodeBlock],
+    imports: [FormsModule, EditorModule, ButtonModule, MessageModule, ComponentShowcase],
     template: `
-        <div class="flex flex-col gap-8">
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Zengin Metin Editörü (p-editor)</div>
+        <div class="flex flex-col gap-6">
+            <app-showcase title="Zengin Metin Editörü (p-editor)" snippetId="editor-rich" [code]="snippet('editor-rich')">
                 <!-- snippet:editor-rich -->
                 <p-editor [(ngModel)]="icerik" [style]="{ height: '320px' }">
                     <ng-template #header>
@@ -53,17 +52,17 @@ import { SnippetService } from './snippet.service';
                     </ng-template>
                 </p-editor>
                 <!-- /snippet -->
-                <app-code-block [code]="snippet('editor-rich')" />
                 <div class="flex gap-2 mt-4">
                     <p-button label="İçeriği Temizle" severity="secondary" outlined (click)="temizle()" />
                     <p-button label="Varsayılanı Yükle" (click)="varsayilanYukle()" />
                 </div>
-            </div>
+            </app-showcase>
 
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Salt Okunur Mod</div>
+            <app-showcase title="Salt Okunur Mod" snippetId="editor-readonly" [code]="snippet('editor-readonly')">
+                <!-- snippet:editor-readonly -->
                 <p-editor [ngModel]="saltOkunurIcerik" [readonly]="true" [style]="{ height: '200px' }"> </p-editor>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
 
             @if (icerik()) {
                 <div class="card">

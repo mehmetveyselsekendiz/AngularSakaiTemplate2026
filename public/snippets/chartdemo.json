@@ -1,3 +1,8 @@
 {
-  "chart-line": "<p-chart type=\"line\" [data]=\"lineData()\" [options]=\"lineOptions()\"></p-chart>"
+  "chart-line": "<p-chart type=\"line\" [data]=\"lineData()\" [options]=\"lineOptions()\"></p-chart>",
+  "chart-bar": "<p-chart type=\"bar\" [data]=\"barData()\" [options]=\"barOptions()\"></p-chart>",
+  "chart-pie": "<p-chart type=\"pie\" [data]=\"pieData()\" [options]=\"pieOptions()\"></p-chart>",
+  "chart-doughnut": "<p-chart type=\"doughnut\" [data]=\"pieData()\" [options]=\"pieOptions()\"></p-chart>",
+  "chart-polar": "<p-chart type=\"polarArea\" [data]=\"polarData()\" [options]=\"polarOptions()\"></p-chart>",
+  "chart-radar": "<p-chart type=\"radar\" [data]=\"radarData()\" [options]=\"radarOptions()\"></p-chart>"
 }

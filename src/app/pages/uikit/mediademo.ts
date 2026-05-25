@@ -7,7 +7,7 @@ import { ImageModule } from 'primeng/image';
 import { TagModule } from 'primeng/tag';
 import { brandColors } from '@/app/core/config/design-tokens';
 import { svgPlaceholder } from '@/app/core/util/svg-placeholder';
-import { CodeBlock } from './code-block';
+import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
 
 interface Kart {
@@ -33,48 +33,50 @@ const MFA_ETIKETLER = ['MFA Kırmızı', 'Lacivert', 'Koyu Lacivert', 'Altın Va
 @Component({
     selector: 'app-media-demo',
     standalone: true,
-    imports: [CommonModule, CarouselModule, ButtonModule, GalleriaModule, ImageModule, TagModule, CodeBlock],
+    imports: [CommonModule, CarouselModule, ButtonModule, GalleriaModule, ImageModule, TagModule, ComponentShowcase],
     template: `
-        <div class="card">
-            <div class="font-semibold text-xl mb-4">Carousel</div>
-            <p-carousel [value]="kartlar()" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="carouselOptions">
-                <ng-template let-kart #item>
-                    <div class="border border-surface rounded-border m-2 p-4 flex flex-col gap-3">
-                        <div class="flex items-center justify-center rounded-border h-32" [style.background]="kart.renk">
-                            <i [class]="kart.icon + ' text-white'" style="font-size: 3rem"></i>
+        <div class="flex flex-col gap-6">
+            <app-showcase title="Carousel" snippetId="media-carousel" [code]="snippet('media-carousel')">
+                <!-- snippet:media-carousel -->
+                <p-carousel [value]="kartlar()" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="carouselOptions">
+                    <ng-template let-kart #item>
+                        <div class="border border-surface rounded-border m-2 p-4 flex flex-col gap-3">
+                            <div class="flex items-center justify-center rounded-border h-32" [style.background]="kart.renk">
+                                <i [class]="kart.icon + ' text-white'" style="font-size: 3rem"></i>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="font-semibold">{{ kart.baslik }}</span>
+                                <p-tag [value]="kart.durum" [severity]="getDurumSeverity(kart.durum)" />
+                            </div>
+                            <p class="text-sm text-color-secondary m-0">{{ kart.aciklama }}</p>
+                            <div class="flex gap-2 justify-end">
+                                <p-button icon="pi pi-eye" severity="secondary" [outlined]="true" size="small" />
+                                <p-button icon="pi pi-pencil" size="small" />
+                            </div>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <span class="font-semibold">{{ kart.baslik }}</span>
-                            <p-tag [value]="kart.durum" [severity]="getDurumSeverity(kart.durum)" />
-                        </div>
-                        <p class="text-sm text-color-secondary m-0">{{ kart.aciklama }}</p>
-                        <div class="flex gap-2 justify-end">
-                            <p-button icon="pi pi-eye" severity="secondary" [outlined]="true" size="small" />
-                            <p-button icon="pi pi-pencil" size="small" />
-                        </div>
-                    </div>
-                </ng-template>
-            </p-carousel>
-        </div>
+                    </ng-template>
+                </p-carousel>
+                <!-- /snippet -->
+            </app-showcase>
 
-        <div class="card">
-            <div class="font-semibold text-xl mb-4">Image (Önizleme)</div>
-            <!-- snippet:media-image -->
-            <p-image [src]="onizlemeSrc" alt="MFA Kurumsal Görsel" width="250" [preview]="true" />
-            <!-- /snippet -->
-            <app-code-block [code]="snippet('media-image')" />
-        </div>
+            <app-showcase title="Image (Önizleme)" snippetId="media-image" [code]="snippet('media-image')">
+                <!-- snippet:media-image -->
+                <p-image [src]="onizlemeSrc" alt="MFA Kurumsal Görsel" width="250" [preview]="true" />
+                <!-- /snippet -->
+            </app-showcase>
 
-        <div class="card">
-            <div class="font-semibold text-xl mb-4">Galleria</div>
-            <p-galleria [value]="gorseller()" [responsiveOptions]="galleriaOptions" [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
-                <ng-template #item let-item>
-                    <img [src]="item.itemImageSrc" [alt]="item.alt" style="width:100%; border-radius: var(--border-radius)" />
-                </ng-template>
-                <ng-template #thumbnail let-item>
-                    <img [src]="item.thumbnailImageSrc" [alt]="item.alt" style="width:100%" />
-                </ng-template>
-            </p-galleria>
+            <app-showcase title="Galleria" snippetId="media-galleria" [code]="snippet('media-galleria')">
+                <!-- snippet:media-galleria -->
+                <p-galleria [value]="gorseller()" [responsiveOptions]="galleriaOptions" [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
+                    <ng-template #item let-item>
+                        <img [src]="item.itemImageSrc" [alt]="item.alt" style="width:100%; border-radius: var(--border-radius)" />
+                    </ng-template>
+                    <ng-template #thumbnail let-item>
+                        <img [src]="item.thumbnailImageSrc" [alt]="item.alt" style="width:100%" />
+                    </ng-template>
+                </p-galleria>
+                <!-- /snippet -->
+            </app-showcase>
         </div>
     `
 })

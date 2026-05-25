@@ -3,17 +3,16 @@ import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { CodeBlock } from './code-block';
+import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
 
 @Component({
     selector: 'app-timeline-demo',
     standalone: true,
-    imports: [CommonModule, TimelineModule, ButtonModule, CardModule, CodeBlock],
+    imports: [CommonModule, TimelineModule, ButtonModule, CardModule, ComponentShowcase],
     template: `<div class="grid grid-cols-12 gap-8">
         <div class="col-span-12 sm:col-span-6">
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Left Align</div>
+            <app-showcase title="Left Align" snippetId="timeline-left" [code]="snippet('timeline-left')">
                 <!-- snippet:timeline-left -->
                 <p-timeline [value]="events1">
                     <ng-template #content let-event>
@@ -21,32 +20,33 @@ import { SnippetService } from './snippet.service';
                     </ng-template>
                 </p-timeline>
                 <!-- /snippet -->
-                <app-code-block [code]="snippet('timeline-left')" />
-            </div>
+            </app-showcase>
         </div>
         <div class="col-span-12 sm:col-span-6">
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Right Align</div>
+            <app-showcase title="Right Align" snippetId="timeline-right" [code]="snippet('timeline-right')">
+                <!-- snippet:timeline-right -->
                 <p-timeline [value]="events1" align="right">
                     <ng-template #content let-event>
                         {{ event.status }}
                     </ng-template>
                 </p-timeline>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
         </div>
         <div class="col-span-12 sm:col-span-6">
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Alternate Align</div>
+            <app-showcase title="Alternate Align" snippetId="timeline-alternate" [code]="snippet('timeline-alternate')">
+                <!-- snippet:timeline-alternate -->
                 <p-timeline [value]="events1" align="alternate">
                     <ng-template #content let-event>
                         {{ event.status }}
                     </ng-template>
                 </p-timeline>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
         </div>
         <div class="col-span-12 sm:col-span-6">
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Opposite Content</div>
+            <app-showcase title="Opposite Content" snippetId="timeline-opposite" [code]="snippet('timeline-opposite')">
+                <!-- snippet:timeline-opposite -->
                 <p-timeline [value]="events1">
                     <ng-template #content let-event>
                         <small class="p-text-secondary">{{ event.date }}</small>
@@ -55,11 +55,12 @@ import { SnippetService } from './snippet.service';
                         {{ event.status }}
                     </ng-template>
                 </p-timeline>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
         </div>
         <div class="col-span-full">
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Templating</div>
+            <app-showcase title="Templating" snippetId="timeline-templating" [code]="snippet('timeline-templating')">
+                <!-- snippet:timeline-templating -->
                 <p-timeline [value]="events1" align="alternate" styleClass="customized-timeline">
                     <ng-template #marker let-event>
                         <span class="flex w-8 h-8 items-center justify-center text-white rounded-full z-10 shadow-sm" [style]="{ 'background-color': event.color }">
@@ -77,11 +78,12 @@ import { SnippetService } from './snippet.service';
                         </p-card>
                     </ng-template>
                 </p-timeline>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
         </div>
         <div class="col-span-full">
-            <div class="card">
-                <div class="font-semibold text-xl mb-4">Horizontal</div>
+            <app-showcase title="Horizontal" snippetId="timeline-horizontal" [code]="snippet('timeline-horizontal')">
+                <!-- snippet:timeline-horizontal -->
                 <div class="font-semibold mb-2">Top Align</div>
                 <p-timeline [value]="events2" layout="horizontal" align="top">
                     <ng-template #content let-event>
@@ -103,7 +105,8 @@ import { SnippetService } from './snippet.service';
                     </ng-template>
                     <ng-template #opposite let-event> &nbsp; </ng-template>
                 </p-timeline>
-            </div>
+                <!-- /snippet -->
+            </app-showcase>
         </div>
     </div>`
 })

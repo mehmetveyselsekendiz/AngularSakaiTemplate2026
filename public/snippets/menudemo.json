@@ -1,3 +1,13 @@
 {
-  "menu-menubar": "<p-menubar [model]=\"nestedMenuItems\">\n    <ng-template #end>\n        <p-iconfield>\n            <p-inputicon class=\"pi pi-search\" />\n            <input type=\"text\" pInputText placeholder=\"Search\" />\n        </p-iconfield>\n    </ng-template>\n</p-menubar>"
+  "menu-menubar": "<p-menubar [model]=\"nestedMenuItems\">\n    <ng-template #end>\n        <p-iconfield>\n            <p-inputicon class=\"pi pi-search\" />\n            <input type=\"text\" pInputText placeholder=\"Search\" />\n        </p-iconfield>\n    </ng-template>\n</p-menubar>",
+  "menu-breadcrumb": "<p-breadcrumb [model]=\"breadcrumbItems\" [home]=\"breadcrumbHome\"></p-breadcrumb>",
+  "menu-steps": "<p-stepper [value]=\"1\">\n    <p-step-list>\n        <p-step [value]=\"1\">Header I</p-step>\n        <p-step [value]=\"2\">Header II</p-step>\n        <p-step [value]=\"3\">Header III</p-step>\n    </p-step-list>\n</p-stepper>",
+  "menu-tabmenu": "<p-tabs [value]=\"0\">\n    <p-tablist>\n        <p-tab [value]=\"0\">Header I</p-tab>\n        <p-tab [value]=\"1\">Header II</p-tab>\n        <p-tab [value]=\"2\">Header III</p-tab>\n    </p-tablist>\n</p-tabs>",
+  "menu-tiered": "<p-tieredmenu [model]=\"tieredMenuItems\"></p-tieredmenu>",
+  "menu-plain": "<p-menu [model]=\"menuItems\"></p-menu>",
+  "menu-overlay": "<p-menu #menu [popup]=\"true\" [model]=\"overlayMenuItems\"></p-menu>\n<button type=\"button\" pButton icon=\"pi pi-chevron-down\" label=\"Options\" (click)=\"menu.toggle($event)\" style=\"width:auto\"></button>",
+  "menu-context": "<div #anchor>\n    Right click to display.\n    <p-contextmenu [target]=\"anchor\" [model]=\"contextMenuItems\"></p-contextmenu>\n</div>",
+  "menu-megamenu-h": "<p-megamenu [model]=\"megaMenuItems\" />",
+  "menu-megamenu-v": "<p-megamenu [model]=\"megaMenuItems\" orientation=\"vertical\" />",
+  "menu-panelmenu": "<p-panelmenu [model]=\"panelMenuItems\" />"
 }

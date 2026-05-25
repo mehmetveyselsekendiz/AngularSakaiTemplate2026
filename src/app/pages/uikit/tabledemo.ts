@@ -19,7 +19,7 @@ import { TagModule } from 'primeng/tag';
 import { ObjectUtils } from 'primeng/utils';
 import { svgPlaceholder } from '@/app/core/util/svg-placeholder';
 import { brandColors } from '@/app/core/config/design-tokens';
-import { CodeBlock } from './code-block';
+import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
 
 interface Representative {
@@ -73,10 +73,10 @@ interface expandedRows {
         RatingModule,
         RippleModule,
         IconFieldModule,
-        CodeBlock
+        ComponentShowcase
     ],
-    template: ` <div class="card">
-            <div class="font-semibold text-xl mb-4">Filtering</div>
+    template: ` <div class="flex flex-col gap-6">
+        <app-showcase title="Filtering" snippetId="table-filtering" [code]="snippet('table-filtering')">
             <!-- snippet:table-filtering -->
             <p-table
                 #dt1
@@ -231,11 +231,10 @@ interface expandedRows {
                 </ng-template>
             </p-table>
             <!-- /snippet -->
-            <app-code-block [code]="snippet('table-filtering')" />
-        </div>
+        </app-showcase>
 
-        <div class="card">
-            <div class="font-semibold text-xl mb-4">Frozen Columns</div>
+        <app-showcase title="Frozen Columns" snippetId="table-frozen" [code]="snippet('table-frozen')">
+            <!-- snippet:table-frozen -->
             <p-togglebutton [(ngModel)]="balanceFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" [onLabel]="'Balance'" offLabel="Balance" />
 
             <p-table [value]="customers2" [scrollable]="true" scrollHeight="400px" styleClass="mt-4">
@@ -268,10 +267,11 @@ interface expandedRows {
                     </tr>
                 </ng-template>
             </p-table>
-        </div>
+            <!-- /snippet -->
+        </app-showcase>
 
-        <div class="card">
-            <div class="font-semibold text-xl mb-4">Row Expansion</div>
+        <app-showcase title="Row Expansion" snippetId="table-expansion" [code]="snippet('table-expansion')">
+            <!-- snippet:table-expansion -->
             <p-table [value]="products" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }" [expandedRowKeys]="expandedRows">
                 <ng-template #caption>
                     <button pButton icon="pi pi-fw {{ isExpanded ? 'pi-minus' : 'pi-plus' }}" label="{{ isExpanded ? 'Collapse All' : 'Expand All' }}" (click)="expandAll()"></button>
@@ -359,10 +359,11 @@ interface expandedRows {
                     </tr>
                 </ng-template>
             </p-table>
-        </div>
+            <!-- /snippet -->
+        </app-showcase>
 
-        <div class="card">
-            <div class="font-semibold text-xl mb-4">Grouping</div>
+        <app-showcase title="Grouping" snippetId="table-grouping" [code]="snippet('table-grouping')">
+            <!-- snippet:table-grouping -->
             <p-table [value]="customers3" sortField="representative.name" sortMode="single" [scrollable]="true" scrollHeight="400px" rowGroupMode="subheader" groupRowsBy="representative.name" [tableStyle]="{ 'min-width': '60rem' }">
                 <ng-template #header>
                     <tr>
@@ -411,7 +412,9 @@ interface expandedRows {
                     </tr>
                 </ng-template>
             </p-table>
-        </div>`,
+            <!-- /snippet -->
+        </app-showcase>
+    </div>`,
     styles: `
         .p-datatable-frozen-tbody {
             font-weight: bold;

@@ -1,3 +1,4 @@
 {
-  "hierarchy-basic": "<p-organizationchart [value]=\"data\" styleClass=\"w-full overflow-auto\" />"
+  "hierarchy-basic": "<p-organizationchart [value]=\"data\" styleClass=\"w-full overflow-auto\" />",
+  "hierarchy-selectable": "<p-organizationchart [value]=\"data\" selectionMode=\"single\" [(selection)]=\"selected\" styleClass=\"w-full overflow-auto\" />\n@if (selected) {\n    <p class=\"mt-4 text-sm text-muted-color\">\n        Seçili: <strong>{{ selected.label }}</strong>\n    </p>\n}"
 }

@@ -17,14 +17,7 @@ import { TabsModule } from 'primeng/tabs';
         <div class="mfa-showcase card">
             <div class="mfa-showcase__header flex items-center justify-between gap-2">
                 <span class="mfa-showcase__title font-semibold text-lg">{{ title() }}</span>
-                <p-button
-                    [icon]="kopyalandi() ? 'pi pi-check' : 'pi pi-copy'"
-                    [label]="kopyalandi() ? 'Kopyalandı' : 'Kopyala'"
-                    size="small"
-                    severity="secondary"
-                    [text]="true"
-                    (onClick)="kopyala()"
-                />
+                <p-button [icon]="kopyalandi() ? 'pi pi-check' : 'pi pi-copy'" [label]="kopyalandi() ? 'Kopyalandı' : 'Kopyala'" size="small" severity="secondary" [text]="true" (onClick)="kopyala()" />
             </div>
             @if (description()) {
                 <p class="mfa-showcase__desc text-sm text-muted-color mt-1 mb-0">{{ description() }}</p>
