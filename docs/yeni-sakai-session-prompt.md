@@ -2,12 +2,12 @@
 
 Bu dosya, **`AngularSakaiTemplate2026`** dizininde **yeni bir Claude Code oturumu** başlattığında ilk mesaj olarak göndereceğin prompt'u içerir.
 
-> **Son güncelleme:** 25 Mayıs 2026 — Phase 1–8 + 9.0 (kısmi) tamamlandı. **Phase 9 yeniden tasarlandı (K-017)** — aktif faz: Phase 9 (Yeniden) — Bileşen Vitrini + Kütüphane Zenginleştirme.
+> **Son güncelleme:** 26 Mayıs 2026 — Phase 1–10 tamamlandı ve push edildi. **Aktif faz: Phase 11 — İlk modül iskeleti (`features/vize/`) + modül fork rehberi + OpenShift Docker + README.**
 
 ## Kullanım Adımları
 
 1. PowerShell veya Terminal aç
-2. `cd C:\Users\t1.veysel.sekendiz\Desktop\AngularSakaiTemplate2026`
+2. `cd C:\Projects\AngularSakaiTemplate2026`
 3. Bu dizinde Claude Code oturumu aç (`claude`)
 4. Aşağıdaki **"PROMPT — BURADAN KOPYALA"** bölümündeki metni komple kopyala ve ilk mesaj olarak yapıştır
 
@@ -24,48 +24,40 @@ bu template'i fork'layıp kendi modüllerini geliştirecek.
 
 ## MEVCUT DURUM — ÖNCE BUNU OKU
 
-Phase 1–8 + 9.0 (kısmi) tamamlandı. Phase 9 yeniden tasarlandı; aktif faz
-Phase 9 (Yeniden) — Bileşen Vitrini + Kütüphane Zenginleştirme. Sıfırdan
-başlama; kurulum adımlarını tekrar yapma.
+Phase 1–10 tamamlandı ve push edildi. Aktif faz: **Phase 11 — İlk modül
+iskeleti (features/vize/) + modül fork rehberi + OpenShift Docker + README**.
+Sıfırdan başlama; kurulum/önceki fazları tekrar yapma.
 
 >>> BU OTURUMDA ÖNCE ŞUNLARI OKU:
->>>   docs/superpowers/specs/2026-05-25-phase-9-component-library-design.md
->>>   docs/superpowers/plans/2026-05-25-phase-9-component-library.md
->>> Sonra plandaki 9A görevinden başla (ComponentShowcase + buttondemo/inputdemo pilot).
+>>>   1. CLAUDE.md (otomatik yüklenir) — kurallar, sıfır-paket, klasör sorumluluğu (§9-10)
+>>>   2. docs/ilerleme-ve-kararlar.md — en alttaki "Sırada — Sonraki Oturum"
+>>>   3. docs/sakai-mfa-uyarlama-plani.md §4B (Phase 11) + §10 klasör yapısı
+>>> Phase 11'in spec/plan'ı HENÜZ YOK — önce kapsamı netleştir, plan çıkar, BANA sun, onay al.
 
 Oturumu anlamak için sırasıyla şunları oku:
 
 1. CLAUDE.md — kritik kurallar ve yasaklar (otomatik yüklenir)
 2. docs/ilerleme-ve-kararlar.md — tamamlanan TÜM adımlar + kararlar
    (en alttaki "Sırada — Sonraki Oturum" bölümünden başla)
-3. docs/sakai-mfa-uyarlama-plani.md §4B — Yeni yol haritası (Phase 7A-11)
-4. docs/i18n-rehber.md — modül takımları için i18n rehberi (Phase 7C ekledi)
+3. docs/sakai-mfa-uyarlama-plani.md §4B — Yol haritası (Phase 7A-11)
+4. docs/i18n-rehber.md — modül takımları için i18n rehberi (modül kodu bunu kullanır)
 
 Faz özeti:
-- Phase 1  ✓  Sakai demo temizliği (CDN font, landing, demo servisler)
-- Phase 2  ✓  MFA tema (mfa-tokens.scss, MfaPreset, theme.config.ts)
-- Phase 3  ✓  Kurumsal Kimlik sayfası (/pages/kurumsal-kimlik)
-- Phase 4  ✓  Bileşen Kütüphanesi governance (/uikit/* tek yetkili kaynak)
-- Phase 5  ✓  Manuel OIDC Auth (PKCE, AuthService, guard, interceptor)
-- Phase 6  ✓  uikit sayfaları MFA uyumlu (CDN kaldırıldı, MFA token, Türkçe)
-- Phase 7A ✓  navigation.config.ts, menü computed() signal, auth alt-grup,
-              eksik sayfa tespiti, palet ihlal temizliği
-- Phase 7B ✓  Runtime Ayar Sistemi (SettingsService + tema/font/dil +
-              localStorage + topbar icon group + /pages/ayarlar)
-- Phase 7C ✓  Template-düzeyi i18n (auth/empty/dashboard) + foundation
-              pipe'lar (mfaDate/mfaCurrency, runtime locale) + modül
-              rehberi (docs/i18n-rehber.md). K-012 ile kapsam daraltıldı:
-              /uikit/*, kurumsal-kimlik, crud template-only kabul edildi.
-- Phase 8  ✓  Palet İhlali Tarayıcı + Governance (check-palette.mjs +
-              npm run lint:palette; 50 ihlal temizlendi; /pages/
-              kurumsal-kimlik/denetim runtime sayfası; K-014, K-015)
-- Phase 9.0 ✓ Kod görüntüleme altyapısı (extract-snippets.mjs + CodeBlock +
-              SnippetService); ANCAK kısmi (18/105 örnek, tab yok) — K-017 ile
-              yeniden tasarlandı
-- Phase 9  ▶  YENİDEN — Bileşen Vitrini (ComponentShowcase: kart + p-tabs
-              Önizleme/Kod) + HER örnek + eksik bileşenler + Kurumsal Desenler.
-              Spec/plan: superpowers/specs+plans/2026-05-25-phase-9-*
-- Phase 10 ⏳ Responsive Audit (5 breakpoint, touch ≥44px, WCAG 1.4.10)
+- Phase 1–6 ✓ Sakai temizliği, MFA tema, kurumsal kimlik, OIDC auth, uikit MFA uyumu
+- Phase 7A ✓ navigation.config.ts, menü computed() signal, palet ihlal temizliği
+- Phase 7B ✓ Runtime Ayar Sistemi (SettingsService + tema/font/dil + topbar)
+- Phase 7C ✓ Template i18n + mfaDate/mfaCurrency pipe'lar + docs/i18n-rehber.md
+             (K-012: /uikit/*, kurumsal-kimlik, crud template-only)
+- Phase 8  ✓ Palet İhlali Tarayıcı (check-palette.mjs + lint:palette) +
+             /pages/kurumsal-kimlik/denetim sayfası (K-014, K-015)
+- Phase 9  ✓ Bileşen Vitrini (ComponentShowcase: kart + p-tabs Önizleme/Kod) +
+             14 eksik PrimeNG bileşeni + "Kurumsal Desenler" sayfası
+             (/uikit/patterns) — 125 snippet, 18 uikit sayfası (K-016, K-017, K-018)
+- Phase 10 ✓ Responsive Audit — 320px'te 24/24 sayfa yatay taşmasız;
+             chrome/navigasyon dokunma hedefleri 44px (K-019, K-020).
+             Reflow stratejisi: geniş içerik kart-içi overflow-x:auto.
+- Phase 11 ▶ İlk modül iskeleti (features/vize/) + modül fork rehberi +
+             OpenShift Docker + README. ÖNCE plan çıkar, sun, onay al.
 
 ---
 
@@ -254,7 +246,7 @@ Eğer bu oturuma **yeni bir özellik isteğiyle** başlıyorsan, promptun başı
 --- OTURUM BAĞLAMI ---
 [isteğini buraya yaz]
 
-Not: Phase 1-9 tamamlandı, Phase 10 sırada.
+Not: Phase 1-10 tamamlandı, Phase 11 sırada.
 Detay için docs/ilerleme-ve-kararlar.md'nin son bölümünü oku.
 --- OTURUM BAĞLAMI SONU ---
 ```
