@@ -30,9 +30,10 @@ COPY docker-entrypoint.sh /docker-entrypoint.d/40-mfa-config.sh
 USER root
 RUN sed -i 's/\r$//' /docker-entrypoint.d/40-mfa-config.sh \
     && chmod +x /docker-entrypoint.d/40-mfa-config.sh \
-    # OpenShift rastgele UID + gid 0 ile çalıştırır; config.js'i yazabilmek için
-    # html dizinini group-root yazılabilir yap (chmod g=u).
-    && chgrp -R 0 /usr/share/nginx/html \
+    # config.js'i runtime'da yazabilmek için html dizini hem uid 101 (düz docker run)
+    # hem de gid 0 (OpenShift rastgele UID'yi grup 0'a ekler) tarafından yazılabilir olmalı:
+    # sahiplik 101:0 + group perms = user perms (g=u).
+    && chown -R 101:0 /usr/share/nginx/html \
     && chmod -R g=u /usr/share/nginx/html
 USER 101
 
