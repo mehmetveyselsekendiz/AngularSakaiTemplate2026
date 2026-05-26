@@ -1,0 +1,16 @@
+# Build bağlamından dışlanan dosyalar (imaj boyutu + build hızı)
+node_modules
+.angular
+dist
+.git
+.gitignore
+.github
+.claude
+.vscode
+.idea
+coverage
+docs
+*.md
+Dockerfile
+.dockerignore
+npm-debug.log*
