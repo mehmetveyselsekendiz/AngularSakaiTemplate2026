@@ -9,6 +9,9 @@ import { providePrimeNG } from 'primeng/config';
 import { MfaPreset } from '@/app/core/config/theme.config';
 import { authInterceptor } from '@/app/core/auth/auth.interceptor';
 import { errorInterceptor } from '@/app/core/http/error.interceptor';
+// GELİŞTİRME-AMAÇLI: vize modülü için bellek-içi mock (yalnızca SSO yokken aktif).
+// Gerçek staging'e geçişte bu satırı ve vize-dev-data.interceptor.ts dosyasını kaldırın.
+import { vizeDevDataInterceptor } from '@/app/features/vize/vize-dev-data.interceptor';
 import { SettingsService } from '@/app/core/settings/settings.service';
 import { appRoutes } from './app.routes';
 
@@ -18,7 +21,7 @@ registerLocaleData(localeEn, 'en');
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(appRoutes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
-        provideHttpClient(withFetch(), withInterceptors([authInterceptor, errorInterceptor])),
+        provideHttpClient(withFetch(), withInterceptors([vizeDevDataInterceptor, authInterceptor, errorInterceptor])),
         provideZonelessChangeDetection(),
         providePrimeNG({ theme: { preset: MfaPreset, options: { darkModeSelector: '.app-dark' } } }),
         // MessageService: error interceptor ve tüm uygulama için global provider

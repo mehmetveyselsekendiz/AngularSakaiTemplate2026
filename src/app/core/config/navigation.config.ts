@@ -24,6 +24,10 @@ export const NAV_GROUPS: NavGroup[] = [
         items: [{ labelKey: 'menu.dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
     },
     {
+        labelKey: 'menu.modules',
+        items: [{ labelKey: 'menu.modules.vize', icon: 'pi pi-fw pi-id-card', routerLink: ['/vize'], requiredRoles: ['VIZE_OKUMA'] }]
+    },
+    {
         labelKey: 'menu.library',
         items: [
             { labelKey: 'menu.uikit.button', icon: 'pi pi-fw pi-mobile', class: 'rotated-icon', routerLink: ['/uikit/button'] },
@@ -72,6 +76,7 @@ export const NAV_GROUPS: NavGroup[] = [
 // Breadcrumb için: route → labelKey eşlemesi (eskiden Türkçe string, şimdi key)
 export const ROUTE_LABEL_KEY_MAP: Record<string, string> = {
     '/': 'menu.dashboard',
+    '/vize': 'menu.modules.vize',
     '/uikit/button': 'menu.uikit.button',
     '/uikit/input': 'menu.uikit.input',
     '/uikit/formlayout': 'menu.uikit.formlayout',

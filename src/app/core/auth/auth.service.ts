@@ -94,7 +94,10 @@ export class AuthService {
             username: 'developer',
             email: 'developer@mfa.gov.tr',
             fullName: displayName || 'Geliştirici',
-            roles: [],
+            // Geliştirici modunda örnek modül rolleri — böylece rol-gated menü/aksiyonlar görünür.
+            // Gerçek roller SSO token claim'lerinden gelir (bkz. extractRoles). Modül takımları
+            // kendi geliştirme rollerini buraya ekleyebilir (yalnızca dev modunu etkiler).
+            roles: ['VIZE_OKUMA', 'VIZE_YAZMA', 'VIZE_SIL'],
             accessToken: 'dev-token'
         };
         this._user.set(mockUser);
