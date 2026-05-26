@@ -28,7 +28,8 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY docker-entrypoint.sh /docker-entrypoint.d/40-mfa-config.sh
 
 USER root
-RUN chmod +x /docker-entrypoint.d/40-mfa-config.sh \
+RUN sed -i 's/\r$//' /docker-entrypoint.d/40-mfa-config.sh \
+    && chmod +x /docker-entrypoint.d/40-mfa-config.sh \
     # OpenShift rastgele UID + gid 0 ile çalıştırır; config.js'i yazabilmek için
     # html dizinini group-root yazılabilir yap (chmod g=u).
     && chgrp -R 0 /usr/share/nginx/html \

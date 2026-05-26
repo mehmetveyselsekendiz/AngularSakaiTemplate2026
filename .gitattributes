@@ -1,0 +1,6 @@
+# Shell script'leri ve konteyner dosyaları DAİMA LF — CRLF, Linux'ta
+# `#!/bin/sh` shebang'ını ve docker-entrypoint'i bozar.
+*.sh text eol=lf
+docker-entrypoint.sh text eol=lf
+Dockerfile text eol=lf
+nginx.conf text eol=lf
