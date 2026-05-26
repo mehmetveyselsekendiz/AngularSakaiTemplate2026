@@ -2,7 +2,7 @@
 
 Bu dosya, **`AngularSakaiTemplate2026`** dizininde **yeni bir Claude Code oturumu** başlattığında ilk mesaj olarak göndereceğin prompt'u içerir.
 
-> **Son güncelleme:** 26 Mayıs 2026 — Phase 1–10 tamamlandı ve push edildi. **Aktif faz: Phase 11 — İlk modül iskeleti (`features/vize/`) + modül fork rehberi + OpenShift Docker + README.**
+> **Son güncelleme:** 26 Mayıs 2026 — Phase 1–11 tamamlandı ve push edildi. **Çekirdek template TAMAM** (vize örnek modülü + fork rehberi + OpenShift Docker + README, hepsi doğrulandı). Aktif zorunlu faz yok; kalan opsiyonel iş: `v1.0.0` tag + CI pipeline + CLAUDE.md §8/§13'e K-021 dev-data istisnası notu.
 
 ## Kullanım Adımları
 
@@ -24,23 +24,28 @@ bu template'i fork'layıp kendi modüllerini geliştirecek.
 
 ## MEVCUT DURUM — ÖNCE BUNU OKU
 
-Phase 1–10 tamamlandı ve push edildi. Aktif faz: **Phase 11 — İlk modül
-iskeleti (features/vize/) + modül fork rehberi + OpenShift Docker + README**.
-Sıfırdan başlama; kurulum/önceki fazları tekrar yapma.
+Phase 1–11 tamamlandı ve push edildi. **Çekirdek template TAMAM.** Aktif
+zorunlu faz YOK. Sıfırdan başlama; kurulum/önceki fazları tekrar yapma.
 
 >>> BU OTURUMDA ÖNCE ŞUNLARI OKU:
 >>>   1. CLAUDE.md (otomatik yüklenir) — kurallar, sıfır-paket, klasör sorumluluğu (§9-10)
->>>   2. docs/ilerleme-ve-kararlar.md — en alttaki "Sırada — Sonraki Oturum"
->>>   3. docs/sakai-mfa-uyarlama-plani.md §4B (Phase 11) + §10 klasör yapısı
->>> Phase 11'in spec/plan'ı HENÜZ YOK — önce kapsamı netleştir, plan çıkar, BANA sun, onay al.
+>>>   2. docs/ilerleme-ve-kararlar.md — en alttaki "Sırada — Sonraki Oturum" + Oturum 10 (Phase 11)
+>>>   3. docs/MODULE-DEV-GUIDE.md — modül fork/geliştirme rehberi (vize işlenmiş örnek)
+>>> Yeni bir modül/özellik isteğim varsa: önce kapsamı netleştir, plan çıkar, BANA sun, onay al.
+
+Bu oturumda muhtemelen şunlardan biri olacak:
+- **Yeni modül** (pasaport/personel/konsolosluk) → features/vize/'yi şablon al, MODULE-DEV-GUIDE.md'yi izle
+- **Kalan opsiyonel iş** → v1.0.0 tag, CI pipeline (lint:palette + build), CLAUDE.md §8/§13'e K-021 notu
+- **Vize modülünde değişiklik/iyileştirme**
 
 Oturumu anlamak için sırasıyla şunları oku:
 
 1. CLAUDE.md — kritik kurallar ve yasaklar (otomatik yüklenir)
-2. docs/ilerleme-ve-kararlar.md — tamamlanan TÜM adımlar + kararlar
-   (en alttaki "Sırada — Sonraki Oturum" bölümünden başla)
-3. docs/sakai-mfa-uyarlama-plani.md §4B — Yol haritası (Phase 7A-11)
-4. docs/i18n-rehber.md — modül takımları için i18n rehberi (modül kodu bunu kullanır)
+2. docs/ilerleme-ve-kararlar.md — tamamlanan TÜM adımlar + kararlar (K-001…K-021)
+   (en alttaki "Sırada — Sonraki Oturum" + "Oturum 10" bölümünden başla)
+3. docs/sakai-mfa-uyarlama-plani.md §4B — Yol haritası (Phase 7A-11, hepsi ✓)
+4. docs/MODULE-DEV-GUIDE.md — modül geliştirme rehberi (YENİ modül yazacaksan)
+5. docs/i18n-rehber.md — modül takımları için i18n rehberi (modül kodu bunu kullanır)
 
 Faz özeti:
 - Phase 1–6 ✓ Sakai temizliği, MFA tema, kurumsal kimlik, OIDC auth, uikit MFA uyumu
@@ -56,8 +61,10 @@ Faz özeti:
 - Phase 10 ✓ Responsive Audit — 320px'te 24/24 sayfa yatay taşmasız;
              chrome/navigasyon dokunma hedefleri 44px (K-019, K-020).
              Reflow stratejisi: geniş içerik kart-içi overflow-x:auto.
-- Phase 11 ▶ İlk modül iskeleti (features/vize/) + modül fork rehberi +
-             OpenShift Docker + README. ÖNCE plan çıkar, sun, onay al.
+- Phase 11 ✓ features/vize/ tam CRUD örnek modülü (lazy route, httpResource,
+             Reactive Forms, rol-gating, i18n, sıfır-paket dev-data interceptor
+             — K-021) + docs/MODULE-DEV-GUIDE.md + OpenShift Docker (Dockerfile/
+             nginx.conf/entrypoint, doğrulandı: /health 200, config.js env) + README.
 
 ---
 
@@ -246,7 +253,7 @@ Eğer bu oturuma **yeni bir özellik isteğiyle** başlıyorsan, promptun başı
 --- OTURUM BAĞLAMI ---
 [isteğini buraya yaz]
 
-Not: Phase 1-10 tamamlandı, Phase 11 sırada.
+Not: Phase 1-11 tamamlandı, çekirdek template hazır.
 Detay için docs/ilerleme-ve-kararlar.md'nin son bölümünü oku.
 --- OTURUM BAĞLAMI SONU ---
 ```
