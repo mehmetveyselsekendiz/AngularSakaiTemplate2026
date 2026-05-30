@@ -22,10 +22,12 @@
 // Çıkış kodu: ihlal varsa 1 (CI/pre-commit fail eder), temizse 0.
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
-import { join, relative, sep } from 'node:path';
+import { join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..');
+// Proje kökü. Test edilebilirlik için MFA_LINT_ROOT env değişkeniyle override
+// edilebilir (scripts/__tests__/*.test.mjs sahte fixture köklerine işaret eder).
+const ROOT = process.env.MFA_LINT_ROOT ? resolve(process.env.MFA_LINT_ROOT) : join(fileURLToPath(new URL('.', import.meta.url)), '..');
 const APP_DIR = join(ROOT, 'src', 'app');
 const UIKIT_DIR = join(APP_DIR, 'pages', 'uikit');
 const FEATURES_DIR = join(APP_DIR, 'features');

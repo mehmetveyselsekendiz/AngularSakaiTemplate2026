@@ -245,10 +245,14 @@ npm run format                 # prettier
 npm run lint:palette           # governance tarayıcı (hex/tailwind/cdn/import) — ihlalde exit 1
 npm run lint:tokens            # 3 palet dosyası (scss/preset/design-tokens) senkron mu — drift'te exit 1
 npm run snippets               # /uikit örnek snippet'lerini public/snippets/*.json'a çıkar
-npm test                       # karma + jasmine — kullanılmıyor (test stratejisi ileride)
+npm test                       # ng test --no-watch --browsers=ChromeHeadlessNoSandbox (zoneless birim testleri)
+npm run test:watch             # ng test (izleme modu, geliştirme)
+npm run test:scripts           # node --test scripts/__tests__/*.test.mjs (governance script'leri, saf Node)
 ```
 
-**CI:** `.github/workflows/ci.yml` push/PR `main`'de `lint:palette` → `lint:tokens` → snippet tazeliği → `build` gate'ini çalıştırır. Bu kapı yeşil olmadan merge etme.
+**CI:** `.github/workflows/ci.yml` push/PR `main`'de `lint:palette` → `lint:tokens` → snippet tazeliği → `test:scripts` → `test` → `build` gate'ini çalıştırır. Bu kapı yeşil olmadan merge etme.
+
+**Test stratejisi (Oturum 13, K-025):** Sıfır yeni paket — zaten kurulu Karma+Jasmine. Zoneless uyumu: her spec `provideZonelessChangeDetection()` sağlar, effect'leri `ApplicationRef.tick()` ile flush eder (zone.js YOK → `fakeAsync`/zone-tick yok). Birim testleri `core/` davranışını kapsar (settings/i18n/auth). Governance script'leri saf-Node `node:test` ile test edilir; `MFA_LINT_ROOT` env'i ile sahte fixture köküne yönlendirilip drift/ihlalde exit 1 doğrulanır. Karma test hedefi global SCSS yüklemez (`styles: []`) — webpack sass-loader `@/` alias'ını çözmediği için, birim testleri de stile ihtiyaç duymaz.
 
 ---
 

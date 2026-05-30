@@ -62,7 +62,13 @@ export class SettingsService {
         };
         const supportsVT = typeof (document as any).startViewTransition === 'function';
         if (supportsVT) {
-            (document as any).startViewTransition(toggle);
+            const transition = (document as any).startViewTransition(toggle);
+            // Hızlı tema değişiminde önceki geçiş iptal edilir → ready/finished
+            // promise'i AbortError ("Transition was skipped") ile reddeder. Bu
+            // beklenen bir durum; reddi yutarak "unhandled promise rejection"
+            // gürültüsünü engelle (görsel davranış değişmez).
+            transition?.ready?.catch?.(() => {});
+            transition?.finished?.catch?.(() => {});
         } else {
             toggle();
         }

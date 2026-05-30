@@ -14,10 +14,12 @@
 // Tonal rampalar (50..950) bunlardan türetilir; anchor doğruysa felsefe korunur.
 
 import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..');
+// Proje kökü. Test edilebilirlik için MFA_LINT_ROOT env değişkeniyle override
+// edilebilir (scripts/__tests__/*.test.mjs sahte fixture köklerine işaret eder).
+const ROOT = process.env.MFA_LINT_ROOT ? resolve(process.env.MFA_LINT_ROOT) : join(fileURLToPath(new URL('.', import.meta.url)), '..');
 
 const SCSS = 'src/assets/mfa-tokens.scss';
 const PRESET = 'src/app/core/config/theme.config.ts';

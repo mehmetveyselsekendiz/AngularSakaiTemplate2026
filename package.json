@@ -10,7 +10,9 @@
         "lint:palette": "node scripts/check-palette.mjs",
         "lint:tokens": "node scripts/check-tokens-sync.mjs",
         "snippets": "node scripts/extract-snippets.mjs",
-        "test": "ng test"
+        "test": "ng test --no-watch --browsers=ChromeHeadlessNoSandbox",
+        "test:watch": "ng test",
+        "test:scripts": "node --test scripts/__tests__/*.test.mjs"
     },
     "private": true,
     "dependencies": {
