@@ -4,7 +4,9 @@
 >
 > Detaylı yol haritası: [`docs/sakai-mfa-uyarlama-plani.md`](docs/sakai-mfa-uyarlama-plani.md)
 > Açılış prompt'u: [`docs/yeni-sakai-session-prompt.md`](docs/yeni-sakai-session-prompt.md)
-> Aktif tasarım dokümanları: [`docs/superpowers/specs/`](docs/superpowers/specs/)
+> Tasarım dokümanları (tarihsel referans, fazlar tamamlandı): [`docs/superpowers/specs/`](docs/superpowers/specs/)
+>
+> **Durum: `v1.0.0` — production-ready template baseline.** Çekirdek tamam (kurumsal kimlik tek-kaynak, kütüphane, auth, i18n, vize örnek modül, Docker, CI). Modül takımları bunu fork'lar.
 
 ---
 
@@ -101,11 +103,16 @@ PrimeNG'ye bağlama: `src/app/core/config/theme.config.ts` → `MfaPreset = defi
 
 ## 5. Font — Helvetica System Stack
 
+**TEK KAYNAK:** `mfa-tokens.scss` → `--mfa-font-sans` token'ı (design-tokens.ts `brandTypography` ile senkron). `body` bunu okur (`_core.scss` → `font-family: var(--mfa-font-sans)`). Resmi yazışma için `--mfa-font-serif` (Times) mevcut.
+
 ```scss
-body { font-family: Helvetica, Arial, sans-serif; }
+// mfa-tokens.scss
+--mfa-font-sans: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", system-ui, sans-serif;
+// _core.scss
+body { font-family: var(--mfa-font-sans); }
 ```
 
-**YASAK:** Inter, Roboto, Google Fonts, herhangi bir CDN font. Sebep: Kurumsal güvenlik + offline kullanım.
+**YASAK:** Inter, Roboto, Google Fonts, herhangi bir CDN font. Component'lerde hardcoded `font-family` yazma — `--mfa-font-sans` token'ını oku. Sebep: Kurumsal güvenlik + offline kullanım.
 
 **Font boyutu (Phase 7B+):** `<html>` kök `font-size` `data-font-scale` özniteliğine bağlı (`xs=13/sm=14/md=15/lg=17/xl=19 px`). Component-level SCSS'lerde `rem` kullan, hardcoded `px` yazma — yoksa font scale bypass edilir.
 
@@ -196,7 +203,8 @@ src/
 │   │   ├── settings/              # settings.service, settings.types  (Phase 7B+)
 │   │   ├── i18n/                  # translate.service, translate.pipe (Phase 7B+)
 │   │   ├── http/                  # error.interceptor
-│   │   └── config/                # app-env, theme.config, navigation.config
+│   │   ├── config/                # app-env, theme.config, navigation.config, design-tokens
+│   │   └── util/                  # mfa-logo (amblem), svg-placeholder
 │   ├── pages/                     # Tüm sayfalar (uikit/, dashboard, ayarlar, kurumsal-kimlik, auth, vs.)
 │   └── features/                  # Modül kodu (vize, pasaport, ...)
 └── assets/
@@ -233,8 +241,11 @@ npm run build                  # production build
 npm run watch                  # dev build watch mode
 npm run format                 # prettier
 npm run lint:palette           # governance tarayıcı (hex/tailwind/cdn/import) — ihlalde exit 1
-npm test                       # karma + jasmine — kullanılmıyor (test stratejisi Phase 8+)
+npm run snippets               # /uikit örnek snippet'lerini public/snippets/*.json'a çıkar
+npm test                       # karma + jasmine — kullanılmıyor (test stratejisi ileride)
 ```
+
+**CI:** `.github/workflows/ci.yml` push/PR `main`'de `lint:palette` → snippet tazeliği → `build` gate'ini çalıştırır. Bu kapı yeşil olmadan merge etme.
 
 ---
 

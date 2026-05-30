@@ -23,10 +23,7 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
         <span class="mfa-logo" [class.mfa-logo--responsive]="responsive()">
             <svg class="mfa-logo__mark" viewBox="0 0 48 48" role="img" aria-label="T.C. Dışişleri Bakanlığı">
                 <circle cx="24" cy="24" r="23" fill="var(--mfa-brand)" />
-                <polygon
-                    points="24,11 27.17,19.63 36.36,19.98 29.14,25.67 31.64,34.52 24,29.4 16.36,34.52 18.86,25.67 11.64,19.98 20.83,19.63"
-                    fill="var(--mfa-brand-fg)"
-                />
+                <polygon points="24,11 27.17,19.63 36.36,19.98 29.14,25.67 31.64,34.52 24,29.4 16.36,34.52 18.86,25.67 11.64,19.98 20.83,19.63" fill="var(--mfa-brand-fg)" />
             </svg>
             @if (variant() === 'full') {
                 <span class="mfa-logo__wordmark">

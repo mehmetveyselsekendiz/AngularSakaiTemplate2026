@@ -102,9 +102,7 @@ import { MfaLogo } from '@/app/core/util/mfa-logo';
             <!-- Logo Varyantları -->
             <div class="card">
                 <div class="font-semibold text-xl mb-1">Logo Varyantları</div>
-                <p class="text-surface-500 text-sm mb-4">
-                    Amblem <code>src/app/core/util/mfa-logo.ts</code> bileşeninden gelir ve MFA paletini (<code>--mfa-brand</code>) okur — yer tutucudur, gerçek Bakanlık amblemi tek dosyada güncellenir.
-                </p>
+                <p class="text-surface-500 text-sm mb-4">Amblem <code>src/app/core/util/mfa-logo.ts</code> bileşeninden gelir ve MFA paletini (<code>--mfa-brand</code>) okur — yer tutucudur, gerçek Bakanlık amblemi tek dosyada güncellenir.</p>
 
                 <!-- Amblem önizleme: açık zemin / marka zemin -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
