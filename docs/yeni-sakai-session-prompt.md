@@ -57,7 +57,7 @@ Faz özeti:
              /pages/kurumsal-kimlik/denetim sayfası (K-014, K-015)
 - Phase 9  ✓ Bileşen Vitrini (ComponentShowcase: kart + p-tabs Önizleme/Kod) +
              14 eksik PrimeNG bileşeni + "Kurumsal Desenler" sayfası
-             (/uikit/patterns) — 125 snippet, 18 uikit sayfası (K-016, K-017, K-018)
+             (/uikit/patterns) — 131 snippet, 18 uikit sayfası (K-016, K-017, K-018)
 - Phase 10 ✓ Responsive Audit — 320px'te 24/24 sayfa yatay taşmasız;
              chrome/navigasyon dokunma hedefleri 44px (K-019, K-020).
              Reflow stratejisi: geniş içerik kart-içi overflow-x:auto.
@@ -65,6 +65,12 @@ Faz özeti:
              Reactive Forms, rol-gating, i18n, sıfır-paket dev-data interceptor
              — K-021) + docs/MODULE-DEV-GUIDE.md + OpenShift Docker (Dockerfile/
              nginx.conf/entrypoint, doğrulandı: /health 200, config.js env) + README.
+- Oturum 11 ✓ Kurumsal kimlik bütünlüğü: font tek-kaynak (--mfa-font-sans, K-022)
+             + palet-tabanlı SVG amblem (core/util/mfa-logo.ts, K-023) + CI pipeline.
+- Oturum 12 ✓ Kütüphane zenginleştirme: Kurumsal Desenler 8→14 kalıp (durum rozeti
+             kataloğu, marka aksanlı kartlar, stepper, atama şeridi, bölümlenmiş form,
+             ilerleme paneli) — 131 snippet. Docker imajı (84.5 MB) build+runtime
+             doğrulandı. Tema light/dark denetimi temiz. PRODUCTION-READY.
 
 ---
 

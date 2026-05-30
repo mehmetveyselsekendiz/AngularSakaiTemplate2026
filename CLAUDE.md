@@ -273,7 +273,7 @@ npm test                       # karma + jasmine — kullanılmıyor (test strat
 
 **Kaynak:** `/uikit/*` sayfaları → `src/app/pages/uikit/`
 
-Sayfalar: Butonlar · Giriş Alanları · Form Düzeni · **Zengin Metin** · Tablo · Liste · Ağaç · Panel · Overlay · Medya · Menü · Mesajlar · Dosya Yükleme · Grafikler · Zaman Çizelgesi · Hiyerarşi · Diğer
+Sayfalar: Butonlar · Giriş Alanları · Form Düzeni · **Zengin Metin** · Tablo · Liste · Ağaç · Panel · Overlay · Medya · Menü · Mesajlar · Dosya Yükleme · Grafikler · Zaman Çizelgesi · Hiyerarşi · Diğer · **Kurumsal Desenler** (`/uikit/patterns` — 14 kompozit kalıp; modüllerin kopyala-yapıştır referansı)
 
 Tüm PrimeNG bileşenleri `MfaPreset` üzerinden **otomatik olarak MFA kurumsal paletini** kullanır. Renk, border, shadow — hiçbiri hardcoded değil.
 

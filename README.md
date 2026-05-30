@@ -79,7 +79,7 @@ public/
 └── i18n/                # tr.json · en.json
 ```
 
-- **`/uikit/*`** — modül takımları için tek yetkili bileşen referansı (PrimeNG bileşenleri + "Kurumsal Desenler").
+- **`/uikit/*`** — modül takımları için tek yetkili bileşen referansı: 18 sayfa, 131 kopyalanabilir snippet (Önizleme/Kod) + **"Kurumsal Desenler"** sayfası (14 kompozit kalıp: sayfa başlığı, tablo+toolbar, form kartı, durum rozeti kataloğu, marka aksanlı kartlar, stepper, atama şeridi, bölümlenmiş form, ilerleme paneli, …).
 - **`/pages/kurumsal-kimlik`** — renk paleti, tipografi, logo rehberi + canlı palet denetimi.
 - **`features/vize/`** — işlenmiş örnek modül (lazy route + httpResource + Reactive Forms + rol-gating + i18n).
 
@@ -95,7 +95,7 @@ Kısaca: `features/<modul>/` iskeleti → lazy route (`app.routes.ts`) → menü
 
 ## Docker / OpenShift dağıtımı
 
-Multi-stage imaj: `node:22` build → `nginx-unprivileged:1.27` runtime (port 8080, root değil — OpenShift uyumlu).
+Multi-stage imaj: `node:22` build → `nginx-unprivileged:1.27` runtime (port 8080, root değil — OpenShift uyumlu). İmaj ~84.5 MB; `docker build` + runtime (`/health` 200, config.js env enjeksiyonu) doğrulandı.
 
 ```bash
 docker build -t mfa-frontend .
