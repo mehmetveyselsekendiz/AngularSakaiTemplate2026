@@ -19,6 +19,10 @@ import { TagModule } from 'primeng/tag';
 import { FluidModule } from 'primeng/fluid';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+import { StepperModule } from 'primeng/stepper';
+import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
+import { ProgressBarModule } from 'primeng/progressbar';
 import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
 
@@ -29,6 +33,8 @@ interface Basvuru {
     ulke: string;
     durum: string;
 }
+
+type TagSeverity = 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast';
 
 /**
  * Kurumsal Desenler — modüllerin kopyala-yapıştır kullanacağı kompozit kalıplar.
@@ -59,6 +65,10 @@ interface Basvuru {
         FluidModule,
         ConfirmDialogModule,
         ToastModule,
+        StepperModule,
+        AvatarModule,
+        BadgeModule,
+        ProgressBarModule,
         ComponentShowcase
     ],
     template: `
@@ -248,6 +258,122 @@ interface Basvuru {
                 </div>
                 <!-- /snippet -->
             </app-showcase>
+
+            <app-showcase title="Durum Rozeti Kataloğu" snippetId="pattern-status-catalog" [code]="snippet('pattern-status-catalog')" description="İş durumlarının tek-tip severity + ikon eşlemesi. Modüller, durum renklerini tutarlı tutmak için bu kataloğu kopyalar.">
+                <!-- snippet:pattern-status-catalog -->
+                <div class="flex flex-wrap gap-3">
+                    @for (d of durumKatalogu; track d.etiket) {
+                        <p-tag [value]="d.etiket" [severity]="d.severity" [icon]="d.icon" />
+                    }
+                </div>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="Marka Aksanlı Bilgi Kartları" snippetId="pattern-notice-cards" [code]="snippet('pattern-notice-cards')" description="Sol kenar marka-renkli (lacivert/kırmızı/altın/gri) şeritli içerik kartları. Renk varyasyonu; zemin color-mix ile dark mode'a uyar.">
+                <!-- snippet:pattern-notice-cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    @for (n of bildirimKartlari; track n.baslik) {
+                        <div class="flex gap-3 p-4 rounded-border" [style.background]="n.bg" [style.borderLeft]="'4px solid ' + n.renk">
+                            <i [class]="n.icon" [style.color]="n.renk" [style.fontSize]="'1.5rem'"></i>
+                            <div>
+                                <h4 class="m-0 mb-1 font-semibold">{{ n.baslik }}</h4>
+                                <p class="m-0 text-sm text-muted-color">{{ n.mesaj }}</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="Süreç Adımları (Stepper)" snippetId="pattern-process-steps" [code]="snippet('pattern-process-steps')" description="Çok aşamalı başvuru sürecinin yatay göstergesi; aktif adım marka rengiyle vurgulanır.">
+                <!-- snippet:pattern-process-steps -->
+                <p-stepper [value]="2">
+                    <p-step-list>
+                        <p-step [value]="1">Başvuru Alındı</p-step>
+                        <p-step [value]="2">Belge İncelemesi</p-step>
+                        <p-step [value]="3">Karar</p-step>
+                        <p-step [value]="4">Sonuç</p-step>
+                    </p-step-list>
+                </p-stepper>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="Atama / Kişi Şeridi" snippetId="pattern-user-row" [code]="snippet('pattern-user-row')" description="Avatar + ad + iletişim + rol rozeti. 'Atanan memur' veya 'başvuran' gösterimi; avatar zemini MFA paletinden.">
+                <!-- snippet:pattern-user-row -->
+                <div class="flex flex-col gap-3">
+                    @for (k of kisiler; track k.ad) {
+                        <div class="flex items-center gap-3 p-3 border border-surface rounded-border">
+                            <p-avatar [label]="k.basHarf" shape="circle" [style]="{ background: k.bg, color: k.renk }" />
+                            <div class="flex-1">
+                                <div class="font-medium">{{ k.ad }}</div>
+                                <div class="text-sm text-muted-color">{{ k.email }}</div>
+                            </div>
+                            <p-tag [value]="k.rol" [severity]="k.rolSeverity" />
+                        </div>
+                    }
+                </div>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="Bölümlenmiş Form (Fieldset)" snippetId="pattern-sectioned-form" [code]="snippet('pattern-sectioned-form')" description="Çok bölümlü kurumsal form: Kişisel / İletişim / Başvuru grupları p-fieldset ile ayrılır (Reactive Forms).">
+                <!-- snippet:pattern-sectioned-form -->
+                <form [formGroup]="kayitForm" (ngSubmit)="kayitGonder()">
+                    <p-fluid class="flex flex-col gap-4">
+                        <p-fieldset legend="Kişisel Bilgiler">
+                            <div class="flex flex-col md:flex-row gap-4">
+                                <div class="flex flex-col gap-2 md:w-1/2">
+                                    <label for="k-ad">Ad</label>
+                                    <input pInputText id="k-ad" formControlName="ad" />
+                                </div>
+                                <div class="flex flex-col gap-2 md:w-1/2">
+                                    <label for="k-soyad">Soyad</label>
+                                    <input pInputText id="k-soyad" formControlName="soyad" />
+                                </div>
+                            </div>
+                        </p-fieldset>
+                        <p-fieldset legend="İletişim">
+                            <div class="flex flex-col md:flex-row gap-4">
+                                <div class="flex flex-col gap-2 md:w-1/2">
+                                    <label for="k-eposta">E-posta</label>
+                                    <input pInputText id="k-eposta" formControlName="eposta" />
+                                </div>
+                                <div class="flex flex-col gap-2 md:w-1/2">
+                                    <label for="k-telefon">Telefon</label>
+                                    <input pInputText id="k-telefon" formControlName="telefon" />
+                                </div>
+                            </div>
+                        </p-fieldset>
+                        <p-fieldset legend="Başvuru Detayı">
+                            <div class="flex flex-col gap-2">
+                                <label for="k-tur">Başvuru Türü</label>
+                                <p-select id="k-tur" formControlName="tur" [options]="turler" optionLabel="label" optionValue="value" placeholder="Seçin" />
+                            </div>
+                        </p-fieldset>
+                    </p-fluid>
+                    <div class="flex justify-end gap-2 mt-4">
+                        <p-button label="Vazgeç" severity="secondary" [text]="true" type="button" (click)="kayitForm.reset()" />
+                        <p-button label="Gönder" icon="pi pi-send" type="submit" [disabled]="kayitForm.invalid" />
+                    </div>
+                </form>
+                <!-- /snippet -->
+            </app-showcase>
+
+            <app-showcase title="İlerleme / Kota Paneli" snippetId="pattern-progress-panel" [code]="snippet('pattern-progress-panel')" description="Tamamlanma yüzdesi / kontenjan göstergesi; marka renkli p-progressbar + durum rozeti.">
+                <!-- snippet:pattern-progress-panel -->
+                <div class="flex flex-col gap-4">
+                    @for (p of ilerlemeler; track p.etiket) {
+                        <div class="flex flex-col gap-2">
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">{{ p.etiket }}</span>
+                                <p-tag [value]="p.deger + '%'" [severity]="p.severity" />
+                            </div>
+                            <p-progressbar [value]="p.deger" [showValue]="false" />
+                            <span class="text-sm text-muted-color">{{ p.aciklama }}</span>
+                        </div>
+                    }
+                </div>
+                <!-- /snippet -->
+            </app-showcase>
         </div>
     `,
     providers: [ConfirmationService, MessageService]
@@ -332,6 +458,50 @@ export class PatternsDemo {
         { durum: 'Belge kontrolü tamamlandı', tarih: '15/01/2026' },
         { durum: 'Onaylandı', tarih: '20/01/2026' }
     ];
+
+    durumKatalogu: { etiket: string; severity: TagSeverity; icon: string }[] = [
+        { etiket: 'Onaylandı', severity: 'success', icon: 'pi pi-check-circle' },
+        { etiket: 'Beklemede', severity: 'warn', icon: 'pi pi-clock' },
+        { etiket: 'İşlemde', severity: 'info', icon: 'pi pi-sync' },
+        { etiket: 'Reddedildi', severity: 'danger', icon: 'pi pi-times-circle' },
+        { etiket: 'Taslak', severity: 'secondary', icon: 'pi pi-pencil' },
+        { etiket: 'İptal', severity: 'contrast', icon: 'pi pi-ban' }
+    ];
+
+    bildirimKartlari = [
+        { baslik: 'Bilgilendirme', mesaj: 'Başvurunuz sıraya alındı; ortalama işlem süresi 5 iş günüdür.', icon: 'pi pi-info-circle', renk: 'var(--mfa-navy)', bg: 'color-mix(in srgb, var(--mfa-navy) 10%, transparent)' },
+        { baslik: 'Önemli', mesaj: 'Eksik belgeniz var; lütfen pasaport fotokopisini yükleyin.', icon: 'pi pi-exclamation-circle', renk: 'var(--mfa-red)', bg: 'color-mix(in srgb, var(--mfa-red) 10%, transparent)' },
+        { baslik: 'Uyarı', mesaj: 'Randevu tarihinize 3 gün kaldı; değişiklik için son gün bugün.', icon: 'pi pi-exclamation-triangle', renk: 'var(--mfa-gold)', bg: 'color-mix(in srgb, var(--mfa-gold) 16%, transparent)' },
+        { baslik: 'İpucu', mesaj: 'Başvuru durumunuzu e-Devlet üzerinden de takip edebilirsiniz.', icon: 'pi pi-lightbulb', renk: 'var(--mfa-gray)', bg: 'color-mix(in srgb, var(--mfa-gray) 12%, transparent)' }
+    ];
+
+    kisiler: { ad: string; basHarf: string; email: string; rol: string; rolSeverity: TagSeverity; renk: string; bg: string }[] = [
+        { ad: 'Selin Demir', basHarf: 'SD', email: 'selin.demir@mfa.gov.tr', rol: 'Konsolos', rolSeverity: 'danger', renk: 'var(--mfa-brand-fg)', bg: 'var(--mfa-red)' },
+        { ad: 'Ahmet Yıldız', basHarf: 'AY', email: 'ahmet.yildiz@mfa.gov.tr', rol: 'Uzman', rolSeverity: 'info', renk: 'var(--mfa-brand-fg)', bg: 'var(--mfa-navy)' },
+        { ad: 'Elif Korkmaz', basHarf: 'EK', email: 'elif.korkmaz@mfa.gov.tr', rol: 'Memur', rolSeverity: 'secondary', renk: 'var(--mfa-text)', bg: 'color-mix(in srgb, var(--mfa-gray) 25%, transparent)' }
+    ];
+
+    kayitForm = this.fb.group({
+        ad: ['', Validators.required],
+        soyad: ['', Validators.required],
+        eposta: ['', [Validators.required, Validators.email]],
+        telefon: [''],
+        tur: [null as string | null, Validators.required]
+    });
+
+    ilerlemeler: { etiket: string; deger: number; severity: TagSeverity; aciklama: string }[] = [
+        { etiket: 'Belge Tamamlanma', deger: 80, severity: 'success', aciklama: '5 belgeden 4 tanesi yüklendi.' },
+        { etiket: 'Randevu Kontenjanı', deger: 45, severity: 'warn', aciklama: 'Bu hafta 45 / 100 randevu doldu.' },
+        { etiket: 'İnceleme İlerlemesi', deger: 30, severity: 'info', aciklama: 'Başvuru değerlendirme aşamasında.' }
+    ];
+
+    kayitGonder(): void {
+        if (this.kayitForm.invalid) {
+            this.kayitForm.markAllAsTouched();
+            return;
+        }
+        this.messageService.add({ severity: 'success', summary: 'Gönderildi', detail: 'Kayıt başarıyla gönderildi.' });
+    }
 
     durumSeverity(durum: string): 'success' | 'warn' | 'danger' | 'info' {
         switch (durum) {
