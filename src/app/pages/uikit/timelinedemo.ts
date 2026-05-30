@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ComponentShowcase } from './component-showcase';
 import { SnippetService } from './snippet.service';
+import { svgPlaceholder } from '@/app/core/util/svg-placeholder';
 
 @Component({
     selector: 'app-timeline-demo',
@@ -69,7 +70,7 @@ import { SnippetService } from './snippet.service';
                     </ng-template>
                     <ng-template #content let-event>
                         <p-card [header]="event.status" [subheader]="event.date">
-                            <img *ngIf="event.image" [src]="'/demo/images/product/' + event.image" [alt]="event.name" width="200" class="shadow" />
+                            <img *ngIf="event.image" [src]="event.image" [alt]="event.status" width="200" class="shadow" />
                             <p>
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse,
                                 cupiditate neque quas!
@@ -128,7 +129,7 @@ export class TimelineDemo {
                 date: '15/10/2020 10:30',
                 icon: 'pi pi-shopping-cart',
                 color: 'var(--mfa-red)',
-                image: 'game-controller.jpg'
+                image: svgPlaceholder(200, 120, undefined, 'Sipariş')
             },
             {
                 status: 'Processing',

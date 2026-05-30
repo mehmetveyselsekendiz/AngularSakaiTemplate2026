@@ -38,7 +38,16 @@ import { VIZE_DURUM_SECENEKLERI, VizeBasvurusu, VizeDurum, VizeQuery, vizeDurumS
                 </ng-template>
                 <ng-template #end>
                     <div class="flex flex-wrap items-center gap-2">
-                        <p-select [options]="durumSecenekleri()" [ngModel]="durumInput()" (ngModelChange)="durumInput.set($event); uygula()" optionLabel="label" optionValue="value" [showClear]="true" [placeholder]="'vize.list.filter.durum' | t" styleClass="w-48" />
+                        <p-select
+                            [options]="durumSecenekleri()"
+                            [ngModel]="durumInput()"
+                            (ngModelChange)="durumInput.set($event); uygula()"
+                            optionLabel="label"
+                            optionValue="value"
+                            [showClear]="true"
+                            [placeholder]="'vize.list.filter.durum' | t"
+                            styleClass="w-48"
+                        />
                         <p-iconfield iconPosition="left">
                             <p-inputicon class="pi pi-search" />
                             <input pInputText type="text" [ngModel]="aramaInput()" (ngModelChange)="aramaInput.set($event)" (keyup.enter)="uygula()" [placeholder]="'vize.list.search' | t" />

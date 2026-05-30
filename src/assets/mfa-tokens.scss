@@ -70,6 +70,12 @@
   --mfa-danger-900: #6e1313;
   --mfa-danger-950: #3d0909;
 
+  // ─── Tipografi (kurumsal font stack) ─────────────────────────────────────
+  // TEK KAYNAK: design-tokens.ts brandTypography ile senkrondur.
+  // body bu token'ı okur (_core.scss); component'lerde hardcoded font-family yazma.
+  --mfa-font-sans:  "Helvetica Neue", Helvetica, Arial, "Liberation Sans", system-ui, sans-serif;
+  --mfa-font-serif: "Times New Roman", Times, "Liberation Serif", serif;
+
   // ─── Yüzey (surface) paleti ──────────────────────────────────────────────
   --mfa-surface-0:   #ffffff;
   --mfa-surface-50:  #f9f9fa;

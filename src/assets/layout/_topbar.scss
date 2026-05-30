@@ -28,9 +28,8 @@
         font-weight: 500;
         gap: 0.5rem;
 
-        svg {
-            width: 3rem;
-        }
+        // MFA amblem boyutu — app-mfa-logo --mfa-logo-size token'ını okur.
+        --mfa-logo-size: 2rem;
 
         &:focus-visible {
             @include focused();

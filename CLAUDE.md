@@ -158,6 +158,8 @@ this.http.post<ApiResponse>('/api/personel', dto).subscribe(...);
 
 **Mock backend YOK.** Geliştirme staging API'ye `proxy.conf.js` ile bağlanır (`/api/**` → `window.__ENV__.API_URL`).
 
+**İstisna (K-021):** Tek bilinçli istisna — modül örneklerinin SSO/staging olmadan yerelde çalışabilmesi için **dev-only `HttpInterceptorFn`** (`features/vize/vize-dev-data.interceptor.ts`). Yalnızca `SSO_URL` boşken devreye girer, bellek-içi veriyle yanıt verir; component/servis gerçek üretim desenini (`httpResource('/api/...')`) kullanmaya devam eder. Kalıcı mock altyapısı (MSW/json-server) **değildir** ve tek dosya silinerek kaldırılır (bkz. `docs/MODULE-DEV-GUIDE.md` §8).
+
 ---
 
 ## 9. Klasör Sorumluluğu
@@ -245,7 +247,7 @@ npm test                       # karma + jasmine — kullanılmıyor (test strat
 - ❌ Zod / Axios / TanStack / Zustand / NgRx
 - ❌ Lucide / Font Awesome
 - ❌ Sonner / ngx-toastr
-- ❌ Mock backend / json-server / MSW
+- ❌ Mock backend / json-server / MSW (tek istisna: K-021 dev-only `HttpInterceptorFn`, SSO boşken, tek silinebilir dosya — §8)
 - ❌ Template-driven validated form
 - ❌ Module syntax (`@NgModule`) — standalone only
 - ❌ Zone.js (`provideZoneChangeDetection`) — zoneless only

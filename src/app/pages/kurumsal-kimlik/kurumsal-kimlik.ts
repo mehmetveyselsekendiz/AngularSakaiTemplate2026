@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { TagModule } from 'primeng/tag';
 import { DividerModule } from 'primeng/divider';
 import { brandColors, brandTypography, printTypography, logoVariants, logoBackgroundRules, differentiationAreas, corporateIdentity, BrandColor, BrandColorKey } from '@/app/core/config/design-tokens';
+import { MfaLogo } from '@/app/core/util/mfa-logo';
 
 @Component({
     selector: 'app-kurumsal-kimlik',
     standalone: true,
-    imports: [CommonModule, TagModule, DividerModule],
+    imports: [CommonModule, TagModule, DividerModule, MfaLogo],
     template: `
         <div class="flex flex-col gap-6">
             <!-- Başlık -->
@@ -100,11 +101,30 @@ import { brandColors, brandTypography, printTypography, logoVariants, logoBackgr
 
             <!-- Logo Varyantları -->
             <div class="card">
-                <div class="font-semibold text-xl mb-4">Logo Varyantları</div>
+                <div class="font-semibold text-xl mb-1">Logo Varyantları</div>
+                <p class="text-surface-500 text-sm mb-4">
+                    Amblem <code>src/app/core/util/mfa-logo.ts</code> bileşeninden gelir ve MFA paletini (<code>--mfa-brand</code>) okur — yer tutucudur, gerçek Bakanlık amblemi tek dosyada güncellenir.
+                </p>
+
+                <!-- Amblem önizleme: açık zemin / marka zemin -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+                    <div class="flex items-center justify-center p-6 rounded-lg border border-surface-200" style="background: var(--mfa-bg)">
+                        <app-mfa-logo variant="full" />
+                    </div>
+                    <div class="flex items-center justify-center p-6 rounded-lg border border-surface-200" style="background: var(--mfa-brand)">
+                        <span style="--mfa-brand: var(--mfa-brand-fg); --mfa-text: var(--mfa-brand-fg); --mfa-text-muted: var(--mfa-brand-fg)">
+                            <app-mfa-logo variant="full" />
+                        </span>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
                     @for (variant of variants; track variant.id) {
                         <div class="border border-surface-200 rounded-lg p-4">
-                            <div class="font-semibold text-sm mb-1">{{ variant.name }}</div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <app-mfa-logo variant="mark" [style.--mfa-logo-size.px]="variant.minWebHeightPx" />
+                                <div class="font-semibold text-sm">{{ variant.name }}</div>
+                            </div>
                             <div class="text-xs text-surface-500 mb-2">{{ variant.description }}</div>
                             <div class="flex gap-4 text-xs text-surface-400">
                                 <span>Min baskı: {{ variant.minPrintHeightCm }} cm</span>

@@ -1,11 +1,11 @@
 html {
     height: 100%;
-    font-size: 14px;
     line-height: 1.2;
 }
 
 body {
-    font-family: 'Lato', sans-serif;
+    // Kurumsal font — TEK KAYNAK: mfa-tokens.scss --mfa-font-sans (CLAUDE.md §5)
+    font-family: var(--mfa-font-sans);
     color: var(--text-color);
     background-color: var(--surface-ground);
     margin: 0;

@@ -12,18 +12,19 @@ import { SettingsService } from '@/app/core/settings/settings.service';
 import { TranslateService } from '@/app/core/i18n/translate.service';
 import { TranslatePipe } from '@/app/core/i18n/translate.pipe';
 import { FontScale } from '@/app/core/settings/settings.types';
+import { MfaLogo } from '@/app/core/util/mfa-logo';
 
 @Component({
     selector: 'app-topbar',
     standalone: true,
-    imports: [RouterModule, CommonModule, FormsModule, StyleClassModule, TooltipModule, SelectButtonModule, PopoverModule, TranslatePipe],
+    imports: [RouterModule, CommonModule, FormsModule, StyleClassModule, TooltipModule, SelectButtonModule, PopoverModule, TranslatePipe, MfaLogo],
     template: `<div class="layout-topbar">
         <div class="layout-topbar-logo-container">
             <button class="layout-menu-button layout-topbar-action" (click)="layoutService.onMenuToggle()" [attr.aria-label]="'topbar.toggle_menu' | t">
                 <i class="pi pi-bars"></i>
             </button>
             <a class="layout-topbar-logo" routerLink="/">
-                <span>MFA</span>
+                <app-mfa-logo [responsive]="true" />
             </a>
         </div>
 
