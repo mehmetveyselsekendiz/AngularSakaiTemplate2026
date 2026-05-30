@@ -259,7 +259,12 @@ type TagSeverity = 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contr
                 <!-- /snippet -->
             </app-showcase>
 
-            <app-showcase title="Durum Rozeti Kataloğu" snippetId="pattern-status-catalog" [code]="snippet('pattern-status-catalog')" description="İş durumlarının tek-tip severity + ikon eşlemesi. Modüller, durum renklerini tutarlı tutmak için bu kataloğu kopyalar.">
+            <app-showcase
+                title="Durum Rozeti Kataloğu"
+                snippetId="pattern-status-catalog"
+                [code]="snippet('pattern-status-catalog')"
+                description="İş durumlarının tek-tip severity + ikon eşlemesi. Modüller, durum renklerini tutarlı tutmak için bu kataloğu kopyalar."
+            >
                 <!-- snippet:pattern-status-catalog -->
                 <div class="flex flex-wrap gap-3">
                     @for (d of durumKatalogu; track d.etiket) {
@@ -269,7 +274,12 @@ type TagSeverity = 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contr
                 <!-- /snippet -->
             </app-showcase>
 
-            <app-showcase title="Marka Aksanlı Bilgi Kartları" snippetId="pattern-notice-cards" [code]="snippet('pattern-notice-cards')" description="Sol kenar marka-renkli (lacivert/kırmızı/altın/gri) şeritli içerik kartları. Renk varyasyonu; zemin color-mix ile dark mode'a uyar.">
+            <app-showcase
+                title="Marka Aksanlı Bilgi Kartları"
+                snippetId="pattern-notice-cards"
+                [code]="snippet('pattern-notice-cards')"
+                description="Sol kenar marka-renkli (lacivert/kırmızı/altın/gri) şeritli içerik kartları. Renk varyasyonu; zemin color-mix ile dark mode'a uyar."
+            >
                 <!-- snippet:pattern-notice-cards -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     @for (n of bildirimKartlari; track n.baslik) {
@@ -315,7 +325,12 @@ type TagSeverity = 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contr
                 <!-- /snippet -->
             </app-showcase>
 
-            <app-showcase title="Bölümlenmiş Form (Fieldset)" snippetId="pattern-sectioned-form" [code]="snippet('pattern-sectioned-form')" description="Çok bölümlü kurumsal form: Kişisel / İletişim / Başvuru grupları p-fieldset ile ayrılır (Reactive Forms).">
+            <app-showcase
+                title="Bölümlenmiş Form (Fieldset)"
+                snippetId="pattern-sectioned-form"
+                [code]="snippet('pattern-sectioned-form')"
+                description="Çok bölümlü kurumsal form: Kişisel / İletişim / Başvuru grupları p-fieldset ile ayrılır (Reactive Forms)."
+            >
                 <!-- snippet:pattern-sectioned-form -->
                 <form [formGroup]="kayitForm" (ngSubmit)="kayitGonder()">
                     <p-fluid class="flex flex-col gap-4">
