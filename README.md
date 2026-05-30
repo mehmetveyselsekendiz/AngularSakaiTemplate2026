@@ -54,11 +54,12 @@ npm run watch          # dev build, watch
 
 ```bash
 npm run lint:palette   # palet/governance tarayıcı (hex/tailwind/cdn/import) — ihlalde exit 1
+npm run lint:tokens    # 3 palet dosyası (scss/preset/design-tokens) senkron mu — drift'te exit 1
 npm run snippets       # /uikit örnek snippet'lerini public/snippets/*.json'a çıkar
 npm run format         # prettier
 ```
 
-**CI:** `.github/workflows/ci.yml` her push/PR'da `lint:palette` → snippet tazeliği → `build` kapısını çalıştırır (Node 22). Bu kapı yeşil olmadan merge edilmez.
+**CI:** `.github/workflows/ci.yml` her push/PR'da `lint:palette` → `lint:tokens` → snippet tazeliği → `build` kapısını çalıştırır (Node 22). Bu kapı yeşil olmadan merge edilmez.
 
 ---
 

@@ -36,6 +36,9 @@ jobs:
       - name: Governance — palet/CDN/import tarayıcı
         run: npm run lint:palette
 
+      - name: Token senkronu — 3 palet dosyası ayrışmamalı
+        run: npm run lint:tokens
+
       - name: Snippet tazeliği (npm run snippets fark üretmemeli)
         run: |
           npm run snippets

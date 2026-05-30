@@ -99,6 +99,8 @@ PrimeNG'ye bağlama: `src/app/core/config/theme.config.ts` → `MfaPreset = defi
 
 **KURAL:** Renk değişikliği **sadece** `mfa-tokens.scss`'te yapılır. Component'lerde hardcoded hex YAZMA. `<p-button severity="primary">`, `class="bg-primary"`, `style="background:var(--mfa-red)"` üçü de aynı CSS değişkenini okumalı.
 
+**3-dosya senkronu (K-024):** Marka hex'i teknik olarak 3 yerde yaşar — `mfa-tokens.scss` (**kanonik**, runtime CSS), `theme.config.ts` (PrimeNG preset, tanım anında `var()` okunamaz → literal hex), `design-tokens.ts` (Kurumsal Kimlik sayfası + `svg-placeholder`, `data:` SVG `var()` çözmez → literal hex). Bir marka rengini değiştirirken **önce `mfa-tokens.scss`**, sonra diğer ikisini aynı hex'e getir. `npm run lint:tokens` (CI'da) bu üçünün ayrışmadığını (drift) doğrular; ayrışırsa exit 1.
+
 ---
 
 ## 5. Font — Helvetica System Stack
@@ -241,11 +243,12 @@ npm run build                  # production build
 npm run watch                  # dev build watch mode
 npm run format                 # prettier
 npm run lint:palette           # governance tarayıcı (hex/tailwind/cdn/import) — ihlalde exit 1
+npm run lint:tokens            # 3 palet dosyası (scss/preset/design-tokens) senkron mu — drift'te exit 1
 npm run snippets               # /uikit örnek snippet'lerini public/snippets/*.json'a çıkar
 npm test                       # karma + jasmine — kullanılmıyor (test stratejisi ileride)
 ```
 
-**CI:** `.github/workflows/ci.yml` push/PR `main`'de `lint:palette` → snippet tazeliği → `build` gate'ini çalıştırır. Bu kapı yeşil olmadan merge etme.
+**CI:** `.github/workflows/ci.yml` push/PR `main`'de `lint:palette` → `lint:tokens` → snippet tazeliği → `build` gate'ini çalıştırır. Bu kapı yeşil olmadan merge etme.
 
 ---
 
