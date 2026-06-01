@@ -4,6 +4,7 @@
 >
 > Detaylı yol haritası: [`docs/sakai-mfa-uyarlama-plani.md`](docs/sakai-mfa-uyarlama-plani.md)
 > Açılış prompt'u: [`docs/yeni-sakai-session-prompt.md`](docs/yeni-sakai-session-prompt.md)
+> Logo/amblem değiştirme: [`docs/logo-degistirme.md`](docs/logo-degistirme.md)
 > Tasarım dokümanları (tarihsel referans, fazlar tamamlandı): [`docs/superpowers/specs/`](docs/superpowers/specs/)
 >
 > **Durum: `v1.0.0` — production-ready template baseline.** Çekirdek tamam (kurumsal kimlik tek-kaynak, kütüphane, auth, i18n, vize örnek modül, Docker, CI). Modül takımları bunu fork'lar.

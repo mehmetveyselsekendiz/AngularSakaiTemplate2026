@@ -1,14 +1,17 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 
 /**
- * MFA Kurumsal Amblem — palet-tabanlı SVG placeholder.
+ * MFA Kurumsal Amblem — gerçek Bakanlık amblemi.
  *
- * Gerçek Bakanlık amblemi gelene kadar yer tutucu. Renkler MFA paletinden
- * (`--mfa-brand` / `--mfa-brand-fg`) okunur — dark mode'da otomatik kayar,
- * hardcoded hex YOK (governance-temiz). Boyut `--mfa-logo-size` ile ayarlanır.
+ * Amblem `public/mfa-icon.svg`'ten `<img>` ile yüklenir (göreli yol, base href
+ * `/`). SVG'in kendi sabit kurumsal renkleri vardır; çok-renkli/detaylı amblem
+ * olduğu için palet token'larına bağlanmaz ve dark mode'da tonal kaymaz —
+ * resmi amblem her temada aynıdır. Boyut `--mfa-logo-size` ile ayarlanır.
+ * Yazı markası ("T.C. Dışişleri Bakanlığı" + EN alt başlık) palet token'larından
+ * beslenmeye devam eder (dark mode uyumlu).
  *
- * Gerçek amblem geldiğinde: bu dosyadaki <svg> içeriğini değiştir (veya yerel
- * asset'e geç). Kullanan yerler (topbar, kurumsal kimlik) değişmez.
+ * Amblemi değiştirmek için: yeni SVG/PNG'yi `public/`'e koy, aşağıdaki `src`'yi
+ * güncelle. Kullanan yerler (topbar, kurumsal kimlik) değişmez.
  *
  * Kullanım:
  *   <app-mfa-logo />                         tam (amblem + yazı markası)
@@ -21,10 +24,7 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <span class="mfa-logo" [class.mfa-logo--responsive]="responsive()">
-            <svg class="mfa-logo__mark" viewBox="0 0 48 48" role="img" aria-label="T.C. Dışişleri Bakanlığı">
-                <circle cx="24" cy="24" r="23" fill="var(--mfa-brand)" />
-                <polygon points="24,11 27.17,19.63 36.36,19.98 29.14,25.67 31.64,34.52 24,29.4 16.36,34.52 18.86,25.67 11.64,19.98 20.83,19.63" fill="var(--mfa-brand-fg)" />
-            </svg>
+            <img class="mfa-logo__mark" src="mfa-icon.svg" width="48" height="48" [attr.alt]="variant() === 'mark' ? 'T.C. Dışişleri Bakanlığı' : ''" [attr.aria-hidden]="variant() === 'full' ? 'true' : null" />
             @if (variant() === 'full') {
                 <span class="mfa-logo__wordmark">
                     <span class="mfa-logo__title">T.C. Dışişleri Bakanlığı</span>
@@ -45,6 +45,7 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
                 width: var(--mfa-logo-size, 2rem);
                 height: var(--mfa-logo-size, 2rem);
                 flex: none;
+                object-fit: contain;
             }
             .mfa-logo__wordmark {
                 display: inline-flex;
