@@ -54,7 +54,7 @@
             font-size: 1.125rem;
             font-weight: 600;
             letter-spacing: 0.01em;
-            color: var(--mfa-brand); // kurumsal marka rengi — siyah default değil
+            color: var(--mfa-text); // nötr başlık — marka vurgusu logoda; dark'ta otomatik beyaza döner
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;

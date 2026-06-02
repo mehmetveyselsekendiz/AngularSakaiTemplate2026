@@ -12,7 +12,7 @@ export interface AppSettings {
 
 export const DEFAULT_SETTINGS: AppSettings = {
     themeMode: 'light',
-    fontScale: 'md',
+    fontScale: 'sm',
     language: 'tr'
 };
 
