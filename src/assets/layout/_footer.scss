@@ -1,8 +1,17 @@
 .layout-footer {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 1rem 0 1rem 0;
-    gap: 0.5rem;
+    justify-content: space-between; // sol: kurumsal atıf · sağ: modül adı + sürüm
+    flex-wrap: wrap; // dar ekranda alt alta
+    gap: 0.5rem 1rem;
+    padding: 1rem 0; // yatay boşluğu .layout-main-container (2rem) verir
     border-top: 1px solid var(--surface-border);
+
+    // Sol atıf ve sağ modül+sürüm aynı sade footer metni — ayrı vurgu yok
+    .layout-footer-credit,
+    .layout-footer-app {
+        font-size: 0.8rem;
+        color: var(--mfa-text-muted);
+        white-space: nowrap;
+    }
 }

@@ -10,7 +10,13 @@
     padding: 0 2rem;
     background-color: var(--surface-card);
     transition: left var(--layout-section-transition-duration);
-    display: flex;
+    // 3 kolon: sol logo · orta modül başlığı · sağ aksiyonlar.
+    // `1fr auto 1fr` → sol/sağ bölge içeriklerinden bağımsız EŞİT genişlikte olur,
+    // orta kolon böylece gerçek viewport ortasına hizalanır (logo 20rem ≠ aksiyon
+    // genişliği olsa bile başlık ortada kalır).
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    column-gap: 1rem;
     align-items: center;
 
     .layout-topbar-logo-container {
@@ -36,9 +42,8 @@
         }
     }
 
-    // Modül adı — logo ile sağ aksiyonlar arasında ortalanır, kalan alanı doldurur
+    // Modül adı — grid'in orta (auto) kolonu; viewport ortasına hizalı
     .layout-topbar-module {
-        flex: 1 1 auto;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -148,7 +153,7 @@
     }
 
     .layout-topbar-actions {
-        margin-left: auto;
+        justify-self: end; // grid sağ kolonunun sonuna yasla (eski margin-left:auto yerine)
         display: flex;
         gap: 1rem;
     }
