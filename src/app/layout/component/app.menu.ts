@@ -4,7 +4,8 @@ import { RouterModule } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
 import { AppMenuitem } from './app.menuitem';
 import { AuthService } from '@/app/core/auth/auth.service';
-import { NAV_GROUPS, NavItem } from '@/app/core/config/navigation.config';
+import { buildNavGroups, NavItem } from '@/app/core/config/navigation.config';
+import { appEnv } from '@/app/core/config/app-env';
 import { TranslateService } from '@/app/core/i18n/translate.service';
 
 @Component({
@@ -30,7 +31,9 @@ export class AppMenu {
         const roles = this.authService.roles();
         this.translate.dict(); // dil signal'ına abone ol → dil değişince re-eval
 
-        return NAV_GROUPS.filter((g) => this.hasAccess(g.requiredRoles, roles)).map((g) => ({
+        // SSO boşsa dev modu → geliştirici referansını ekle; doluysa sadece modül nav
+        const groups = buildNavGroups(!appEnv.ssoUrl());
+        return groups.filter((g) => this.hasAccess(g.requiredRoles, roles)).map((g) => ({
             label: g.labelKey ? this.translate.t(g.labelKey) : g.label,
             icon: g.icon,
             separator: g.separator,
