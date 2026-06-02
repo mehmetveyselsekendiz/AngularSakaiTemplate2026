@@ -36,6 +36,26 @@
         }
     }
 
+    // Modül adı — logo ile sağ aksiyonlar arasında ortalanır, kalan alanı doldurur
+    .layout-topbar-module {
+        flex: 1 1 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 0; // çocuğun text-overflow ile kırpılabilmesi için
+        padding: 0 1rem;
+
+        .layout-topbar-module-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            color: var(--mfa-brand); // kurumsal marka rengi — siyah default değil
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
     .layout-topbar-action {
         display: inline-flex;
         justify-content: center;
@@ -74,6 +94,51 @@
         }
     }
 
+    // Kullanıcı butonu — baş harf rozeti (avatar) + ad gösteren kurumsal oval
+    .layout-topbar-user {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        height: 44px; // dokunma hedefi tabanı (WCAG 2.5.5) — px kasıtlı
+        padding: 0 0.85rem 0 0.35rem;
+        border: none;
+        background: transparent;
+        border-radius: 999px;
+        color: var(--mfa-text);
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+
+        &:hover {
+            background: var(--mfa-bg-muted);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--mfa-brand);
+            outline-offset: -2px;
+        }
+
+        .layout-topbar-user-avatar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 50%;
+            background: var(--mfa-brand);
+            color: var(--mfa-brand-fg);
+            font-size: 0.8rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .layout-topbar-user-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--mfa-text);
+            white-space: nowrap;
+        }
+    }
+
     .layout-menu-button {
         margin-right: 0.5rem;
     }
@@ -105,6 +170,11 @@
 
         .layout-topbar-logo-container {
             width: auto;
+        }
+
+        // Modül adı dar ekranda gizlenir — logo + hamburger + aksiyonlar zaten barı doldurur
+        .layout-topbar-module {
+            display: none;
         }
 
         .layout-menu-button {

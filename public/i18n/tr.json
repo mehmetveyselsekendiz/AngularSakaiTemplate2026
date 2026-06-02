@@ -1,4 +1,5 @@
 {
+  "app.module_name": "Kurumsal Modül",
   "menu.home": "Ana Sayfa",
   "menu.dashboard": "Dashboard",
   "menu.library": "Bileşen Kütüphanesi",
@@ -35,6 +36,9 @@
   "topbar.profile": "Profil",
   "topbar.settings": "Ayarlar",
   "topbar.toggle_menu": "Menüyü Aç/Kapat",
+  "topbar.theme.tooltip": "Tema Değiştir",
+  "topbar.font.tooltip": "Yazı Tipi Boyutu",
+  "topbar.language.tooltip": "Dil Değiştir",
   "settings.title": "Ayarlar",
   "settings.theme.label": "Görünüm",
   "settings.theme.light": "Aydınlık",

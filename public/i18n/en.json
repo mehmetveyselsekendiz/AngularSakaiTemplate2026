@@ -1,4 +1,5 @@
 {
+  "app.module_name": "Corporate Module",
   "menu.home": "Home",
   "menu.dashboard": "Dashboard",
   "menu.library": "Component Library",
@@ -35,6 +36,9 @@
   "topbar.profile": "Profile",
   "topbar.settings": "Settings",
   "topbar.toggle_menu": "Toggle Menu",
+  "topbar.theme.tooltip": "Toggle Theme",
+  "topbar.font.tooltip": "Font Size",
+  "topbar.language.tooltip": "Change Language",
   "settings.title": "Settings",
   "settings.theme.label": "Appearance",
   "settings.theme.light": "Light",

@@ -35,6 +35,12 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
     `,
     styles: [
         `
+            /* Host'u flex yap — varsayılan inline host, çevredeki büyük font-size'ın
+               satır-yüksekliği strut'unu miras alıp amblemi dikeyde yukarı kaydırıyordu. */
+            :host {
+                display: inline-flex;
+                align-items: center;
+            }
             .mfa-logo {
                 display: inline-flex;
                 align-items: center;

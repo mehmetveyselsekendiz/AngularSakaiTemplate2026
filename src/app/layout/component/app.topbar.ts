@@ -28,6 +28,11 @@ import { MfaLogo } from '@/app/core/util/mfa-logo';
             </a>
         </div>
 
+        <!-- Modül adı (ortada) — fork'lar tr.json/en.json'daki app.module_name key'ini değiştirir -->
+        <div class="layout-topbar-module">
+            <span class="layout-topbar-module-title">{{ 'app.module_name' | t }}</span>
+        </div>
+
         <div class="layout-topbar-actions">
             <!-- 3'lü ayar grubu: Dil / Font / Tema — tek border'lı container, aralarında divider -->
             <div class="mfa-settings-group inline-flex items-stretch overflow-hidden rounded-md border" style="border-color: var(--mfa-border)">
@@ -63,9 +68,9 @@ import { MfaLogo } from '@/app/core/util/mfa-logo';
             <div class="layout-topbar-menu hidden lg:block">
                 <div class="layout-topbar-menu-content">
                     @if (authService.isLoggedIn()) {
-                        <button type="button" class="layout-topbar-action" [pTooltip]="logoutTooltip()" tooltipPosition="bottom" (click)="onLogout()">
-                            <i class="pi pi-user"></i>
-                            <span>{{ authService.displayName() }}</span>
+                        <button type="button" class="layout-topbar-user" [pTooltip]="logoutTooltip()" tooltipPosition="bottom" (click)="onLogout()">
+                            <span class="layout-topbar-user-avatar" aria-hidden="true">{{ userInitials() }}</span>
+                            <span class="layout-topbar-user-name">{{ authService.displayName() }}</span>
                         </button>
                     } @else {
                         <button type="button" class="layout-topbar-action">
@@ -130,6 +135,16 @@ export class AppTopbar {
     readonly logoutTooltip = computed(() => {
         this.t.dict();
         return this.t.t('topbar.logout');
+    });
+
+    // Kullanıcı adından baş harf(ler)i türet — ilk + son kelimenin ilk harfi (örn. "Ahmet Yılmaz" → "AY")
+    readonly userInitials = computed(() => {
+        const name = this.authService.displayName().trim();
+        if (!name) return '';
+        const parts = name.split(/\s+/);
+        const first = parts[0]?.charAt(0) ?? '';
+        const last = parts.length > 1 ? parts[parts.length - 1].charAt(0) : '';
+        return (first + last).toLocaleUpperCase('tr-TR');
     });
 
     readonly scaleOptions: { label: string; value: FontScale }[] = [
