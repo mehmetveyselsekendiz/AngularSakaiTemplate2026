@@ -45,7 +45,7 @@ describe('SettingsService', () => {
         const { service } = setup();
         expect(service.settings()).toEqual(DEFAULT_SETTINGS);
         expect(service.themeMode()).toBe('light');
-        expect(service.fontScale()).toBe('md');
+        expect(service.fontScale()).toBe('sm');
         expect(service.language()).toBe('tr');
     });
 
