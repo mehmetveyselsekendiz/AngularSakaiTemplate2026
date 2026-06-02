@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { AppLayout } from './app/layout/component/app.layout';
-import { Dashboard } from './app/pages/dashboard/dashboard';
 import { Notfound } from './app/pages/notfound/notfound';
 import { authGuard } from './app/core/auth/auth.guard';
 
@@ -10,7 +9,8 @@ export const appRoutes: Routes = [
         component: AppLayout,
         canActivate: [authGuard],
         children: [
-            { path: '', component: Dashboard },
+            // "/" modülün ana sayfasına yönlenir. Fork ekibi 'vize'yi kendi ana route'uyla değiştirir.
+            { path: '', redirectTo: 'vize', pathMatch: 'full' },
             { path: 'vize', loadChildren: () => import('./app/features/vize/vize.routes') },
             { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
             { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') }
