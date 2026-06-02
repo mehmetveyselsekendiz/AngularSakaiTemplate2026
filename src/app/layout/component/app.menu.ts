@@ -33,12 +33,14 @@ export class AppMenu {
 
         // SSO boşsa dev modu → geliştirici referansını ekle; doluysa sadece modül nav
         const groups = buildNavGroups(!appEnv.ssoUrl());
-        return groups.filter((g) => this.hasAccess(g.requiredRoles, roles)).map((g) => ({
-            label: g.labelKey ? this.translate.t(g.labelKey) : g.label,
-            icon: g.icon,
-            separator: g.separator,
-            items: (g.items ?? []).filter((i) => this.hasAccess(i.requiredRoles, roles)).map((i) => this.mapItem(i, roles))
-        }));
+        return groups
+            .filter((g) => this.hasAccess(g.requiredRoles, roles))
+            .map((g) => ({
+                label: g.labelKey ? this.translate.t(g.labelKey) : g.label,
+                icon: g.icon,
+                separator: g.separator,
+                items: (g.items ?? []).filter((i) => this.hasAccess(i.requiredRoles, roles)).map((i) => this.mapItem(i, roles))
+            }));
     });
 
     private mapItem(item: NavItem, roles: string[]): MenuItem {
