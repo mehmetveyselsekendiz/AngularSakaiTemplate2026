@@ -178,6 +178,7 @@ MFA-spesifik kodu kendi klasörlerimize topla; render/layout dosyaları temiz ka
 
 **MFA-spesifik (özgürce yaz):**
 - `src/app/core/` — auth, settings, i18n, http, config
+  - **Navigasyon (tek-modül modeli):** `core/config/module-nav.config.ts` (bu modülün menüsü — fork ekibi düzenler, üretimde görünür) ve `core/config/template-nav.config.ts` (geliştirici referansı — yalnızca SSO boşken görünür, üretimde gizli, fork dokunmaz) ayrıdır. `navigation.config.ts` ikisini `buildNavGroups(isDevMode)` ile birleştirir. **Her fork = TEK modül; "Modüller" üst sekmesi yoktur.** "/" modülün ana sayfasına redirect (`app.routes.ts`); fork kendi route'una çevirir. Dashboard yoktur.
 - `src/app/features/` — modül kodu (vize, pasaport, personel, konsolosluk)
 - `src/assets/mfa-tokens.scss` — TEK PALET KAYNAĞI
 - `src/assets/i18n/` — TR/EN sözlükleri
@@ -206,7 +207,7 @@ src/
 │   │   ├── settings/              # settings.service, settings.types  (Phase 7B+)
 │   │   ├── i18n/                  # translate.service, translate.pipe (Phase 7B+)
 │   │   ├── http/                  # error.interceptor
-│   │   ├── config/                # app-env, theme.config, navigation.config, design-tokens
+│   │   ├── config/                # app-env, theme.config, module-nav + template-nav (+navigation.config birleştirici), design-tokens
 │   │   └── util/                  # mfa-logo (amblem), svg-placeholder
 │   ├── pages/                     # Tüm sayfalar (uikit/, dashboard, ayarlar, kurumsal-kimlik, auth, vs.)
 │   └── features/                  # Modül kodu (vize, pasaport, ...)
@@ -337,8 +338,8 @@ Kullanıcının canlı kontrol edebildiği üç boyut: **tema** (light/dark/syst
 **Tek kaynak:** `src/app/core/settings/settings.service.ts` — signal-based, localStorage persistence, View Transition'lı dark geçiş.
 
 **Erişim noktaları:**
-- Topbar `pi-cog` butonu → sağ `<p-drawer>` (hızlı erişim, mobile full-width)
-- `/pages/ayarlar` → tam sayfa (drawer ile aynı `<app-settings-form>` paylaşır)
+- Topbar 3'lü ayar grubu (dil / font / tema) → ayarları **doğrudan** değiştirir (hızlı ayar). Topbar'da ayrı bir `pi-cog` "ayarlar sayfası açan" buton YOK.
+- `/pages/ayarlar` → tam sayfa (reset + hakkında). Dev sidebar'da **Geliştirici > Kurumsal Kimlik** grubundan erişilir; üretimde sidebar'da yer almaz (hızlı ayarlar topbar grubundadır).
 
 **Sorumluluk ayrımı:**
 - `SettingsService` (core/settings) → tema, font, dil, persistence

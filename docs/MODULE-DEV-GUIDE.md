@@ -142,15 +142,21 @@ readonly form = this.fb.group({
 
 İki katman:
 
-**Menü görünürlüğü** — `core/config/navigation.config.ts` `requiredRoles`:
+**Menü görünürlüğü** — `core/config/module-nav.config.ts` `requiredRoles`:
 
 ```ts
-{ labelKey: 'menu.modules', items: [
+{ labelKey: 'menu.module.vize', items: [
   { labelKey: 'menu.modules.vize', icon: 'pi pi-fw pi-id-card', routerLink: ['/vize'], requiredRoles: ['VIZE_OKUMA'] }
 ]},
 ```
 
 Menü `authService.roles()` signal'ına bağlı `computed()` ile otomatik filtrelenir.
+
+> **Navigasyonu uyarlama (tek-modül modeli).** Bu template her fork'ta TEK bir modüldür; "Modüller" üst sekmesi yoktur.
+> 1. `core/config/module-nav.config.ts` → `MODULE_NAV` grubunun `labelKey`'ini ve item'larını **kendi modülünüze** göre değiştirin (örnek Vize'yi kendi sayfalarınızla değiştirin).
+> 2. `src/app.routes.ts` → `{ path: '', redirectTo: 'vize', pathMatch: 'full' }` hedefini kendi **ana route'unuza** çevirin. (Ayrı dashboard sayfası yoktur; "/" modülün ana sayfasına gider.)
+> 3. `core/config/template-nav.config.ts`'e **DOKUNMAYIN** — geliştirici referansıdır (Bileşen Kütüphanesi / Kurumsal Kimlik / Örnek Sayfalar), yalnızca SSO boşken görünür ve üretimde otomatik gizlenir.
+> 4. Yeni grup/menü etiketleri için `tr.json`/`en.json`'a `menu.*` key ekleyin (sabit metin yazmayın), `ROUTE_LABEL_KEY_MAP`'i güncelleyin.
 
 **Aksiyon görünürlüğü** — `PermissionService` (Signal):
 
@@ -233,8 +239,8 @@ npm run format         # prettier
 ## 10. Yeni modül checklist
 
 - [ ] `features/<modul>/` iskeleti oluşturuldu (models, service, routes, list/detail/form)
-- [ ] Lazy route `app.routes.ts`'e eklendi
-- [ ] Menü `navigation.config.ts`'e `labelKey` + `requiredRoles` ile eklendi; `ROUTE_LABEL_KEY_MAP` güncellendi
+- [ ] Lazy route `app.routes.ts`'e eklendi; "/" redirect hedefi modülün ana route'una çevrildi
+- [ ] Menü `core/config/module-nav.config.ts`'e `labelKey` + `requiredRoles` ile eklendi; `ROUTE_LABEL_KEY_MAP` güncellendi (`template-nav.config.ts`'e dokunulmadı)
 - [ ] Veri: okuma `httpResource`, yazma `HttpClient`; `/api/...` uç noktaları
 - [ ] Form: Reactive Forms + Angular `Validators`
 - [ ] Tüm UI metni `| t`; key'ler `tr.json` + `en.json`'a eklendi (kendi namespace'iniz)

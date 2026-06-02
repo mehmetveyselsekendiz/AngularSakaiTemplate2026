@@ -83,8 +83,8 @@ sahte fixture köklerine yönlendirilerek drift/ihlal → exit 1 negatif testler
 src/
 ├── app/
 │   ├── layout/          # topbar, sidebar, menü, footer
-│   ├── core/            # MFA runtime: auth/ settings/ i18n/ http/ config/
-│   ├── pages/           # uikit/ (bileşen vitrini), dashboard, ayarlar, kurumsal-kimlik, auth
+│   ├── core/            # MFA runtime: auth/ settings/ i18n/ http/ config/ (module-nav + template-nav)
+│   ├── pages/           # uikit/ (bileşen vitrini), ayarlar, kurumsal-kimlik, auth
 │   └── features/        # MODÜL KODU — vize/ (örnek tam CRUD modül)
 └── assets/
     ├── mfa-tokens.scss  # TEK PALET KAYNAĞI (kurumsal renkler)
@@ -104,7 +104,9 @@ public/
 
 Yeni modül eklemek için **[`docs/MODULE-DEV-GUIDE.md`](docs/MODULE-DEV-GUIDE.md)** rehberini izleyin. Vize modülü (`src/app/features/vize/`) tüm desenleri gösteren işlenmiş örnektir.
 
-Kısaca: `features/<modul>/` iskeleti → lazy route (`app.routes.ts`) → menü (`navigation.config.ts` `requiredRoles`) → veri (`httpResource`/`HttpClient`) → Reactive Forms → i18n key'leri (`tr.json`/`en.json`) → `npm run lint:palette` temiz.
+Kısaca: `features/<modul>/` iskeleti → lazy route (`app.routes.ts`) → menü (`core/config/module-nav.config.ts` — modülün kendi nav'ı + `requiredRoles`) → veri (`httpResource`/`HttpClient`) → Reactive Forms → i18n key'leri (`tr.json`/`en.json`) → `npm run lint:palette` temiz.
+
+**Navigasyon (tek-modül modeli):** Her fork TEK bir modüldür; "Modüller" üst sekmesi yoktur. `core/config/module-nav.config.ts` modülün menüsüdür (fork düzenler). `core/config/template-nav.config.ts` geliştirici referansıdır (Bileşen Kütüphanesi / Kurumsal Kimlik / Örnek Sayfalar) ve **yalnızca SSO boşken** görünür — üretimde otomatik gizlidir. `/` modülün ana sayfasına yönlenir; fork `app.routes.ts`'teki redirect hedefini kendi route'una çevirir.
 
 ---
 
